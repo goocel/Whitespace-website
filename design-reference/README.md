@@ -186,21 +186,25 @@ Detail teknis:
 - Setiap halaman wajib punya `<script>document.documentElement.classList.add("js");</script>` di `<head>` (sudah ada di template).
 - Hero 3D (three.js) dari situs asli **belum** diterapkan.
 
-### GSAP (khusus Home)
+### GSAP (semua halaman)
 
-Halaman Home memakai **GSAP 3.12.5 + ScrollTrigger** (CDN cdnjs) lewat `js/home-motion.js` supaya gerakan lebih halus:
+Semua halaman memakai **GSAP 3.12.5 + ScrollTrigger** (CDN cdnjs) supaya gerakan lebih halus.
+`js/motion.js` dimuat di setiap halaman; Home menambah `js/home-motion.js` untuk animasi khusus Home.
 
-| Elemen | Animasi GSAP |
-| --- | --- |
-| Hero (judul, paragraf, tombol, caption) | Naik 32px + fade, berurutan 0,09 dtk, `expo.out` 1,1 dtk |
-| Hero matrix mengikuti kursor | Saat kursor di atas hero, seluruh matriks miring 3D (rotateY ±10°, rotateX ±6°, perspektif 1100px) dan bergeser ±12px ke arah kursor; kembali halus saat kursor keluar (`gsap.quickTo`, 0,9 dtk `power3.out`). Hanya untuk perangkat dengan mouse |
-| Semua kubus isometrik | Tween variabel `--tx/--ty/--to` dari posisi awal ke akhir, `expo.out` 1,3 dtk, delay per kubus tetap dari `ILLUSTRATIONS` |
-| Grafik runway | Garis tergambar `power2.inOut`; titik hitam & oranye "pop" (`back.out`) |
-| Judul section, kartu, baris matrix, langkah proses, case study, tabel, kotak CTA | Naik 28px + fade saat masuk layar (ScrollTrigger.batch), stagger 0,05–0,1 dtk |
+| Elemen | File | Animasi GSAP |
+| --- | --- | --- |
+| Hero Home (judul, paragraf, tombol, caption) | `home-motion.js` | Naik 32px + fade, berurutan 0,09 dtk, `expo.out` 1,1 dtk |
+| Hero halaman dalam (breadcrumb, judul, lead, teks samping; intro + detail di Contact) | `motion.js` | Sama dengan hero Home |
+| Hero matrix mengikuti kursor | `home-motion.js` | Saat kursor di atas hero, seluruh matriks miring 3D (rotateY ±10°, rotateX ±6°, perspektif 1100px) dan bergeser ±12px ke arah kursor; kembali halus saat kursor keluar (`gsap.quickTo`, 0,9 dtk `power3.out`). Hanya untuk perangkat dengan mouse |
+| Semua kubus isometrik | `motion.js` | Tween variabel `--tx/--ty/--to` dari posisi awal ke akhir, `expo.out` 1,3 dtk, delay per kubus tetap dari `ILLUSTRATIONS` |
+| Grafik runway | `home-motion.js` | Garis tergambar `power2.inOut`; titik hitam & oranye "pop" (`back.out`) |
+| Bar timeline di tabel engagement | `motion.js` | Memanjang dari kiri (`scaleX`), `expo.out` 1,2 dtk, berurutan per baris |
+| Judul section, kartu nilai, fitur, tile layanan, lowongan, field form, langkah proses, tabel, link "Next", kotak CTA | `motion.js` | Naik 28px + fade saat masuk layar (ScrollTrigger.batch), stagger 0,05–0,1 dtk |
+| Paragraf About, baris matrix, case study | `home-motion.js` | Sama, khusus Home |
 
-Cara kerja: `home-motion.js` menambah class `html.gsap-motion`, yang mematikan transition CSS (aturan di `css/home.css`) sehingga hanya GSAP yang menggerakkan elemen.
+Cara kerja: `motion.js` menambah class `html.gsap-motion`, yang mematikan transition CSS (aturan kubus di `css/base.css`, grafik di `css/home.css`) sehingga hanya GSAP yang menggerakkan elemen.
 Kalau GSAP gagal dimuat atau pengguna memilih *reduce motion*, class itu tidak ditambahkan dan animasi CSS biasa yang berjalan.
-Untuk memakai GSAP di halaman lain: tambahkan 2 script CDN + script animasi halaman itu, ikuti pola `home-motion.js`.
+Untuk halaman baru: muat 2 script CDN GSAP sebelum `isometric.js`, lalu `motion.js` setelah `site.js` (sudah ada di template). Komponen baru yang perlu animasi masuk: tambahkan `reveal(".selector")` di `motion.js`.
 
 ## Membuat halaman baru
 

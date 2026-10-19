@@ -135,15 +135,8 @@
   }
 }
 
-/* ---------- GSAP mode (js/home-motion.js adds html.gsap-motion) ----------
-   GSAP tweens --tx/--ty/--to on each cube and inline styles on the chart,
-   so the CSS transitions from base.css / components.css are switched off here. */
-.gsap-motion .iso-svg[data-on] .c {
-  transform: translate(var(--tx, var(--ax)), var(--ty, var(--ay)));
-  opacity: var(--to, 1);
-  transition: none;
-}
-
+/* ---------- GSAP mode (js/motion.js adds html.gsap-motion) ----------
+   GSAP draws the runway chart with inline styles, so its CSS transitions are switched off. */
 .gsap-motion .rw-line,
 .gsap-motion .rw-pivot,
 .gsap-motion .rw-end {

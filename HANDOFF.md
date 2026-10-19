@@ -37,11 +37,12 @@ index.html, about.html, careers.html, contact.html
 practices/<slug>.html        4 halaman praktik (path pakai ../)
 css/base.css                 token, tipografi, layout, tombol, header, CTA + footer
 css/components.css           semua komponen konten
-css/home.css                 khusus Home (+ aturan mode GSAP)
+css/home.css                 khusus Home (+ aturan GSAP grafik runway)
 js/isometric.js              renderer kubus isometrik + ILLUSTRATIONS
 js/site.js                   nav, dropdown, render ilustrasi, reveal, highlight matrix
 js/home.js                   hero matrix interaktif (hover cell)
-js/home-motion.js            animasi GSAP khusus Home (+ tilt hero ikut kursor)
+js/motion.js                 animasi GSAP semua halaman (intro hero, kubus, reveal, bar timeline)
+js/home-motion.js            animasi GSAP khusus Home (hero, tilt ikut kursor, grafik runway)
 js/contact.js                form kontak → mailto, ?practice=<slug> mengisi Topic
 assets/images/brand/         logo.svg, logo-white.svg (asli dari situs acuan)
 design-reference/            README (style guide tertulis), styleguide.html, page-template.html
@@ -61,7 +62,7 @@ design-reference/            README (style guide tertulis), styleguide.html, pag
   hero halaman dalam maks 460px rata kanan; ikon kartu 120px; menara Contact 150px.
 - **Tombol**: oranye → panel hitam menyapu dari kiri saat hover (putih di blok gelap); tombol header → oranye.
 - **Kartu nilai**: hover latar `--panel` → `--cell`.
-- **GSAP 3.12.5 + ScrollTrigger hanya di Home** (CDN cdnjs). Halaman lain pakai animasi CSS.
+- **GSAP 3.12.5 + ScrollTrigger di semua halaman** (CDN cdnjs): `motion.js` di semua halaman, `home-motion.js` tambahan di Home.
   Kalau GSAP gagal dimuat / reduced motion → otomatis kembali ke CSS.
 
 ## Ilustrasi kubus (`js/isometric.js` → `ILLUSTRATIONS`)
@@ -93,7 +94,7 @@ Resep generator asli ada di chunk JS acuan `/_next/static/immutable/chunks/2iure
 
 1. Samakan ilustrasi `deck`, ikon fase proses, dan `night` dengan acuan (user sudah ditawari).
 2. Hero 3D three.js seperti acuan (saat ini SVG + tilt GSAP mengikuti kursor; parallax per kubus dicoba & dibatalkan karena muncul celah).
-3. GSAP untuk halaman selain Home (belum diminta).
+3. ~~GSAP untuk halaman selain Home~~ — sudah diterapkan (`js/motion.js`).
 4. Tampilan HP 390px belum diverifikasi penuh (headless Edge minimum ±500px; cek dengan Puppeteer viewport 390).
 5. Nomor telepon `021-39731400` terbaca samar dari screenshot desain — sama dengan situs acuan, belum dikonfirmasi user.
 6. Dua jarak di dalam section Home masih 120px (teks "We don't hand…" → kartu; grafik → tabel) — bisa dirapatkan kalau user minta.

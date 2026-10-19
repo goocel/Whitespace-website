@@ -304,6 +304,14 @@ h4 {
   opacity: var(--bo);
 }
 
+/* GSAP mode (js/motion.js adds html.gsap-motion): GSAP tweens --tx/--ty/--to on each cube,
+   so the CSS transition above is switched off. */
+.gsap-motion .iso-svg[data-on] .c {
+  transform: translate(var(--tx, var(--ax)), var(--ty, var(--ay)));
+  opacity: var(--to, 1);
+  transition: none;
+}
+
 @media print {
   .iso-svg[data-on="false"] .c {
     transform: translate(var(--ax), var(--ay));
