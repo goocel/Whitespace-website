@@ -1,0 +1,151 @@
+/* =========================================================
+   Whitespace Solutions — Home page only
+   ========================================================= */
+
+/* ---------- Hero ---------- */
+.hero {
+  overflow: hidden;
+}
+
+.hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 48px;
+  min-height: min(calc(100svh - var(--header-h)), 900px);
+}
+
+.hero__text {
+  padding-block: 64px;
+  z-index: 1;
+}
+
+/* Breaks as in the design: "Growth hides / in the space / no one has / mapped." */
+.hero__text .display {
+  max-width: 7.6em;
+}
+
+.hero__text .lead {
+  max-width: 580px;
+  margin: 40px 0 44px;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 32px;
+}
+
+.hero__matrix {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+.hero__svg {
+  width: 100%;
+}
+
+.hero__svg .vx-face[data-col] {
+  cursor: crosshair;
+}
+
+.hero__svg .vx-face.is-hover {
+  fill: var(--orange);
+  stroke: var(--orange);
+}
+
+.hero__caption {
+  position: absolute;
+  right: 0;
+  bottom: 24px;
+  padding: 8px 12px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  font-stretch: 85%;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+}
+
+/* ---------- About ---------- */
+.about__body {
+  max-width: 600px;
+  justify-self: end;
+}
+
+.about__art {
+  width: min(100%, 420px);
+  margin: 0 0 56px 24px;
+}
+
+.about__body p + p {
+  margin-top: 24px;
+  font-size: 16px;
+}
+
+.about .values {
+  margin-top: 120px;
+}
+
+/* ---------- Work ---------- */
+.table-wrap {
+  margin-top: 120px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+    gap: 0;
+    min-height: 0;
+  }
+
+  .hero__text {
+    padding-bottom: 16px;
+  }
+
+  .hero__matrix {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero__caption {
+    position: static;
+    align-self: flex-start;
+    margin-top: 12px;
+  }
+
+  .about__body {
+    justify-self: start;
+  }
+
+  .about__art {
+    margin-inline: auto;
+  }
+
+  .about .values {
+    margin-top: 72px;
+  }
+
+  .table-wrap {
+    margin-top: 80px;
+  }
+}
+
+/* ---------- GSAP mode (js/home-motion.js adds html.gsap-motion) ----------
+   GSAP tweens --tx/--ty/--to on each cube and inline styles on the chart,
+   so the CSS transitions from base.css / components.css are switched off here. */
+.gsap-motion .iso-svg[data-on] .c {
+  transform: translate(var(--tx, var(--ax)), var(--ty, var(--ay)));
+  opacity: var(--to, 1);
+  transition: none;
+}
+
+.gsap-motion .rw-line,
+.gsap-motion .rw-pivot,
+.gsap-motion .rw-end {
+  transition: none;
+}

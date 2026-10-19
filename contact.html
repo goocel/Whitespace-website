@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Start a conversation with Whitespace Solutions. Tell us where things stand." />
+  <title>Contact — Whitespace Solutions</title>
+  <script>document.documentElement.classList.add("js");</script>
+  <link rel="icon" href="assets/images/brand/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+  <!-- ================= HEADER (same on every page) ================= -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo" aria-label="Whitespace Solutions home">
+        <img src="assets/images/brand/logo.svg" alt="Whitespace Solutions" width="147" height="42" />
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Main">
+        <ul class="nav__list">
+          <li><a href="about.html" class="nav__link">About</a></li>
+          <li class="nav__dropdown">
+            <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-controls="practicesMenu">
+              Practices
+              <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+            </button>
+            <ul class="nav__menu" id="practicesMenu">
+              <li><a href="practices/turnaround-transformation.html">Turnaround &amp; Transformation</a></li>
+              <li><a href="practices/organizational-productivity.html">Organizational Productivity</a></li>
+              <li><a href="practices/deals-growth.html">Deals &amp; Growth</a></li>
+              <li><a href="practices/capital-management-advisory.html">Capital Management &amp; Advisory</a></li>
+            </ul>
+          </li>
+          <li><a href="careers.html" class="nav__link">Careers</a></li>
+        </ul>
+        <a href="contact.html" class="btn btn--dark">Start a conversation</a>
+      </nav>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="contact-page">
+      <div class="container contact-page__inner">
+        <div class="contact-page__intro">
+          <h1 class="display">Start a<br /> conversation.</h1>
+          <p class="lead">Partner with us for transformation and strategic growth. Tell us where things stand.</p>
+          <div class="iso contact-page__art" data-illustration="tower" data-pad="0.4"></div>
+          <dl class="details">
+            <div>
+              <dt class="caption">Office</dt>
+              <dd><a href="https://www.google.com/maps/search/?api=1&amp;query=Puri+Indah+Financial+Tower+Jakarta" target="_blank" rel="noopener">Puri Indah Financial Tower, 6th floor, Jl. Puri Lkr. Dalam, Kembangan Selatan, Jakarta Barat 11610, Indonesia</a></dd>
+            </div>
+            <div>
+              <dt class="caption">Phone</dt>
+              <dd><a href="tel:+622139731400">021-39731400</a></dd>
+            </div>
+            <div>
+              <dt class="caption">Email</dt>
+              <dd><a href="mailto:contact@whitespace.id">contact@whitespace.id</a></dd>
+            </div>
+          </dl>
+        </div>
+
+        <form class="form" id="contactForm" novalidate>
+          <div class="field">
+            <label for="f-name">Name</label>
+            <input id="f-name" type="text" name="name" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="f-position">Position <small>(optional)</small></label>
+            <input id="f-position" type="text" name="position" autocomplete="organization-title" />
+          </div>
+          <div class="field">
+            <label for="f-institution">Company <small>(optional)</small></label>
+            <input id="f-institution" type="text" name="institution" autocomplete="organization" />
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone <small>(optional)</small></label>
+            <input id="f-phone" type="tel" name="phone" autocomplete="tel" />
+          </div>
+          <div class="field field--full">
+            <label for="f-email">Work email</label>
+            <input id="f-email" type="email" name="email" autocomplete="email" required />
+          </div>
+          <div class="field field--full">
+            <label for="f-practice">Topic <small>(optional)</small></label>
+            <select id="f-practice" name="practice">
+              <option value="">Not sure yet</option>
+              <option value="turnaround-transformation">Turnaround &amp; Transformation</option>
+              <option value="organizational-productivity">Organizational Productivity</option>
+              <option value="deals-growth">Deals &amp; Growth</option>
+              <option value="capital-management-advisory">Capital Management &amp; Advisory</option>
+            </select>
+          </div>
+          <div class="field field--full">
+            <label for="f-message">What should we talk about?</label>
+            <textarea id="f-message" name="message" rows="5" placeholder="Where the business stands, and where you want it to go." required></textarea>
+          </div>
+          <div class="form__footer">
+            <p class="muted">Sending opens your email app with the message ready. Nothing is stored on this site.</p>
+            <button type="submit" class="btn btn--orange">Compose email <span class="arrow" aria-hidden="true">→</span></button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= CONTACT + FOOTER (one dark block, same on every page) ================= -->
+  <div class="dark">
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__grid">
+          <div class="footer__brand">
+            <a href="index.html" class="logo" aria-label="Whitespace Solutions home">
+              <img src="assets/images/brand/logo-white.svg" alt="Whitespace Solutions" width="147" height="42" />
+            </a>
+            <p>Advisory for Indonesia's middle market. We find the whitespace in your business and stay to build it.</p>
+          </div>
+          <div>
+            <h4>Practices</h4>
+            <ul>
+              <li><a href="practices/turnaround-transformation.html">Turnaround &amp; Transformation</a></li>
+              <li><a href="practices/organizational-productivity.html">Organizational Productivity</a></li>
+              <li><a href="practices/deals-growth.html">Deals &amp; Growth</a></li>
+              <li><a href="practices/capital-management-advisory.html">Capital Management &amp; Advisory</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Firm</h4>
+            <ul>
+              <li><a href="about.html">About</a></li>
+              <li><a href="about.html#workflow">How we work</a></li>
+              <li><a href="careers.html">Careers</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Office</h4>
+            <ul>
+              <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Puri+Indah+Financial+Tower+Jakarta" target="_blank" rel="noopener">Puri Indah Financial Tower, 6th floor<br />Jl. Puri Lkr. Dalam, Kembangan Selatan<br />Jakarta Barat 11610, Indonesia</a></li>
+              <li><a href="tel:+622139731400">021-39731400</a></li>
+              <li><a href="mailto:contact@whitespace.id">contact@whitespace.id</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <span>&copy; <span id="year">2026</span> Whitespace Solutions. All rights reserved.</span>
+          <span>Jakarta, Indonesia</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/isometric.js"></script>
+  <script src="js/site.js"></script>
+  <script src="js/contact.js"></script>
+</body>
+</html>

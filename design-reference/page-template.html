@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PAGE DESCRIPTION" />
+  <title>PAGE TITLE — Whitespace Solutions</title>
+  <script>document.documentElement.classList.add("js");</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet" />
+  <!-- Paths assume this file is copied to the project root. -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <!-- <link rel="stylesheet" href="css/PAGE.css" /> -->
+</head>
+<body>
+  <!-- ================= HEADER (same on every page) ================= -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo" aria-label="Whitespace Solutions home">
+        <img src="assets/images/brand/logo.svg" alt="Whitespace Solutions" width="147" height="42" />
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Main">
+        <ul class="nav__list">
+          <li><a href="about.html" class="nav__link">About</a></li>
+          <li class="nav__dropdown">
+            <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-controls="practicesMenu">
+              Practices
+              <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+            </button>
+            <ul class="nav__menu" id="practicesMenu">
+              <li><a href="practices/turnaround-transformation.html">Turnaround &amp; Transformation</a></li>
+              <li><a href="practices/organizational-productivity.html">Organizational Productivity</a></li>
+              <li><a href="practices/deals-growth.html">Deals &amp; Growth</a></li>
+              <li><a href="practices/capital-management-advisory.html">Capital Management &amp; Advisory</a></li>
+            </ul>
+          </li>
+          <li><a href="careers.html" class="nav__link">Careers</a></li>
+        </ul>
+        <a href="contact.html" class="btn btn--dark">Start a conversation</a>
+      </nav>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= PAGE INTRO ================= -->
+    <section class="section" style="border-top: 0">
+      <div class="container">
+        <div class="split split--head">
+          <h1 class="title">Page title goes here.</h1>
+          <p class="lead">One or two sentences that frame the page, aligned to the bottom of the title.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EXAMPLE SECTION ================= -->
+    <section class="section">
+      <div class="container">
+        <div class="split split--head">
+          <h2 class="title">Section title.</h2>
+          <p class="lead">Supporting sentence for this section.</p>
+        </div>
+
+        <ul class="values">
+          <li class="value">
+            <div class="iso value__art" data-illustration="ownership" data-pad="0.4"></div>
+            <h3>Card title</h3>
+            <p>Short supporting copy for this card.</p>
+          </li>
+          <li class="value">
+            <div class="iso value__art" data-illustration="strategic" data-pad="0.4"></div>
+            <h3>Card title</h3>
+            <p>Short supporting copy for this card.</p>
+          </li>
+          <li class="value">
+            <div class="iso value__art" data-illustration="tailored" data-pad="0.4"></div>
+            <h3>Card title</h3>
+            <p>Short supporting copy for this card.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= CONTACT + FOOTER (one dark block, same on every page) ================= -->
+  <div class="dark">
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="contact__hero">
+          <div class="contact__box">
+            <h2 class="title">Where is your<br /> whitespace?</h2>
+            <p>Tell us where the business is stuck, or where you want it to go. The first conversation is about your situation, not our pitch.</p>
+            <a href="contact.html" class="btn btn--orange">Start a conversation <span class="arrow" aria-hidden="true">→</span></a>
+          </div>
+          <div class="iso contact__art" data-illustration="night"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__grid">
+          <div class="footer__brand">
+            <a href="index.html" class="logo" aria-label="Whitespace Solutions home">
+              <img src="assets/images/brand/logo-white.svg" alt="Whitespace Solutions" width="147" height="42" />
+            </a>
+            <p>Advisory for Indonesia's middle market. We find the whitespace in your business and stay to build it.</p>
+          </div>
+          <div>
+            <h4>Practices</h4>
+            <ul>
+              <li><a href="practices/turnaround-transformation.html">Turnaround &amp; Transformation</a></li>
+              <li><a href="practices/organizational-productivity.html">Organizational Productivity</a></li>
+              <li><a href="practices/deals-growth.html">Deals &amp; Growth</a></li>
+              <li><a href="practices/capital-management-advisory.html">Capital Management &amp; Advisory</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Firm</h4>
+            <ul>
+              <li><a href="about.html">About</a></li>
+              <li><a href="about.html#workflow">How we work</a></li>
+              <li><a href="careers.html">Careers</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Office</h4>
+            <ul>
+              <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Puri+Indah+Financial+Tower+Jakarta" target="_blank" rel="noopener">Puri Indah Financial Tower, 6th floor<br />Jl. Puri Lkr. Dalam, Kembangan Selatan<br />Jakarta Barat 11610, Indonesia</a></li>
+              <li><a href="tel:+622139731400">021-39731400</a></li>
+              <li><a href="mailto:contact@whitespace.id">contact@whitespace.id</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <span>&copy; <span id="year">2026</span> Whitespace Solutions. All rights reserved.</span>
+          <span>Jakarta, Indonesia</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/isometric.js"></script>
+  <script src="js/site.js"></script>
+  <!-- <script src="js/PAGE.js"></script> -->
+</body>
+</html>

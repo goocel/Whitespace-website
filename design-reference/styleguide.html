@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Style Guide — Whitespace Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <style>
+    /* Style-guide-only helpers */
+    .sg-label {
+      margin-bottom: 24px;
+      font-stretch: 85%;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .sg-block + .sg-block {
+      margin-top: 64px;
+    }
+
+    .sg-swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: var(--tile-gap);
+    }
+
+    .sg-swatch {
+      background: var(--panel);
+    }
+
+    .sg-swatch span {
+      display: block;
+      height: 96px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .sg-swatch p {
+      padding: 12px 14px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .sg-swatch code {
+      color: var(--muted);
+    }
+
+    .sg-type > * + * {
+      margin-top: 32px;
+    }
+
+    .sg-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .sg-illus {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--tile-gap);
+    }
+
+    .sg-illus figure {
+      padding: 24px 20px 14px;
+      background: var(--panel);
+    }
+
+    .sg-illus .iso {
+      height: 90px;
+    }
+
+    .sg-illus figcaption {
+      margin-top: 12px;
+    }
+
+    /* Shows the gutter beside the page content; negative margins reach the viewport edges. */
+    .sg-layout {
+      display: grid;
+      grid-template-columns: var(--gutter) 1fr var(--gutter);
+      margin-inline: calc(-1 * var(--gutter));
+      margin-bottom: 32px;
+      font-stretch: 85%;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .sg-layout > span {
+      display: grid;
+      place-items: center;
+      min-height: 72px;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .sg-layout__gutter {
+      background: var(--orange-soft);
+      color: var(--orange-hover);
+      writing-mode: vertical-rl;
+    }
+
+    .sg-layout > .sg-layout__content {
+      display: block;
+      align-content: center;
+      background: var(--panel);
+      border-inline: 1px dashed var(--orange);
+    }
+
+    .sg-tokens code {
+      font-size: 14px;
+    }
+
+    .sg-tokens tbody th {
+      width: 18%;
+    }
+
+    .sg-tokens tbody td:nth-child(2) {
+      width: 28%;
+    }
+
+    .sg-dark {
+      padding: 32px;
+      background: var(--night);
+    }
+
+    .sg-dark .iso {
+      max-width: 360px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="section" style="border-top: 0">
+      <div class="container">
+        <div class="split split--head">
+          <h1 class="title">Style guide.</h1>
+          <p class="lead">Everything the Home page is built from. New pages reuse these tokens and components as they are.</p>
+        </div>
+
+        <!-- Colours -->
+        <div class="sg-block">
+          <p class="sg-label">Colour</p>
+          <div class="sg-swatches">
+            <div class="sg-swatch"><span style="background: var(--ink)"></span><p>Ink<br /><code>--ink #15171a</code></p></div>
+            <div class="sg-swatch"><span style="background: var(--text)"></span><p>Text<br /><code>--text #3c4046</code></p></div>
+            <div class="sg-swatch"><span style="background: var(--muted)"></span><p>Muted<br /><code>--muted #62676e</code></p></div>
+            <div class="sg-swatch"><span style="background: var(--line)"></span><p>Line<br /><code>--line #e2e4e7</code></p></div>
+            <div class="sg-swatch"><span style="background: var(--panel)"></span><p>Panel (card bg)<br /><code>--panel #f4f5f6</code></p></div>
+            <div class="sg-swatch"><span style="background: var(--cell)"></span><p>Cell (tile bg)<br /><code>--cell #eef0f2</code></p></div>
+            <div class="sg-swatch"><span style="background: var(--cell-dark)"></span><p>Cell dark<br /><code>--cell-dark #2b2e33</code></p></div>
+            <div class="sg-swatch"><span style="background: var(--orange)"></span><p>Orange (accent)<br /><code>--orange #f2902a</code></p></div>
+            <div class="sg-swatch"><span style="background: var(--orange-soft)"></span><p>Orange soft<br /><code>--orange-soft #fff3e6</code></p></div>
+            <div class="sg-swatch"><span style="background: var(--night)"></span><p>Night<br /><code>--night #121417</code></p></div>
+          </div>
+        </div>
+
+        <!-- Layout & spacing -->
+        <div class="sg-block">
+          <p class="sg-label">Layout &amp; spacing</p>
+          <div class="sg-layout" aria-hidden="true">
+            <span class="sg-layout__gutter">--gutter</span>
+            <span class="sg-layout__content">.container: <strong id="sgContentWidth">–</strong> wide on this screen (max 1760px)</span>
+            <span class="sg-layout__gutter">--gutter</span>
+          </div>
+          <table class="data-table sg-tokens">
+            <thead>
+              <tr><th scope="col">Token</th><th scope="col">Value</th><th scope="col">Meaning</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row"><code>--gutter</code></th><td><code>clamp(16px, 4vw, 72px)</code></td><td>Equal left and right space: 72px on desktop, 4% of the screen below that, 16px minimum on phones.</td></tr>
+              <tr><th scope="row"><code>--container</code></th><td><code>1760px</code></td><td>Maximum content width. Header, hero, sections and footer all share it, so their edges line up.</td></tr>
+              <tr><th scope="row"><code>--section-space</code></th><td><code>clamp(72px, 8vw, 120px)</code></td><td>Top and bottom padding of every section (max 240px between sections).</td></tr>
+              <tr><th scope="row"><code>--head-space</code></th><td><code>clamp(48px, 6vw, 80px)</code></td><td>Gap between a section heading and its content.</td></tr>
+              <tr><th scope="row"><code>--header-h</code></th><td><code>64px</code></td><td>Sticky header height.</td></tr>
+              <tr><th scope="row"><code>--tile-gap</code></th><td><code>3px</code></td><td>Gap between gray tiles (cards, cells, steps).</td></tr>
+              <tr><th scope="row">Breakpoints</th><td><code>1100 / 900 / 600px</code></td><td>Grids shrink / mobile nav and one column / phone.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Typography -->
+        <div class="sg-block sg-type">
+          <p class="sg-label">Typography: Archivo</p>
+          <div><p class="caption">.display</p><p class="display">Growth hides.</p></div>
+          <div><p class="caption">.title</p><p class="title">Four practices.</p></div>
+          <div><p class="caption">.subtitle</p><p class="subtitle">From a three-month runway to nearly positive EBITDA.</p></div>
+          <div><p class="caption">.lead</p><p class="lead">We embed with your team and take ownership of the outcome with you, from strategy to execution.</p></div>
+          <div><p class="caption">body</p><p>Our expertise covers business turnaround, business model design, operational excellence and corporate strategy.</p></div>
+          <div><p class="caption">.caption</p><p class="caption">Anonymized engagements from our practices. Client names withheld.</p></div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="sg-block">
+          <p class="sg-label">Buttons &amp; links</p>
+          <div class="sg-row">
+            <a href="#" class="btn btn--orange">Start a conversation <span class="arrow" aria-hidden="true">→</span></a>
+            <a href="#" class="btn btn--dark">Start a conversation</a>
+            <a href="#" class="link-underline">How we work</a>
+            <a href="#" class="link-arrow">View practice <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+
+        <!-- Illustrations -->
+        <div class="sg-block">
+          <p class="sg-label">Logo</p>
+          <div class="sg-row" style="margin-bottom: 64px">
+            <img src="../assets/images/brand/logo.svg" alt="Whitespace Solutions logo" width="175" height="50" />
+            <div style="padding: 20px; background: var(--night)"><img src="../assets/images/brand/logo-white.svg" alt="Whitespace Solutions logo, white" width="175" height="50" /></div>
+          </div>
+          <p class="sg-label">Isometric illustrations: &lt;div class="iso" data-illustration="…"&gt;</p>
+          <div class="sg-illus">
+            <figure><div class="iso" data-illustration="deck"></div><figcaption class="caption">deck</figcaption></figure>
+            <figure><div class="iso" data-illustration="proactive"></div><figcaption class="caption">proactive</figcaption></figure>
+            <figure><div class="iso" data-illustration="ownership"></div><figcaption class="caption">ownership</figcaption></figure>
+            <figure><div class="iso" data-illustration="strategic"></div><figcaption class="caption">strategic</figcaption></figure>
+            <figure><div class="iso" data-illustration="network"></div><figcaption class="caption">network</figcaption></figure>
+            <figure><div class="iso" data-illustration="tailored"></div><figcaption class="caption">tailored</figcaption></figure>
+            <figure><div class="iso" data-illustration="turnaround"></div><figcaption class="caption">turnaround</figcaption></figure>
+            <figure><div class="iso" data-illustration="productivity"></div><figcaption class="caption">productivity</figcaption></figure>
+            <figure><div class="iso" data-illustration="deals"></div><figcaption class="caption">deals</figcaption></figure>
+            <figure><div class="iso" data-illustration="capital"></div><figcaption class="caption">capital</figcaption></figure>
+            <figure><div class="iso" data-illustration="pre"></div><figcaption class="caption">pre</figcaption></figure>
+            <figure><div class="iso" data-illustration="engagement"></div><figcaption class="caption">engagement</figcaption></figure>
+            <figure><div class="iso" data-illustration="partnership"></div><figcaption class="caption">partnership</figcaption></figure>
+            <figure><div class="iso" data-illustration="about"></div><figcaption class="caption">about</figcaption></figure>
+            <figure><div class="iso" data-illustration="careers"></div><figcaption class="caption">careers</figcaption></figure>
+            <figure><div class="iso" data-illustration="tower"></div><figcaption class="caption">tower</figcaption></figure>
+          </div>
+          <div class="sg-dark" style="margin-top: var(--tile-gap)">
+            <div class="iso" data-illustration="night"></div>
+            <p class="caption" style="color: var(--night-muted); margin-top: 12px">night (on --night background)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Components -->
+    <section class="section">
+      <div class="container">
+        <p class="sg-label">Component: section head (.split.split--head)</p>
+        <div class="split split--head">
+          <h2 class="title">Section title.</h2>
+          <p class="lead">Supporting text sits on the right, aligned to the bottom of the title.</p>
+        </div>
+
+        <p class="sg-label">Component: value cards (.values &gt; .value)</p>
+        <ul class="values">
+          <li class="value">
+            <div class="iso value__art" data-illustration="proactive" data-pad="0.4"></div>
+            <h3>Proactive partnership</h3>
+            <p>Hands-on collaboration that sharpens your competitive edge.</p>
+          </li>
+          <li class="value">
+            <div class="iso value__art" data-illustration="ownership" data-pad="0.4"></div>
+            <h3>Ownership mindset</h3>
+            <p>We embed in your team and take accountability to heart.</p>
+          </li>
+          <li class="value">
+            <div class="iso value__art" data-illustration="strategic" data-pad="0.4"></div>
+            <h3>Strategic collaboration</h3>
+            <p>A think tank on your side.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="sg-label">Component: practice matrix (.matrix &gt; .practice, hover a row)</p>
+        <div class="matrix">
+          <article class="practice">
+            <div class="practice__info">
+              <h3>Turnaround &amp; Transformation</h3>
+              <div class="iso practice__art" data-illustration="turnaround"></div>
+              <a href="#" class="link-arrow">View practice <span aria-hidden="true">→</span></a>
+            </div>
+            <ul class="practice__cells">
+              <li class="cell">Innovation and agility</li>
+              <li class="cell">Operations transformation</li>
+              <li class="cell">Finance transformation</li>
+              <li class="cell">Business process improvements</li>
+              <li class="cell">Cost optimization</li>
+              <li class="cell">Operational restructuring</li>
+              <li class="cell cell--whitespace">Your whitespace</li>
+            </ul>
+          </article>
+          <article class="practice is-active">
+            <div class="practice__info">
+              <h3>Deals &amp; Growth</h3>
+              <div class="iso practice__art" data-illustration="deals"></div>
+              <a href="#" class="link-arrow">View practice <span aria-hidden="true">→</span></a>
+            </div>
+            <ul class="practice__cells">
+              <li class="cell">Partnership &amp; business alliance advisory</li>
+              <li class="cell">Mergers &amp; acquisitions advisory</li>
+              <li class="cell">Post-merger integration</li>
+              <li class="cell">New revenue models</li>
+              <li class="cell">Business model design</li>
+              <li class="cell">Sales and marketing</li>
+              <li class="cell cell--whitespace">Your whitespace</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="sg-label">Component: process (.phases &gt; .phase &gt; .step)</p>
+        <div class="phases">
+          <div class="phase">
+            <div class="iso phase__art" data-illustration="pre"></div>
+            <h3 class="phase__title">Pre-engagement</h3>
+            <ol class="phase__steps">
+              <li class="step" value="1"><h4>Initial exploration</h4><p>Identify objectives and stakeholders.</p></li>
+              <li class="step" value="2"><h4>Preliminary assessment</h4><p>Evaluate feasibility.</p></li>
+              <li class="step" value="3"><h4>Proposal &amp; alignment</h4><p>Agree scope and deliverables.</p></li>
+            </ol>
+          </div>
+          <div class="phase">
+            <div class="iso phase__art" data-illustration="engagement"></div>
+            <h3 class="phase__title">Engagement</h3>
+            <ol class="phase__steps">
+              <li class="step" value="4"><h4>Client discovery</h4><p>Find the patterns that matter.</p></li>
+              <li class="step" value="5"><h4>Solution design</h4><p>Design it with your team.</p></li>
+              <li class="step" value="6"><h4>Presentation</h4><p>Present and refine together.</p></li>
+            </ol>
+          </div>
+          <div class="phase">
+            <div class="iso phase__art" data-illustration="partnership"></div>
+            <h3 class="phase__title">Partnership</h3>
+            <ol class="phase__steps">
+              <li class="step" value="7"><h4>Implementation</h4><p>Plan steps and timelines.</p></li>
+              <li class="step" value="8"><h4>Execution</h4><p>Support the rollout.</p></li>
+              <li class="step" value="9"><h4>Closure</h4><p>Document the lessons.</p></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="sg-label">Component: data table (table.data-table)</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Sector</th>
+                <th scope="col">Engagement</th>
+                <th scope="col">Practice</th>
+                <th scope="col" class="num">Timeline</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Consumer electronics</th>
+                <td>Turnaround of a series A startup.</td>
+                <td><a href="#">Turnaround &amp; Transformation</a></td>
+                <td class="num"><span class="timeline"><span class="timeline__bar" style="--months: 6"></span>6 months</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Media &amp; entertainment</th>
+                <td>People strategy for a nationwide media firm.</td>
+                <td><a href="#">Organizational Productivity</a></td>
+                <td class="num muted">Not disclosed</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="caption">Table caption goes under the table.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/isometric.js"></script>
+  <script>
+    // Render illustrations and matrix hover without the page header that js/site.js expects.
+    const { render, ILLUSTRATIONS } = window.Isometric;
+    document.querySelectorAll("[data-illustration]").forEach((el) => {
+      const name = el.dataset.illustration;
+      el.appendChild(render(ILLUSTRATIONS[name](), { pad: el.dataset.pad ? parseFloat(el.dataset.pad) : undefined }));
+    });
+    // Live content width readout for the layout diagram.
+    const contentWidth = document.getElementById("sgContentWidth");
+    const container = document.querySelector(".container");
+    const showWidth = () => (contentWidth.textContent = `${Math.round(container.getBoundingClientRect().width)}px`);
+    showWidth();
+    window.addEventListener("resize", showWidth);
+
+    const practices = document.querySelectorAll(".practice");
+    practices.forEach((p) =>
+      p.addEventListener("mouseenter", () => practices.forEach((q) => q.classList.toggle("is-active", q === p)))
+    );
+  </script>
+</body>
+</html>

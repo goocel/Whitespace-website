@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Whitespace Solutions works inside middle-market companies to find untapped growth, then stays to build it." />
+  <title>Whitespace Solutions — Advisory for Indonesia's middle market</title>
+  <script>document.documentElement.classList.add("js");</script>
+  <link rel="icon" href="assets/images/brand/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/home.css" />
+</head>
+<body>
+  <!-- ================= HEADER (same on every page) ================= -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo" aria-label="Whitespace Solutions home">
+        <img src="assets/images/brand/logo.svg" alt="Whitespace Solutions" width="147" height="42" />
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Main">
+        <ul class="nav__list">
+          <li><a href="about.html" class="nav__link">About</a></li>
+          <li class="nav__dropdown">
+            <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-controls="practicesMenu">
+              Practices
+              <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+            </button>
+            <ul class="nav__menu" id="practicesMenu">
+              <li><a href="practices/turnaround-transformation.html">Turnaround &amp; Transformation</a></li>
+              <li><a href="practices/organizational-productivity.html">Organizational Productivity</a></li>
+              <li><a href="practices/deals-growth.html">Deals &amp; Growth</a></li>
+              <li><a href="practices/capital-management-advisory.html">Capital Management &amp; Advisory</a></li>
+            </ul>
+          </li>
+          <li><a href="careers.html" class="nav__link">Careers</a></li>
+        </ul>
+        <a href="contact.html" class="btn btn--dark">Start a conversation</a>
+      </nav>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <h1 class="display">Growth hides in the space no one has mapped.</h1>
+          <p class="lead">Whitespace Solutions works inside middle-market companies to find untapped growth, then stays to build it: from turnaround to the capital that funds what comes next.</p>
+          <div class="hero__actions">
+            <a href="contact.html" class="btn btn--orange">Start a conversation <span class="arrow" aria-hidden="true">→</span></a>
+            <a href="#process" class="link-underline">How we work</a>
+          </div>
+        </div>
+        <figure class="hero__matrix">
+          <div class="hero__svg" id="heroMatrix"></div>
+          <figcaption class="hero__caption" id="heroCaption" aria-live="polite">Illustrative: your business as a matrix. Hover to read a cell.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section class="section about" id="about">
+      <div class="container">
+        <div class="split">
+          <h2 class="title">We don't hand<br /> over a deck<br /> and leave.</h2>
+          <div class="about__body">
+            <div class="iso about__art" data-illustration="deck"></div>
+            <p class="lead">We embed with your team and take ownership of the outcome with you, from strategy to execution. Our focus is the middle market: small-cap corporates working to reach their full potential.</p>
+            <p>Our expertise covers business turnaround, business model design, operational excellence, corporate strategy, corporate action planning and structuring business alliances.</p>
+          </div>
+        </div>
+
+        <ul class="values">
+          <li class="value">
+            <div class="iso value__art" data-illustration="proactive" data-pad="0.4"></div>
+            <h3>Proactive partnership</h3>
+            <p>Hands-on collaboration that sharpens your competitive edge and solves problems before they compound.</p>
+          </li>
+          <li class="value">
+            <div class="iso value__art" data-illustration="ownership" data-pad="0.4"></div>
+            <h3>Ownership mindset</h3>
+            <p>We embed in your team and take accountability to heart, from strategy to execution.</p>
+          </li>
+          <li class="value">
+            <div class="iso value__art" data-illustration="strategic" data-pad="0.4"></div>
+            <h3>Strategic collaboration</h3>
+            <p>A think tank on your side: diverse perspectives that turn challenges into opportunities.</p>
+          </li>
+          <li class="value">
+            <div class="iso value__art" data-illustration="network" data-pad="0.4"></div>
+            <h3>Network synergy</h3>
+            <p>Access to our network for opportunities, shared resources and insight that sharpen decisions.</p>
+          </li>
+          <li class="value">
+            <div class="iso value__art" data-illustration="tailored" data-pad="0.4"></div>
+            <h3>Tailored solutions</h3>
+            <p>We engage deeply with your situation, so the solution fits today's problem and tomorrow's growth.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= PRACTICES ================= -->
+    <section class="section practices" id="practices">
+      <div class="container">
+        <div class="split split--head">
+          <h2 class="title">Four practices.<br /> One map of<br /> your business.</h2>
+          <p class="lead">Each practice fills a different part of the matrix, and each one ends where yours begins.</p>
+        </div>
+
+        <div class="matrix" id="practiceMatrix">
+          <article class="practice" id="practice-turnaround">
+            <div class="practice__info">
+              <h3>Turnaround &amp; Transformation</h3>
+              <div class="iso practice__art" data-illustration="turnaround"></div>
+              <a href="practices/turnaround-transformation.html" class="link-arrow">View practice <span aria-hidden="true">→</span></a>
+            </div>
+            <ul class="practice__cells">
+              <li class="cell">Innovation and agility</li>
+              <li class="cell">Operations transformation</li>
+              <li class="cell">Finance transformation</li>
+              <li class="cell">Business process improvements</li>
+              <li class="cell">Cost optimization</li>
+              <li class="cell">Operational restructuring</li>
+              <li class="cell cell--whitespace">Your whitespace</li>
+            </ul>
+          </article>
+
+          <article class="practice" id="practice-productivity">
+            <div class="practice__info">
+              <h3>Organizational Productivity</h3>
+              <div class="iso practice__art" data-illustration="productivity"></div>
+              <a href="practices/organizational-productivity.html" class="link-arrow">View practice <span aria-hidden="true">→</span></a>
+            </div>
+            <ul class="practice__cells">
+              <li class="cell">Performance management</li>
+              <li class="cell">Compensation and rewards</li>
+              <li class="cell">Data-driven decision making</li>
+              <li class="cell">Workforce strategy and talent management</li>
+              <li class="cell">Upskilling and talent development</li>
+              <li class="cell">Corporate governance</li>
+              <li class="cell cell--whitespace">Your whitespace</li>
+            </ul>
+          </article>
+
+          <article class="practice is-active" id="practice-deals">
+            <div class="practice__info">
+              <h3>Deals &amp; Growth</h3>
+              <div class="iso practice__art" data-illustration="deals"></div>
+              <a href="practices/deals-growth.html" class="link-arrow">View practice <span aria-hidden="true">→</span></a>
+            </div>
+            <ul class="practice__cells">
+              <li class="cell">Partnership &amp; business alliance advisory</li>
+              <li class="cell">Mergers &amp; acquisitions advisory</li>
+              <li class="cell">Post-merger integration</li>
+              <li class="cell">New revenue models</li>
+              <li class="cell">Business model design</li>
+              <li class="cell">Sales and marketing</li>
+              <li class="cell">Pricing strategy</li>
+              <li class="cell cell--whitespace">Your whitespace</li>
+            </ul>
+          </article>
+
+          <article class="practice" id="practice-capital">
+            <div class="practice__info">
+              <h3>Capital Management &amp; Advisory</h3>
+              <div class="iso practice__art" data-illustration="capital"></div>
+              <a href="practices/capital-management-advisory.html" class="link-arrow">View practice <span aria-hidden="true">→</span></a>
+            </div>
+            <ul class="practice__cells">
+              <li class="cell">Fundraising story</li>
+              <li class="cell">Capital and financing structure</li>
+              <li class="cell">Financing of innovation and growth</li>
+              <li class="cell">IPO and third-party investing</li>
+              <li class="cell">Liquidity and funding in crisis</li>
+              <li class="cell">Working capital optimization</li>
+              <li class="cell cell--whitespace">Your whitespace</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROCESS ================= -->
+    <section class="section process" id="process">
+      <div class="container">
+        <div class="split split--head">
+          <h2 class="title">From first<br /> conversation<br /> to closure.</h2>
+          <p class="lead">Nine steps across three phases. The third phase, partnership, is where we stay with you through implementation, support and evaluation.</p>
+        </div>
+
+        <div class="phases">
+          <div class="phase">
+            <div class="iso phase__art" data-illustration="pre"></div>
+            <h3 class="phase__title">Pre-engagement</h3>
+            <ol class="phase__steps">
+              <li class="step" value="1"><h4>Initial exploration</h4><p>Identify objectives, stakeholders and potential areas of collaboration.</p></li>
+              <li class="step" value="2"><h4>Preliminary assessment</h4><p>Evaluate feasibility, challenges and opportunities.</p></li>
+              <li class="step" value="3"><h4>Proposal &amp; alignment</h4><p>A formal proposal of scope and deliverables, agreed by all parties.</p></li>
+            </ol>
+          </div>
+          <div class="phase">
+            <div class="iso phase__art" data-illustration="engagement"></div>
+            <h3 class="phase__title">Engagement</h3>
+            <ol class="phase__steps" start="4">
+              <li class="step" value="4"><h4>Client discovery</h4><p>Belief audits, focus interviews and data analysis to find the patterns that matter.</p></li>
+              <li class="step" value="5"><h4>Solution design</h4><p>Design and develop the solution with your team.</p></li>
+              <li class="step" value="6"><h4>Presentation &amp; discussion</h4><p>Present, gather feedback and refine together.</p></li>
+            </ol>
+          </div>
+          <div class="phase">
+            <div class="iso phase__art" data-illustration="partnership"></div>
+            <h3 class="phase__title">Partnership</h3>
+            <ol class="phase__steps" start="7">
+              <li class="step" value="7"><h4>Implementation strategy</h4><p>Plan the steps, resources and timelines for implementation.</p></li>
+              <li class="step" value="8"><h4>Execution &amp; support</h4><p>Put the plan into action, monitor progress and support the rollout.</p></li>
+              <li class="step" value="9"><h4>Evaluation &amp; closure</h4><p>Measure against objectives, close formally and document the lessons.</p></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WORK ================= -->
+    <section class="section work" id="work">
+      <div class="container">
+        <div class="split split--head">
+          <h2 class="title">What the work<br /> looks like.</h2>
+          <p class="lead">From series A startups to a nationwide media firm, across all four practices.</p>
+        </div>
+
+        <div class="case">
+          <figure class="case__chart">
+            <div class="chart">
+              <svg viewBox="0 0 700 330" role="img" aria-labelledby="chartTitle" data-reveal>
+                <title id="chartTitle">Illustrative turnaround: cash runway dips until month 1.4, then climbs to break-even EBITDA by month 6</title>
+                <rect x="52" y="42" width="298" height="218" fill="#fff3e6" />
+                <g stroke="#e2e4e7" stroke-width="1">
+                  <line x1="449" y1="42" x2="449" y2="260" />
+                  <line x1="548" y1="42" x2="548" y2="260" />
+                  <line x1="647" y1="42" x2="647" y2="260" />
+                </g>
+                <line x1="350" y1="86" x2="647" y2="86" stroke="#15171a" stroke-width="1.5" />
+                <path class="rw-line rw-before" d="M52 182 C 100 190, 150 215, 190 243" pathLength="1" />
+                <path class="rw-line rw-after" d="M190 243 C 260 250, 320 220, 400 165 S 560 92, 647 89" pathLength="1" />
+                <circle class="rw-pivot" cx="190" cy="243" r="6" />
+                <circle class="rw-end" cx="647" cy="89" r="8" />
+                <g class="chart__label">
+                  <text x="63" y="64">Runway at start: 3 months</text>
+                  <text x="647" y="72" text-anchor="end">Break-even EBITDA</text>
+                </g>
+                <g class="chart__axis" text-anchor="middle">
+                  <text x="52" y="290">Start</text>
+                  <text x="151" y="290">M1</text>
+                  <text x="250" y="290">M2</text>
+                  <text x="350" y="290">M3</text>
+                  <text x="449" y="290">M4</text>
+                  <text x="548" y="290">M5</text>
+                  <text x="647" y="290">M6</text>
+                </g>
+              </svg>
+            </div>
+            <figcaption class="caption">Consumer electronics, series A. Illustrative shape of the turnaround, not client figures.</figcaption>
+          </figure>
+          <div class="case__text">
+            <h3 class="subtitle">From a three-month runway to nearly positive EBITDA.</h3>
+            <p>A series A consumer electronics startup came to us with three months of cash left. Six months later it was close to EBITDA break-even.</p>
+            <p class="caption">Turnaround &amp; Transformation · 6 months</p>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Sector</th>
+                <th scope="col">Engagement</th>
+                <th scope="col">Practice</th>
+                <th scope="col" class="num">Timeline</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Consumer electronics</th>
+                <td>Turnaround of a series A startup: from a three-month runway to nearly positive EBITDA.</td>
+                <td><a href="practices/turnaround-transformation.html">Turnaround &amp; Transformation</a></td>
+                <td class="num"><span class="timeline"><span class="timeline__bar" style="--months: 6"></span>6 months</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Ticketing technology</th>
+                <td>Revamped the business and operating models of a series A ticketing startup, establishing operational excellence.</td>
+                <td><a href="practices/turnaround-transformation.html">Turnaround &amp; Transformation</a></td>
+                <td class="num"><span class="timeline"><span class="timeline__bar" style="--months: 3"></span>3 months</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Consumer electronics</th>
+                <td>Built an internal data infrastructure for a series A startup, turning it into a data-centric company.</td>
+                <td><a href="practices/organizational-productivity.html">Organizational Productivity</a></td>
+                <td class="num muted">Not disclosed</td>
+              </tr>
+              <tr>
+                <th scope="row">Media &amp; entertainment</th>
+                <td>Evaluated and implemented a people strategy for a nationwide media firm, raising productivity.</td>
+                <td><a href="practices/organizational-productivity.html">Organizational Productivity</a></td>
+                <td class="num muted">Not disclosed</td>
+              </tr>
+              <tr>
+                <th scope="row">Metaverse technology</th>
+                <td>Refined the business model and optimized revenue streams of a metaverse startup.</td>
+                <td><a href="practices/deals-growth.html">Deals &amp; Growth</a></td>
+                <td class="num muted">Not disclosed</td>
+              </tr>
+              <tr>
+                <th scope="row">Manufacturing &amp; retail</th>
+                <td>Evaluated potential revenue streams from sustainable investments, opening strategic growth options.</td>
+                <td><a href="practices/deals-growth.html">Deals &amp; Growth</a>, <a href="practices/capital-management-advisory.html">Capital Management &amp; Advisory</a></td>
+                <td class="num muted">Not disclosed</td>
+              </tr>
+              <tr>
+                <th scope="row">Smart home technology</th>
+                <td>Secured funding for a series A startup by refining its business and operating frameworks and its fundraising narrative.</td>
+                <td><a href="practices/capital-management-advisory.html">Capital Management &amp; Advisory</a></td>
+                <td class="num muted">Not disclosed</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="caption">Anonymized engagements from our practices. Client names withheld.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= CONTACT + FOOTER (one dark block, same on every page) ================= -->
+  <div class="dark">
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="contact__hero">
+          <div class="contact__box">
+            <h2 class="title">Where is your<br /> whitespace?</h2>
+            <p>Tell us where the business is stuck, or where you want it to go. The first conversation is about your situation, not our pitch.</p>
+            <a href="contact.html" class="btn btn--orange">Start a conversation <span class="arrow" aria-hidden="true">→</span></a>
+          </div>
+          <div class="iso contact__art" data-illustration="night"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__grid">
+          <div class="footer__brand">
+            <a href="index.html" class="logo" aria-label="Whitespace Solutions home">
+              <img src="assets/images/brand/logo-white.svg" alt="Whitespace Solutions" width="147" height="42" />
+            </a>
+            <p>Advisory for Indonesia's middle market. We find the whitespace in your business and stay to build it.</p>
+          </div>
+          <div>
+            <h4>Practices</h4>
+            <ul>
+              <li><a href="practices/turnaround-transformation.html">Turnaround &amp; Transformation</a></li>
+              <li><a href="practices/organizational-productivity.html">Organizational Productivity</a></li>
+              <li><a href="practices/deals-growth.html">Deals &amp; Growth</a></li>
+              <li><a href="practices/capital-management-advisory.html">Capital Management &amp; Advisory</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Firm</h4>
+            <ul>
+              <li><a href="about.html">About</a></li>
+              <li><a href="about.html#workflow">How we work</a></li>
+              <li><a href="careers.html">Careers</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Office</h4>
+            <ul>
+              <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Puri+Indah+Financial+Tower+Jakarta" target="_blank" rel="noopener">Puri Indah Financial Tower, 6th floor<br />Jl. Puri Lkr. Dalam, Kembangan Selatan<br />Jakarta Barat 11610, Indonesia</a></li>
+              <li><a href="tel:+622139731400">021-39731400</a></li>
+              <li><a href="mailto:contact@whitespace.id">contact@whitespace.id</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <span>&copy; <span id="year">2026</span> Whitespace Solutions. All rights reserved.</span>
+          <span>Jakarta, Indonesia</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- GSAP (Home only): smoother motion; js/home-motion.js falls back to CSS animations if it fails to load -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/isometric.js"></script>
+  <script src="js/site.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/home-motion.js"></script>
+</body>
+</html>
