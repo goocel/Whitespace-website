@@ -1,10 +1,11 @@
 /*
  * About hero: after the intro, the cubes of the "about" illustration keep transforming between
- * three shapes in a loop. The same 44 cubes move to new positions and change colour, so the shape
- * morphs instead of swapping.
+ * three shapes in a loop. The same 28 cubes move to new positions and change colour, so the shape
+ * morphs instead of swapping. Every shape shows all 28 (hidden cubes are dropped with
+ * Isometric.visibleOnly), so no cube appears from or vanishes into the inside of a shape.
  *   1. The live-site field with five orange-topped towers (the starting shape)
- *   2. A stepped mound with an orange ridge on top
- *   3. A 4×4×3 block with one top corner left empty (the whitespace), hugged by an orange L
+ *   2. A stepped mound with an orange ridge along the back
+ *   3. A 4×4×3 block with a two-deep hole in the front corner (the whitespace), hugged by orange
  * Needs GSAP (html.gsap-motion); without it, or with reduced motion, the first shape stays still.
  */
 (function () {
@@ -14,7 +15,8 @@
   const svg = document.querySelector('[data-illustration="about"] .iso-svg');
   if (!svg) return;
 
-  const { project, darken, TONES, SEAM } = Isometric;
+  const { project, darken, visibleOnly, TONES, SEAM } = Isometric;
+  const COUNT = 28; // cubes in every shape
   const PAD = 0.4;
   const HOLD = 1.2; // seconds each shape stays put
   const MOVE = 1.1; // seconds per cube move
@@ -23,28 +25,28 @@
 
   const v = (x, y, z, tone) => ({ x, y, z, tone });
 
-  // Shape 2: tiers 6×4 and 5×3, then a ridge of five orange cubes on top. 24 + 15 + 5 = 44.
+  // Shape 2: tiers 7×4 and 6×3, then a ridge of five orange cubes along the back. 28 show.
   function mound() {
     const out = [];
-    for (let x = 0; x < 6; x++) for (let y = 0; y < 4; y++) out.push(v(x, y, 0, "paper"));
-    for (let x = 0; x < 5; x++) for (let y = 0; y < 3; y++) out.push(v(x, y, 1, "light"));
-    for (let x = 0; x < 5; x++) out.push(v(x, 1, 2, "orange"));
-    return out;
+    for (let x = 0; x < 7; x++) for (let y = 0; y < 4; y++) out.push(v(x, y, 0, "paper"));
+    for (let x = 0; x < 6; x++) for (let y = 0; y < 3; y++) out.push(v(x, y, 1, "light"));
+    for (let x = 0; x < 5; x++) out.push(v(x, 0, 2, "orange"));
+    return visibleOnly(out);
   }
 
-  // Shape 3: a 4×4×3 block minus a 2×2 notch at the front top corner. 48 − 4 = 44.
-  // The orange L wraps the notch on the top layer.
+  // Shape 3: a 4×4×3 block with the front corner column hollowed two cubes deep. 28 show.
+  // Five orange cubes on the top layer hug the hole.
   function notchedBlock() {
-    const orange = new Set(["1,1", "1,2", "1,3", "2,1", "3,1"]);
+    const orange = new Set(["2,1", "3,1", "2,2", "3,2", "2,3"]);
     const out = [];
     for (let x = 0; x < 4; x++)
       for (let y = 0; y < 4; y++)
         for (let z = 0; z < 3; z++) {
-          if (z === 2 && x >= 2 && y >= 2) continue;
+          if (x === 3 && y === 3 && z >= 1) continue;
           const tone = z === 2 ? (orange.has(`${x},${y}`) ? "orange" : "light") : "paper";
           out.push(v(x, y, z, tone));
         }
-    return out;
+    return visibleOnly(out);
   }
 
   // The starting shape, read back from the rendered cubes.
@@ -52,7 +54,7 @@
     const [x, y, z] = g.dataset.v.split(",").map(Number);
     return { g, faces: g.querySelectorAll("polygon"), pos: { x, y, z, tone: g.dataset.tone } };
   });
-  if (cubes.length !== 44) return; // the shapes below are built for exactly 44 cubes
+  if (cubes.length !== COUNT) return; // the shapes above are built for exactly COUNT cubes
 
   /* Give every cube a target in the next shape: orange goes to orange, and every cube takes the
      nearest free spot (closest pairs first), so cubes make short moves and rarely cross paths. */

@@ -215,6 +215,32 @@
     return voxels;
   }
 
+  /**
+   * Drops the cubes that are completely hidden behind or under other cubes in this view, so a
+   * shape's cube count is the count you can see. Each cube's three outer faces are sampled on a
+   * grid and every sample is traced towards the viewer (+x, +y, +z); a cube stays if any sample
+   * reaches the viewer unblocked.
+   */
+  function visibleOnly(voxels) {
+    const taken = new Set(voxels.map((c) => `${c.x},${c.y},${c.z}`));
+    const N = 6;
+    const faces = [(u, w) => [u, w, 1], (u, w) => [u, 1, w], (u, w) => [1, u, w]];
+    const seen = (c) =>
+      faces.some((face) => {
+        for (let i = 0; i < N; i++)
+          for (let j = 0; j < N; j++) {
+            const [dx, dy, dz] = face((i + 0.5) / N, (j + 0.5) / N);
+            let open = true;
+            for (let s = 0.02; s < 24 && open; s += 0.04) {
+              open = !taken.has(`${Math.floor(c.x + dx + s)},${Math.floor(c.y + dy + s)},${Math.floor(c.z + dz + s)}`);
+            }
+            if (open) return true;
+          }
+        return false;
+      });
+    return voxels.filter(seen);
+  }
+
   /** Calls fn(x, y) for every cell of a cols × rows grid (row by row). */
   function grid(cols, rows, fn) {
     for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) fn(x, y);
@@ -405,7 +431,8 @@
       v(1, 1, 1, "orange"),
     ],
     // About hero (copied from the live site): a 6×4 field of 1–2 high stacks; every column where
-    // (x + 2y) % 5 === 1 is a 3-high tower whose orange top drops in last.
+    // (x + 2y) % 5 === 1 is a 3-high tower whose orange top drops in last. Hidden cubes are
+    // dropped: 28 cubes show, the same count as the shapes it morphs into (js/about-morph.js).
     about: () => {
       const out = [];
       grid(6, 4, (x, y) => {
@@ -420,7 +447,7 @@
           }
         }
       });
-      return out;
+      return visibleOnly(out);
     },
     // Careers hero (copied from the live site): two rows of white steps rising to a 5-high
     // column; the orange cube climbs from the foot of the stairs to the top.
@@ -453,5 +480,5 @@
     },
   };
 
-  window.Isometric = { render, box, heightMap, seeded, project, darken, TONES, SEAM, ILLUSTRATIONS };
+  window.Isometric = { render, box, heightMap, seeded, visibleOnly, project, darken, TONES, SEAM, ILLUSTRATIONS };
 })();

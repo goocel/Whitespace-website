@@ -472,6 +472,26 @@
    offer cards.
    ========================================================= */
 
+/* ---------- Section label (small tag above a section title) ---------- */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange-deep);
+}
+
+.section-label::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: var(--orange);
+}
+
 /* ---------- Three value cards ---------- */
 .values--3 {
   grid-template-columns: repeat(3, 1fr);
@@ -787,9 +807,9 @@
   font-weight: 600;
 }
 
+/* Header cell looks like the others; the soft orange cells below mark the column */
 .why-table thead .why-table__us {
-  background: var(--orange);
-  border-bottom-color: var(--orange);
+  background: none;
 }
 
 .mark {
@@ -1203,6 +1223,12 @@
   .journeys {
     margin-bottom: 80px;
   }
+
+  /* The card-grid variants end their section, so they keep no bottom margin */
+  .journeys--3,
+  .journeys--2 {
+    margin-bottom: 0;
+  }
 }
 
 @media (max-width: 600px) {
@@ -1560,6 +1586,28 @@
   }
 
   .feature:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  /* Three items: stay in one row instead of wrapping 2 + 1 */
+  .features--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .features--3 .feature:nth-child(odd):not(:first-child) {
+    padding-left: 28px;
+    border-left: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 800px) {
+  .features--3 {
+    grid-template-columns: 1fr;
+  }
+
+  .features--3 .feature,
+  .features--3 .feature:nth-child(odd):not(:first-child) {
     padding-left: 0;
     border-left: 0;
   }

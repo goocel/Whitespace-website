@@ -65,4 +65,7 @@
     activeFace = null;
     heroCaption.textContent = defaultCaption;
   });
+
+  // Shared with js/hero-3d.js, which draws the same matrix in WebGL on top of this svg.
+  window.HeroMatrix = { svg: heroSvg, voxels: heroVoxels, caption: heroCaption, defaultCaption, cellLabel };
 })();

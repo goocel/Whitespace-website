@@ -147,6 +147,8 @@ Untuk mengubah lebar seluruh situs, cukup ubah `--gutter` / `--container` di `cs
 | Tag | `ul.tags > li` (kotak kecil bergaris) | Venn, dimensi IT diagnostic |
 | Langkah bernomor | `ol.approach > li` > `span.approach__num` + h3 + p; langkah 1 oranye | AI Implementation "Our approach to AI" |
 | Kartu alur / use case | `ul.journeys > li.journey` (caption + h3 + p); 4 kolom, `.journeys--3` / `.journeys--2` untuk 3 / 2 kolom; kartu pertama bergaris oranye | Home alur klien, AI use cases |
+| Label section | `p.section-label` tepat sebelum `.split--head` (teks huruf besar oranye + kotak kecil). Teksnya tidak boleh sama dengan judul | Semua section isi, kecuali hero & CTA |
+| Fitur 3 kolom | `.features.features--3`: tetap satu baris sampai 800px (tidak pecah 2 + 1) | Belum dipakai; cocok untuk "What we do" di halaman AI |
 | Tabel perbandingan | `.why__wrap > table.why-table`; kolom kita `.why-table__us`; tanda `span.mark.mark--yes / --no / --part`. Setiap `td` wajib `data-label` (di HP tabel jadi kartu per baris) | Home "Why Whitespace" |
 | Kartu penawaran | `.offer-grid > article.offer` (+ `.offer--dark`) | Belum dipakai di halaman (dihapus dari Home); contoh ada di styleguide |
 | Studi kasus alur | `article.case-study` > `.case-study__text` + `ol.flow > li` (+ `.flow__ai` oranye muda, `.flow__person` gelap) + opsional `ul.tags`, `p.case-study__result` | AI Implementation "AI at work" |

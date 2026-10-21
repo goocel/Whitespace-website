@@ -65,6 +65,53 @@
       });
     });
 
+    /* ---------- Working-model diagrams (AI Implementation): each one acts out its model ----------
+       build: we build next to you, then hand the solution over (the small cube moves to YOU).
+       cobuild: your IT and us start apart and slide together into one overlapping block.
+       embed: your team appears, then we drop in beside IT.
+       Plays once in view; hovering the card plays it again. */
+    const modelMotion = {
+      build: (svg, tl) =>
+        tl
+          .from(svg.querySelector(".m-you"), { autoAlpha: 0, y: 10, duration: 0.5, ease: "power2.out" })
+          .from(svg.querySelector(".m-us"), { x: 40, autoAlpha: 0, duration: 0.8, ease: "expo.out" }, 0.15)
+          .fromTo(
+            svg.querySelector(".m-piece"),
+            { x: 94, y: -14, scale: 0.3, autoAlpha: 0, transformOrigin: "50% 50%" },
+            { scale: 1, autoAlpha: 1, duration: 0.3, ease: "back.out(2)" },
+            0.75
+          )
+          .to(svg.querySelector(".m-piece"), { x: 0, duration: 0.8, ease: "power2.inOut" }, 1.1)
+          .to(svg.querySelector(".m-piece"), { keyframes: { y: [-14, -36, 0] }, duration: 0.8, ease: "sine.inOut" }, 1.1),
+      cobuild: (svg, tl) =>
+        tl
+          .from(svg.querySelector(".m-it"), { x: -26, autoAlpha: 0, duration: 0.9, ease: "expo.out" }, 0)
+          .from(svg.querySelector(".m-us"), { x: 26, autoAlpha: 0, duration: 0.9, ease: "expo.out" }, 0.1),
+      embed: (svg, tl) =>
+        tl
+          .from(svg.querySelector(".m-team"), { autoAlpha: 0, scale: 0.92, transformOrigin: "50% 50%", duration: 0.6, ease: "power2.out" })
+          .from(svg.querySelector(".m-it"), { autoAlpha: 0, y: 8, duration: 0.4, ease: "power2.out" }, 0.3)
+          .from(svg.querySelector(".m-us"), { y: -64, autoAlpha: 0, duration: 0.8, ease: "back.out(1.4)" }, 0.55),
+    };
+    const modelTimelines = [];
+    document.querySelectorAll(".model__diagram svg[data-model]").forEach((svg) => {
+      const build = modelMotion[svg.dataset.model];
+      if (!build) return;
+      const tl = build(svg, gsap.timeline({ paused: true }));
+      modelTimelines.push(tl);
+      svg.closest(".model").addEventListener("mouseenter", () => {
+        if (tl.progress() === 1) tl.restart();
+      });
+    });
+    if (modelTimelines.length) {
+      ScrollTrigger.create({
+        trigger: ".models",
+        start: "top 80%",
+        once: true,
+        onEnter: () => modelTimelines.forEach((tl, i) => gsap.delayedCall(i * 0.25, () => tl.play())),
+      });
+    }
+
     /* ---------- Content reveals on scroll ---------- */
     const reveal = (selector, vars = {}) => {
       if (!document.querySelector(selector)) return;
@@ -77,7 +124,7 @@
       });
     };
 
-    reveal(".split--head > *, .split > .title");
+    reveal(".section-label, .split--head > *, .split > .title");
     reveal(".values > .value", { stagger: 0.1 });
     reveal(".phase__art, .phase__title");
     reveal(".step", { stagger: 0.05 });

@@ -24,10 +24,12 @@
 
     /* ---------- Hero matrix follows the cursor, like the live site's 3D camera ----------
        The whole matrix tilts in 3D and drifts toward the cursor, easing back when it leaves.
-       (Per-cube parallax was tried and dropped: stacked cubes separate and show gaps.) */
+       (Per-cube parallax was tried and dropped: stacked cubes separate and show gaps.)
+       Only for the svg fallback: with WebGL, js/hero-3d.js turns the 3D camera instead. */
     const stage = document.querySelector(".hero__matrix");
     const heroSvg = document.querySelector("#heroMatrix .iso-svg");
-    if (stage && heroSvg && window.matchMedia("(pointer: fine)").matches) {
+    const in3d = document.getElementById("heroMatrix")?.dataset.gl;
+    if (stage && heroSvg && !in3d && window.matchMedia("(pointer: fine)").matches) {
       gsap.set(heroSvg, { transformPerspective: 1100, transformOrigin: "50% 60%" });
       const ease = { duration: 0.9, ease: "power3.out" };
       const tiltY = gsap.quickTo(heroSvg, "rotationY", ease);
@@ -98,7 +100,6 @@
       });
     };
 
-    reveal(".about__body > p");
     reveal(".matrix > .practice");
     reveal(".case__text > *");
   });

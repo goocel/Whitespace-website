@@ -11,7 +11,8 @@ Gaya visual meniru situs acuan https://whitespace-web-lilac.vercel.app/ (Next.js
 
 - Repo: https://github.com/goocel/Whitespace-website (public, branch `main`)
 - Preview online (GitHub Pages dari `main`, 1–3 menit setelah push): https://goocel.github.io/Whitespace-website/
-- Commit terakhir: `7bfc647` — semua pekerjaan sudah di-commit & push, kecuali folder `reports/` (lihat bawah).
+- Semua pekerjaan sudah di-commit & push, kecuali folder `reports/` (lihat bawah).
+- Deck sumber isi: `D:\WS.pdf` (di luar repo, jangan di-commit). Baca teksnya dengan `pdfjs-dist` di scratchpad (pdftoppm tidak ada).
 - User berkomunikasi dalam **Bahasa Indonesia**; jawab dalam Bahasa Indonesia.
 - Commit/push **hanya kalau user minta**. Identitas git: Kevin Prakasa / kevin.prakasa@gmail.com.
 
@@ -34,9 +35,9 @@ Menu: **About · What we do ▾ · Careers · [Start a conversation]**. Dropdown
 
 | Halaman | Section (urut) |
 | --- | --- |
-| `index.html` Home | Hero "Practical business transformation, now built around AI." (matrix kubus besar, terpotong kanan/bawah) → "We solve problems the way a founder would" (40+, Practical/Applicable/Affordable, pull quote) → "Three ways we help" (matrix 3 pilar, 12 cell/pilar) → "What the work looks like" (4 alur klien + grafik runway EBITDA) → "Why Whitespace" (tabel vs konsultan & vendor) → CTA |
-| `about.html` | Hero "We're not just consultants." (kubus **berubah bentuk 3× berulang**) → "Most advice stops at the slide deck" (sebelum→sesudah) → "How we show up" (5 komitmen) → "Our workflow" 9 langkah (`#workflow`) → "Across industries" (18 industri + ikon garis) |
-| `practices/ai-implementation.html` | Hero (ilustrasi `ai`) → What we do (3) → Our approach to AI (5 langkah) → AI at work (IT diagnostic, Invoice OCR, Tender engine + 6 contoh use case) → Three ways to work with us (3 model) |
+| `index.html` Home | Struktur dari user: Hero (matrix **3D three.js**, besar, terpotong kanan/bawah) → **The problem** "Most advice stops at the slide deck" (5 baris sebelum→sesudah, deck hal. 3) → **The solution** "Three ways we help" (matrix 3 pilar) → **How it works** "Start small, prove it, then grow" (4 langkah + 4 alur klien + grafik runway) → **Why Whitespace** (tabel + kartu Practical/Applicable/Affordable) → CTA |
+| `about.html` | Hero "We're not just consultants." (kubus **berubah bentuk 3× berulang**, 28 kubus) → "How we show up" (5 komitmen) → "Our workflow" 9 langkah (`#workflow`) → "Across industries" (18 industri + ikon garis). Section "The problem" sudah **dipindah ke Home** |
+| `practices/ai-implementation.html` | Hero (ilustrasi `ai`) → What we do (3) → Our approach to AI (5 langkah) → AI at work (IT diagnostic, Invoice OCR, Tender engine + 6 contoh use case) → Three ways to work with us (3 model, diagram beranimasi) |
 | `practices/business-transformation.html` | Hero (`turnaround`) → What we do (4) → Services (4 praktik lama sebagai grup: Turnaround, Org productivity, Deals & growth, Capital management) → Engagements (7 baris) |
 | `practices/fractional-leadership.html` | Hero (`capital`) → What we do (4) → What it looks like (2 alur klien) |
 | `careers.html` | Tidak berubah isinya |
@@ -59,7 +60,8 @@ css/home.css                 khusus Home: hero (ukuran/posisi matrix), aturan GS
 js/isometric.js              renderer kubus + ILLUSTRATIONS; tiap kubus diberi data-v="x,y,z" & data-tone
 js/site.js                   nav, dropdown, render ilustrasi, reveal, highlight matrix
 js/motion.js                 GSAP semua halaman: intro hero, kubus, reveal, bar timeline
-js/home.js                   hero matrix interaktif (hover cell, label sel)
+js/home.js                   hero matrix SVG (hover cell, label sel); dibagikan ke hero-3d.js
+js/hero-3d.js                hero matrix 3D (three.js) di atas SVG; fallback ke SVG tanpa WebGL
 js/home-motion.js            GSAP Home: intro hero, tilt ikut kursor, grafik runway (titik naik menyusuri kurva)
 js/about-morph.js            hero About: 44 kubus berubah 3 bentuk berulang (konstanta HOLD/MOVE/LIFT/RIPPLE)
 js/contact.js                form → mailto; ?practice=<slug> mengisi Topic
@@ -69,7 +71,8 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
 ## Keputusan & preferensi user (jangan diubah tanpa ditanya)
 
 **Layout & gaya**
-- Lebar `--gutter: clamp(16px, 4vw, 72px)`, `--container: 1760px`; jarak section `clamp(72px, 8vw, 120px)` (sengaja beda dari acuan).
+- Lebar `--gutter: clamp(16px, 4vw, 72px)`, `--container: 1760px`; jarak section `--section-space: clamp(64px, 6vw, 96px)`
+  (dirapatkan 21 Okt atas persetujuan user, sebelumnya 72–120px).
 - CTA + footer = satu blok gelap. Hero halaman dalam rata tengah vertikal. Judul section dipotong manual dengan `<br />`,
   huruf kecil biasa (mis. "How we<br /> show up", bukan Title Case).
 - Warna, font Archivo, skala tipografi, logo = sama dengan acuan. Sudut kotak **tidak membulat**; oranye hanya aksen.
@@ -80,7 +83,12 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
 
 **Isi**
 - **Tidak boleh ada konten dobel dalam satu halaman** (kalimat/judul yang sama di dua section). Cek ini setiap menambah konten.
-- **Jaga halaman tetap ringkas.** Home ±6.600px, AI ±5.000px, BT ±4.300px, FL ±2.400px (tinggi `main` di 1440px).
+  Karena itu beberapa teks tabel/kartu Home sengaja beda dengan deck (mis. "Alongside your team", "Goals measured with you").
+- **Label section** (`p.section-label`, teks oranye kecil di atas judul) ada di setiap section isi semua halaman, kecuali hero & CTA.
+  Teks label tidak boleh sama dengan judulnya.
+- Kutipan "If we owned this company…" sengaja **dihapus** dari Home (sekarang tidak tampil di halaman mana pun).
+- Judul kolom "Whitespace Solutions" di tabel Why tanpa blok oranye; kolomnya dibedakan oleh sel oranye muda saja.
+- **Jaga halaman tetap ringkas.** Home ±6.400px (batas ±6.600px), tinggi `main` di 1440px.
   Sebelum menambah section, pertimbangkan memindah/menggabung.
 - Angka "40+" cukup **sekali** per halaman.
 
@@ -94,6 +102,12 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
 
 **Animasi**
 - GSAP 3.12.5 + ScrollTrigger (CDN cdnjs) di semua halaman. Tanpa GSAP / reduced motion → animasi CSS / tampilan diam.
+- **Hero Home 3D**: `js/hero-3d.js` memuat three.js 0.169.0 (jsDelivr, dynamic import) hanya kalau WebGL ada. Matrix-nya sama dengan
+  SVG (`window.HeroMatrix` dari `js/home.js`); kanvas menutup SVG persis dan kamera dipaskan ke viewBox SVG, jadi layout tidak berubah.
+  Kamera, lampu, warna dan intro meniru acuan (OrthographicCamera, orbit ikut kursor, kubus 0.94 bercelah). Tanpa WebGL → SVG + tilt lama.
+- **About morph**: ketiga bentuk = **28 kubus yang semuanya terlihat** (`Isometric.visibleOnly` membuang kubus tersembunyi).
+  Bentuk baru wajib dicek jumlah kubus terlihatnya sama, supaya transisi tidak memunculkan kubus dari dalam.
+- **Diagram 3 model kerja** (halaman AI): animasi bercerita di `js/motion.js` (`modelMotion`), diputar ulang saat hover kartu.
 
 ## Jebakan teknis (sudah pernah kena)
 
@@ -125,7 +139,12 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
 ## Belum dikerjakan / terbuka
 
 1. Ilustrasi `deck`, ikon fase proses (`pre`/`engagement`/`partnership`), dan `night` belum sama dengan acuan.
-2. Hero 3D three.js seperti acuan (saat ini SVG + tilt GSAP; parallax per kubus pernah dicoba & dibatalkan karena celah).
+2. ~~Hero 3D three.js~~ — selesai 21 Okt.
 3. Nomor telepon `021-39731400` (sama dengan acuan) belum dikonfirmasi user.
 4. Ikon Fractional di matrix Home (`fractional`) beda dengan hero-nya (`capital`) — user belum memutuskan perlu disamakan atau tidak.
 5. Branch `sesi-2` / `sesi-3` perlu di-merge dari `main` sebelum dipakai.
+6. **Menu baru "Who we serve" — HOLD** (user minta tunggu). Bahan: target, 40+ dan industri dari deck, 4 alur klien, dan tabel
+   Engagements di BT (5 dari 7 proyek startup series A) → dua jenis klien. Belum diputuskan: tabel dipindah atau disalin, dan apakah
+   data lama itu masih boleh tampil.
+7. Usulan ganti nama menu "What we do" → "Solutions" — belum dikonfirmasi user.
+8. Daftar industri situs (18) beda dengan deck (13). "What we do" di halaman AI masih pecah 2+1 di tablet (bisa pakai `.features--3`).
