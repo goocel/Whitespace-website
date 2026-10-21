@@ -50,14 +50,40 @@
       stage.addEventListener("pointerleave", () => follow(0, 0));
     }
 
-    /* ---------- Runway chart: lines draw, points pop in ---------- */
+    /* ---------- Runway chart: the runway dips to its low point, then the orange point climbs
+       along the recovery curve from the low to break-even, drawing the line behind it ---------- */
     const chart = document.querySelector(".chart svg");
     if (chart) {
+      const after = chart.querySelector(".rw-after");
+      const end = chart.querySelector(".rw-end");
+      const goal = chart.querySelectorAll(".chart__label text")[1]; // "Break-even EBITDA"
+      const length = after.getTotalLength();
+      const climb = { progress: 0 };
+      const moveEnd = () => {
+        const point = after.getPointAtLength(climb.progress * length);
+        end.setAttribute("cx", point.x.toFixed(1));
+        end.setAttribute("cy", point.y.toFixed(1));
+      };
+      const CLIMB = { duration: 2.2, ease: "power1.inOut" };
+
+      // Lines use pathLength="1", so the dash offset runs 1 → 0. GSAP rounds px values to whole
+      // pixels (1px, then 0px), so the offset is written from a plain number instead.
+      const draw = (line, vars) => {
+        const state = { offset: 1 };
+        const apply = () => (line.style.strokeDashoffset = state.offset.toFixed(4));
+        return gsap.fromTo(state, { offset: 1 }, { offset: 0, ...vars, onStart: apply, onUpdate: apply });
+      };
+
       const tl = gsap.timeline({ paused: true });
-      tl.fromTo(chart.querySelector(".rw-before"), { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.1, ease: "power2.inOut" }, 0)
-        .fromTo(chart.querySelector(".rw-pivot"), { autoAlpha: 0, scale: 0, transformOrigin: "50% 50%" }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: "back.out(2.5)" }, 0.85)
-        .fromTo(chart.querySelector(".rw-after"), { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.6, ease: "power2.inOut" }, 0.9)
-        .fromTo(chart.querySelector(".rw-end"), { autoAlpha: 0, scale: 0, transformOrigin: "50% 50%" }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "back.out(2.5)" }, 2.4);
+      tl.set(goal, { autoAlpha: 0 })
+        .add(draw(chart.querySelector(".rw-before"), { duration: 1.1, ease: "power2.in" }), 0)
+        .fromTo(chart.querySelector(".rw-pivot"), { autoAlpha: 0, scale: 0, transformOrigin: "50% 50%" }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: "back.out(2.5)" }, 1)
+        // Line and point share timing and ease, so the line ends exactly under the moving point.
+        .add(draw(after, CLIMB), 1.3)
+        .fromTo(climb, { progress: 0 }, { progress: 1, ...CLIMB, onUpdate: moveEnd, onStart: moveEnd }, 1.3)
+        .fromTo(end, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25 }, 1.3)
+        .to(end, { scale: 1.45, transformOrigin: "50% 50%", duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out" }, 3.5)
+        .to(goal, { autoAlpha: 1, duration: 0.4 }, 3.5);
       ScrollTrigger.create({ trigger: chart, start: "top 80%", once: true, onEnter: () => tl.play() });
     }
 

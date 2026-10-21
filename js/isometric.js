@@ -139,6 +139,9 @@
       g.style.setProperty("--by", `${by.toFixed(3)}px`);
       g.style.setProperty("--bo", voxel.fade ? "0" : "1");
       g.style.setProperty("--d", `${voxel.delay || 0}ms`);
+      // Position and tone, so other scripts (e.g. js/about-morph.js) can move the cube later.
+      g.dataset.v = `${voxel.x},${voxel.y},${voxel.z}`;
+      g.dataset.tone = voxel.tone || "light";
 
       if (voxel.tone === "ghost") {
         const ghost = {
@@ -349,6 +352,42 @@
       return out;
     },
 
+    /* ---- Pillar icons (Oct 2026) ---- */
+
+    // AI Implementation: a business stack with AI running through it. A light 4×4 base (systems,
+    // data), a dark 4×4 process layer floating above it with a 2×2 hole, and a 2×2 core that
+    // rises from the base through the hole, its orange top standing above the process layer.
+    // Motion: the base ripples in place, the process layer slides in row by row from the back,
+    // then the core rises from below. Nothing drops from above: cubes are painted in order of
+    // the nearer of their start and end, so a cube starting high would cover its neighbours.
+    ai: () => {
+      const out = [];
+      const inCore = (x, y) => x >= 1 && x <= 2 && y >= 1 && y <= 2;
+      grid(4, 4, (x, y) => out.push({ x, y, z: 0, from: [x, y, 0], fade: true, tone: "light", delay: (x + y) * 40 }));
+      grid(4, 4, (x, y) => {
+        if (inCore(x, y)) return;
+        out.push({ x, y, z: 2, from: [x - 4, y, 2], fade: true, tone: "dark", delay: 400 + 110 * y });
+      });
+      grid(4, 4, (x, y) => {
+        if (!inCore(x, y)) return;
+        for (let z = 1; z <= 3; z++)
+          out.push({ x, y, z, from: [x, y, z - 3], fade: true, tone: z === 3 ? "orange" : "mid", delay: 1050 + (x + y - 2) * 70 });
+      });
+      return out;
+    },
+
+    // Fractional Leadership: a stepped organisation (wide base, smaller tier) with an empty
+    // seat on top, at the front corner. The tiers drop in, then the orange cube arrives from
+    // outside and slides into that seat: senior capacity joining from outside.
+    // Base and tier fade in place: a dropping cube is painted late and would cover the cubes above it.
+    fractional: () => {
+      const out = [];
+      grid(3, 3, (x, y) => out.push({ x, y, z: 0, from: [x, y, 0], fade: true, tone: "light", delay: (x + y) * 60 }));
+      grid(2, 2, (x, y) => out.push({ x, y, z: 1, from: [x, y, 1], fade: true, tone: "dark", delay: 450 + (x + y) * 90 }));
+      out.push({ x: 1, y: 1, z: 2, from: [1, -3, 2], fade: true, tone: "orange", delay: 1100 });
+      return out;
+    },
+
     pre: () => [
       ...box(0, 0, 0, 2, 2, 2, "ghost"),
       v(0, 0, 0, "orange"),
@@ -414,5 +453,5 @@
     },
   };
 
-  window.Isometric = { render, box, heightMap, seeded, ILLUSTRATIONS };
+  window.Isometric = { render, box, heightMap, seeded, project, darken, TONES, SEAM, ILLUSTRATIONS };
 })();

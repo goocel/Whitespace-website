@@ -466,6 +466,757 @@
 }
 
 /* =========================================================
+   Positioning components (Home, reused on the pillar pages):
+   stat, pull quote, before/after compare, business × technology
+   overlap, AI approach steps, client journeys, comparison table,
+   offer cards.
+   ========================================================= */
+
+/* ---------- Three value cards ---------- */
+.values--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.value p strong {
+  color: var(--ink);
+  font-weight: 650;
+}
+
+/* ---------- Big number ---------- */
+.stat {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.stat__num {
+  font-size: var(--step-5);
+  font-weight: 800;
+  font-stretch: 115%;
+  letter-spacing: -0.035em;
+  line-height: 0.9;
+  color: var(--orange);
+}
+
+.stat__label {
+  font-size: var(--step-1);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* ---------- Pull quote: closing line of a section ---------- */
+.pullquote {
+  margin-top: var(--head-space);
+  padding: 4px 0 4px 24px;
+  border-left: 4px solid var(--orange);
+  font-size: var(--step-2);
+  font-stretch: 105%;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.pullquote strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* ---------- Before → after rows ---------- */
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 56px 1fr;
+  row-gap: var(--tile-gap);
+}
+
+.compare__head {
+  grid-column: 1;
+  padding-bottom: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.compare__head--to {
+  grid-column: 3;
+  color: var(--orange-deep);
+}
+
+.compare__row {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: stretch;
+}
+
+.compare__from,
+.compare__to {
+  padding: 22px 24px 24px;
+}
+
+.compare__from {
+  background: var(--panel);
+}
+
+.compare__to {
+  background: var(--cell-dark);
+  border-left: 4px solid var(--orange);
+  color: var(--night-text);
+}
+
+.compare h3 {
+  margin-bottom: 6px;
+  font-size: var(--step-1);
+  font-weight: 650;
+  font-stretch: 104%;
+  letter-spacing: -0.01em;
+}
+
+.compare__to h3 {
+  color: var(--white);
+}
+
+.compare p {
+  font-size: 15px;
+}
+
+.compare__arrow {
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--orange);
+}
+
+/* ---------- Business judgment × technology ---------- */
+.overlap {
+  display: grid;
+  grid-template-columns: 1fr minmax(180px, 0.6fr) 1fr;
+  gap: var(--tile-gap);
+  border-top: 1.5px solid var(--ink);
+  padding-top: var(--tile-gap);
+}
+
+.overlap__side {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 28px;
+  background: var(--panel);
+}
+
+.overlap__side h3 {
+  font-size: var(--step-2);
+  font-stretch: 108%;
+  letter-spacing: -0.02em;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tags li {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--white);
+  border: 1px solid var(--line);
+}
+
+.blindspot {
+  margin-top: auto;
+  padding: 16px 18px;
+  background: var(--orange-soft);
+  border-left: 3px solid var(--orange);
+}
+
+.blindspot .caption {
+  margin-bottom: 4px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange-deep);
+}
+
+.blindspot p:last-child {
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.overlap__core {
+  display: grid;
+  place-items: center;
+  padding: 32px 20px;
+  background: var(--orange);
+  text-align: center;
+}
+
+.overlap__core p {
+  font-size: var(--step-3);
+  font-weight: 800;
+  font-stretch: 115%;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
+}
+
+/* ---------- AI approach: five numbered steps ---------- */
+.approach {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--tile-gap);
+}
+
+.approach li {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px 22px 30px;
+  background: var(--panel);
+  border-top: 4px solid var(--ink);
+}
+
+.approach li:first-child {
+  border-top-color: var(--orange);
+}
+
+.approach__num {
+  margin-bottom: 28px;
+  font-size: var(--step-4);
+  font-weight: 800;
+  font-stretch: 115%;
+  line-height: 1;
+  color: var(--line-strong);
+}
+
+.approach li:first-child .approach__num {
+  color: var(--orange);
+}
+
+.approach h3 {
+  font-size: var(--step-1);
+  font-weight: 650;
+  font-stretch: 104%;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.approach p {
+  font-size: 15px;
+}
+
+/* ---------- Client journeys ---------- */
+.journeys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--tile-gap);
+  margin-bottom: 120px;
+}
+
+.journey {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px 22px 30px;
+  background: var(--panel);
+  border-top: 1.5px solid var(--ink);
+}
+
+.journey:first-child {
+  border-top: 4px solid var(--orange);
+}
+
+.journey .caption {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.journey h3 {
+  font-size: var(--step-1);
+  font-weight: 650;
+  font-stretch: 104%;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.journey p:last-child {
+  font-size: 15px;
+}
+
+/* ---------- Comparison table (Why Whitespace) ---------- */
+.why__wrap {
+  overflow-x: auto;
+}
+
+.why-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.why-table th,
+.why-table td {
+  padding: 20px 16px;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--line);
+}
+
+.why-table thead th {
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+}
+
+.why-table tbody th {
+  width: 28%;
+  padding-left: 0;
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.why-table td {
+  color: var(--muted);
+}
+
+.why-table .why-table__us {
+  background: var(--orange-soft);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.why-table thead .why-table__us {
+  background: var(--orange);
+  border-bottom-color: var(--orange);
+}
+
+.mark {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin-right: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+}
+
+.mark--yes {
+  background: var(--orange);
+  color: var(--ink);
+}
+
+.mark--no {
+  background: var(--cell);
+  color: var(--muted);
+}
+
+.mark--part {
+  border: 1px solid var(--line-strong);
+  color: var(--muted);
+}
+
+/* ---------- Offer cards ---------- */
+.offer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--tile-gap);
+}
+
+.offer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: clamp(28px, 3.5vw, 48px);
+  background: var(--panel);
+  border-top: 1.5px solid var(--ink);
+}
+
+.offer .caption {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange-deep);
+}
+
+.offer h3 {
+  font-size: var(--step-3);
+  font-weight: 800;
+  font-stretch: 112%;
+  letter-spacing: -0.03em;
+}
+
+.offer p strong {
+  color: var(--ink);
+}
+
+.offer__list {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.offer__list li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.offer__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 7px;
+  height: 7px;
+  background: var(--orange);
+}
+
+.offer .link-arrow {
+  margin-top: auto;
+}
+
+.offer--dark {
+  background: var(--cell-dark);
+  border-top: 4px solid var(--orange);
+  color: var(--night-text);
+}
+
+.offer--dark .caption {
+  color: var(--orange);
+}
+
+.offer--dark h3,
+.offer--dark p strong,
+.offer--dark .link-arrow:hover {
+  color: var(--white);
+}
+
+.offer--dark .link-arrow {
+  color: var(--night-text);
+}
+
+@media (max-width: 1100px) {
+  .approach {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .journeys {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ---------- Three-column card grid (use cases) ---------- */
+.journeys--3 {
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 0;
+}
+
+.journeys--2 {
+  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 0;
+}
+
+@media (max-width: 700px) {
+  .journeys--2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Case study: text + step flow ---------- */
+.case-study {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 24px 64px;
+  padding-block: 40px;
+  border-top: 1.5px solid var(--ink);
+}
+
+.case-study + .case-study {
+  border-top-width: 1px;
+  border-top-color: var(--line);
+}
+
+.case-study__text .caption {
+  margin-bottom: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange-deep);
+}
+
+.case-study__text h3 {
+  margin-bottom: 16px;
+}
+
+.case-study__text p:not(.caption) {
+  font-size: 16px;
+}
+
+.cases__more {
+  padding: 40px 0 16px;
+  border-top: 1.5px solid var(--ink);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.case-study__result {
+  margin-top: 16px;
+  padding-left: 16px;
+  border-left: 3px solid var(--orange);
+  color: var(--ink);
+}
+
+.flow {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: var(--tile-gap);
+  counter-reset: flow;
+}
+
+.flow li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 18px 24px;
+  background: var(--panel);
+  border-top: 3px solid var(--line-strong);
+}
+
+.flow li::before {
+  counter-increment: flow;
+  content: counter(flow, decimal-leading-zero);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.flow h4 {
+  font-size: 17px;
+  font-weight: 650;
+  font-stretch: 104%;
+  line-height: 1.2;
+}
+
+.flow p {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* The AI step and the human step stand out */
+.flow .flow__ai {
+  background: var(--orange-soft);
+  border-top-color: var(--orange);
+}
+
+.flow .flow__person {
+  background: var(--cell-dark);
+  border-top-color: var(--orange);
+  color: var(--night-text);
+}
+
+.flow .flow__person h4,
+.flow .flow__person::before {
+  color: var(--white);
+}
+
+.case-study .tags {
+  grid-column: 2;
+}
+
+/* ---------- Working models (We build / Co-build / Sit in your team) ---------- */
+.models {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--tile-gap);
+}
+
+.model {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px 26px 32px;
+  background: var(--panel);
+  border-top: 1.5px solid var(--ink);
+}
+
+.model:nth-child(2) {
+  border-top: 4px solid var(--orange);
+}
+
+.model__diagram {
+  display: grid;
+  place-items: center;
+  height: 150px;
+  margin-bottom: 8px;
+  background: var(--white);
+}
+
+.model__diagram svg {
+  width: 200px;
+  height: 110px;
+}
+
+.model__diagram text {
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.model h3 {
+  font-size: var(--step-2);
+  font-stretch: 108%;
+  letter-spacing: -0.02em;
+}
+
+.model p strong {
+  color: var(--ink);
+}
+
+.tile-group__desc {
+  max-width: 640px;
+  margin: -4px 0 14px;
+  font-size: 15px;
+}
+
+@media (max-width: 1100px) {
+  .case-study {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study .tags {
+    grid-column: auto;
+  }
+
+  .journeys--3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Comparison table on phones: one card per criterion, each answer labelled */
+@media (max-width: 700px) {
+  .why-table,
+  .why-table tbody,
+  .why-table tr,
+  .why-table th,
+  .why-table td {
+    display: block;
+    min-width: 0;
+  }
+
+  .why-table thead {
+    display: none;
+  }
+
+  .why-table tr {
+    padding-block: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .why-table tbody tr:first-child {
+    border-top: 1.5px solid var(--ink);
+  }
+
+  .why-table th,
+  .why-table td {
+    width: auto;
+    padding: 6px 0;
+    border: 0;
+  }
+
+  .why-table tbody th {
+    width: auto;
+    margin-bottom: 6px;
+    font-size: var(--step-1);
+  }
+
+  .why-table td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .why-table .why-table__us {
+    margin-top: 6px;
+    padding: 10px 12px;
+  }
+
+  .why-table .why-table__us::before {
+    color: var(--orange-deep);
+  }
+}
+
+@media (max-width: 900px) {
+  .models,
+  .journeys--3 {
+    grid-template-columns: 1fr;
+  }
+
+  .flow {
+    grid-auto-flow: row;
+  }
+}
+
+@media (max-width: 900px) {
+  .values--3,
+  .offer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .compare {
+    grid-template-columns: 1fr;
+  }
+
+  .compare__head--to {
+    display: none;
+  }
+
+  .compare__row {
+    grid-template-columns: 1fr;
+    margin-bottom: 16px;
+  }
+
+  .compare__arrow {
+    padding-block: 6px;
+    transform: rotate(90deg);
+  }
+
+  .overlap {
+    grid-template-columns: 1fr;
+  }
+
+  .overlap__core {
+    padding-block: 28px;
+  }
+
+  .journeys {
+    margin-bottom: 80px;
+  }
+}
+
+@media (max-width: 600px) {
+  .approach,
+  .journeys {
+    grid-template-columns: 1fr;
+  }
+
+  .approach__num {
+    margin-bottom: 12px;
+  }
+}
+
+/* =========================================================
    Inner-page components (About, Careers, Contact, Practices)
    ========================================================= */
 
@@ -533,6 +1284,32 @@
 
 .tiles--short {
   grid-auto-rows: minmax(88px, auto);
+}
+
+/* Tile with a line icon on top and the label at the bottom (About: industries) */
+.tiles--icons {
+  grid-auto-rows: minmax(132px, auto);
+}
+
+.cell--icon {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.cell__icon {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cell__icon .accent {
+  stroke: var(--orange);
 }
 
 .tile-group + .tile-group {
@@ -741,7 +1518,7 @@
   width: 100%;
   padding: 0;
   font: inherit;
-  font-size: var(--step-1);
+  font-size: var(--step--1);
   color: var(--ink);
   background: transparent;
   border: 0;

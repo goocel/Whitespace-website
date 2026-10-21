@@ -34,7 +34,8 @@ https://whitespace-web-lilac.vercel.app/ (Next.js), dengan beberapa penyesuaian 
 
 ```
 index.html, about.html, careers.html, contact.html
-practices/<slug>.html        4 halaman praktik (path pakai ../)
+practices/<slug>.html        3 pilar: ai-implementation, business-transformation, fractional-leadership (path pakai ../)
+                             4 file praktik lama = redirect ke business-transformation.html#services
 css/base.css                 token, tipografi, layout, tombol, header, CTA + footer
 css/components.css           semua komponen konten
 css/home.css                 khusus Home (+ aturan GSAP grafik runway)
@@ -89,6 +90,16 @@ Resep generator asli ada di chunk JS acuan `/_next/static/immutable/chunks/2iure
 - Verifikasi visual: headless Edge `--virtual-time-budget` **membekukan GSAP/ScrollTrigger** — hasilnya menyesatkan.
   Pakai Puppeteer (`puppeteer-core` + Edge di `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe`)
   dengan waktu nyata dan scroll sungguhan.
+
+## Positioning baru (Okt 2026)
+
+Konten mengikuti deck *Company overview* Okt 2026 (AI-first, 3 pilar); konten lama yang masih relevan dipertahankan.
+Perbandingan lengkapnya: `reports/Perbandingan-Website-vs-Company-Overview.pdf` (sengaja tidak di-commit, repo public).
+
+- Menu "What we do" = 3 pilar. Deals & Growth dan Capital Management tetap tampil sebagai kelompok layanan di Business Transformation.
+- Home: hero, founder + 40+, 3 pilar, work (alur klien + grafik runway), Why Whitespace, CTA. Repskill/Sales Assessment hanya lewat topik di Contact.
+- About: "Most advice stops at the slide deck", 5 komitmen, workflow 9 langkah, industri gabungan.
+- Contact: topik = 3 pilar + repskill + sales-assessment; slug praktik lama dipetakan ke business-transformation di `js/contact.js`.
 
 ## Belum dikerjakan / terbuka
 

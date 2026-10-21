@@ -13,13 +13,16 @@ Warna, font, skala tipografi, dan logo mengikuti situs asli: https://whitespace-
 
 | File | Halaman |
 | --- | --- |
-| `index.html` | Home |
-| `about.html` | About: hero, How we show up, Our workflow (`#workflow`), Across industries |
+| `index.html` | Home: hero, founder + 40+, Three ways we help, What the work looks like, Why Whitespace, CTA |
+| `about.html` | About: hero, Most advice stops at the slide deck, How we show up, Our workflow (`#workflow`), Across industries |
 | `careers.html` | Careers: hero, Open roles |
 | `contact.html` | Contact: detail kantor + form (membuka aplikasi email; `?practice=<slug>` mengisi Topic otomatis) |
-| `practices/<slug>.html` | 4 halaman praktik: hero, What we do, Services, Engagements, Next |
+| `practices/<slug>.html` | 3 halaman pilar (menu "What we do"): hero, What we do, lalu section khusus pilar, Next |
 
-Slug praktik: `turnaround-transformation`, `organizational-productivity`, `deals-growth`, `capital-management-advisory`.
+Slug pilar: `ai-implementation`, `business-transformation`, `fractional-leadership`.
+Topic tambahan di form Contact: `repskill`, `sales-assessment`.
+Empat file praktik lama (`turnaround-transformation`, `organizational-productivity`, `deals-growth`, `capital-management-advisory`)
+hanya berisi redirect ke `business-transformation.html#services`; `js/contact.js` memetakan slug lama ke `business-transformation`.
 Halaman di folder `practices/` memakai path `../` untuk CSS, JS, gambar, dan link.
 
 ## Struktur file style
@@ -31,7 +34,7 @@ css/<halaman>.css    → style khusus satu halaman, mis. css/home.css           
 
 js/isometric.js      → renderer kubus isometrik + daftar ilustrasi                      (WAJIB)
 js/site.js           → nav mobile, dropdown, render ilustrasi, highlight matrix, tahun  (WAJIB)
-js/<halaman>.js      → interaksi khusus halaman: js/home.js (hero matrix), js/contact.js (form)
+js/<halaman>.js      → interaksi khusus halaman: js/home.js (hero matrix), js/contact.js (form), js/about-morph.js (hero About berubah bentuk 3× berulang, butuh GSAP)
 
 assets/images/brand/ → logo.svg (latar terang), logo-white.svg (latar gelap)
 ```
@@ -135,13 +138,26 @@ Untuk mengubah lebar seluruh situs, cukup ubah `--gutter` / `--container` di `cs
 | Nav aktif | `aria-current="page"` pada `.nav__link` | Garis bawah oranye |
 | Page hero | `section.page-hero` (+ `.breadcrumb`, `.page-hero__art`) | Semua halaman dalam |
 | Value cards | `ul.values > li.value` (+ `<div class="iso value__art" data-illustration="…" data-pad="0.4">`); area gambar 170px, ikon setinggi 120px (90px di HP), sama dengan situs asli; hover: latar `--panel` → `--cell` | Home, About |
-| Practice matrix | `.matrix > article.practice` (+ `.cell`, `.cell--whitespace`) | Home "Four practices" |
+| Practice matrix | `.matrix > article.practice` (+ `.cell`, `.cell--whitespace`); 11 cell + 1 whitespace per pilar = tepat 2 baris | Home "Three ways we help" |
+| Value cards (3 kolom) | `ul.values.values--3`; `<strong>` di dalam `<p>` jadi kalimat pembuka hitam | Home Practical / Applicable / Affordable |
+| Angka besar | `p.stat > span.stat__num + span.stat__label` (angka oranye, ukuran `--step-5`) | Home "40+ companies served" |
+| Pull quote | `blockquote.pullquote` (+ `<strong>` untuk bagian yang ditekankan); garis kiri oranye. Maks. satu per section | Penutup section |
+| Sebelum → sesudah | `.compare` > `p.compare__head` ×2 + `.compare__row` > `.compare__from` + `span.compare__arrow` + `.compare__to` | About "Most advice stops at the slide deck" |
+| Bisnis × teknologi | `.overlap` > `.overlap__side` (h3 + `ul.tags` + `.blindspot`) + `.overlap__core` (blok oranye) + `.overlap__side` | Belum dipakai di halaman (dihapus dari AI Implementation agar tidak terlalu panjang); contoh ada di styleguide |
+| Tag | `ul.tags > li` (kotak kecil bergaris) | Venn, dimensi IT diagnostic |
+| Langkah bernomor | `ol.approach > li` > `span.approach__num` + h3 + p; langkah 1 oranye | AI Implementation "Our approach to AI" |
+| Kartu alur / use case | `ul.journeys > li.journey` (caption + h3 + p); 4 kolom, `.journeys--3` / `.journeys--2` untuk 3 / 2 kolom; kartu pertama bergaris oranye | Home alur klien, AI use cases |
+| Tabel perbandingan | `.why__wrap > table.why-table`; kolom kita `.why-table__us`; tanda `span.mark.mark--yes / --no / --part`. Setiap `td` wajib `data-label` (di HP tabel jadi kartu per baris) | Home "Why Whitespace" |
+| Kartu penawaran | `.offer-grid > article.offer` (+ `.offer--dark`) | Belum dipakai di halaman (dihapus dari Home); contoh ada di styleguide |
+| Studi kasus alur | `article.case-study` > `.case-study__text` + `ol.flow > li` (+ `.flow__ai` oranye muda, `.flow__person` gelap) + opsional `ul.tags`, `p.case-study__result` | AI Implementation "AI at work" |
+| Model kerja | `.models > article.model` > `.model__diagram` (SVG kotak 200×110) + caption + h3 + p | AI Implementation "Three ways to work with us" |
+| Deskripsi grup tile | `p.tile-group__desc` setelah `.tile-group__label` | Business Transformation Services |
 | Process | `.phases > .phase > ol.phase__steps > li.step[value]` | Home, About "Our workflow" |
 | Tile grid | `ul.tiles > li.cell` (+ `.tiles--short`, `.tile-group`, `a.cell.cell--link`) | Sektor, Services |
 | Feature columns | `.features > .feature` (+ `.feature__num`) | "What we do" |
 | Case study | `.case > figure.case__chart + .case__text` | Home chart runway → EBITDA |
 | Data table | `table.data-table` (+ `.num`, `.timeline`) | Tabel engagement |
-| Next link | `a.next-link` | "Next: Capital Management & Advisory" |
+| Next link | `a.next-link` | "Next: Business Transformation" |
 | Roles list | `ul.roles > li.role` | Careers |
 | Detail list | `dl.details` | Contact |
 | Form | `form.form > .field` (+ `.field--full`, `.form__footer`) | Contact |
@@ -156,10 +172,13 @@ Semua ilustrasi kubus dibuat oleh kode, bukan gambar:
 ```
 
 Nama yang tersedia: `deck`, `proactive`, `ownership`, `strategic`, `network`, `tailored`,
-`turnaround`, `productivity`, `deals`, `capital`, `pre`, `engagement`, `partnership`,
+`turnaround`, `productivity`, `deals`, `capital`, `ai`, `fractional`, `pre`, `engagement`, `partnership`,
 `about`, `careers`, `tower`, `night`.
 
+Ikon pilar: `ai` (AI Implementation), `turnaround` (Business Transformation), `fractional` (Fractional Leadership).
+
 Untuk menambah ilustrasi, tambahkan entri di `ILLUSTRATIONS` pada `js/isometric.js`.
+Perhatian: kubus yang bergerak digambar menurut posisi terdekat antara awal dan akhirnya. Kubus yang **jatuh dari atas** ke samping kubus lain bisa menutupi tetangganya; untuk ilustrasi yang padat, pakai gerakan menyamping atau fade di tempat (lihat `ai`).
 Tone yang tersedia: `light`, `paper`, `mid`, `dark`, `orange`, `ghost` (wireframe oranye putus-putus), `night`, `nightHi`.
 Garis antar-kubus **tipis dan samar** (bukan putih): tiap sisi diberi stroke 0.015 unit dengan warna sisinya sendiri digelapkan 8%. Atur lewat konstanta `SEAM` di `js/isometric.js` (0 = tanpa garis).
 Warnanya sama dengan tone stone, paper, ink, signal, dan night situs asli. Aturannya: kubus abu/gelap, oranye hanya sebagai aksen.

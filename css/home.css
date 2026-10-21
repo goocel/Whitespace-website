@@ -20,9 +20,10 @@
   z-index: 1;
 }
 
-/* Breaks as in the design: "Growth hides / in the space / no one has / mapped." */
+/* Longer headline than the old one, so it runs one step smaller than --step-5 */
 .hero__text .display {
-  max-width: 7.6em;
+  max-width: 9.5em;
+  font-size: clamp(2.5rem, 1.5rem + 3.4vw, 5rem);
 }
 
 .hero__text .lead {
@@ -44,8 +45,12 @@
   align-items: center;
 }
 
+/* The matrix is drawn larger than its column and bleeds off the right and top edges;
+   .hero (overflow: hidden) crops it. */
 .hero__svg {
-  width: 100%;
+  flex-shrink: 0;
+  width: 170%;
+  margin: -4% -76% -26% 6%;
 }
 
 .hero__svg .vx-face[data-col] {
@@ -59,6 +64,7 @@
 
 .hero__caption {
   position: absolute;
+  z-index: 2;
   right: 0;
   bottom: 24px;
   padding: 8px 12px;
@@ -110,6 +116,12 @@
   .hero__matrix {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  /* Below the text on phones: bleed off the right edge only */
+  .hero__svg {
+    width: 135%;
+    margin: 0 -35% 0 0;
   }
 
   .hero__caption {

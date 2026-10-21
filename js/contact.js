@@ -3,7 +3,10 @@
   const form = document.getElementById("contactForm");
   if (!form) return;
 
-  const practice = new URLSearchParams(window.location.search).get("practice");
+  // Links from before Oct 2026 point at the four old practices, now part of Business Transformation.
+  const OLD_PRACTICES = ["turnaround-transformation", "organizational-productivity", "deals-growth", "capital-management-advisory"];
+  let practice = new URLSearchParams(window.location.search).get("practice");
+  if (OLD_PRACTICES.includes(practice)) practice = "business-transformation";
   const topic = form.elements.practice;
   if (practice && [...topic.options].some((o) => o.value === practice)) topic.value = practice;
 

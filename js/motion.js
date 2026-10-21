@@ -85,6 +85,12 @@
     reveal(".tiles > li", { stagger: 0.05 });
     reveal(".roles > .role", { stagger: 0.1 });
     reveal(".form > .field, .form__footer", { stagger: 0.05 });
+    reveal(".compare__row", { stagger: 0.06 });
+    reveal(".overlap > *", { stagger: 0.1 });
+    reveal(".approach > li", { stagger: 0.08 });
+    reveal(".journeys > .journey", { stagger: 0.08 });
+    reveal(".offer-grid > .offer", { stagger: 0.1 });
+    reveal(".pullquote, .why__wrap");
     reveal(".table-wrap");
     reveal(".next-link");
     reveal(".contact__box");

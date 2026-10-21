@@ -3,14 +3,15 @@
   const { render, heightMap } = window.Isometric;
 
   const CELL_LABELS = [
-    "Innovation and agility", "Operations transformation", "Finance transformation",
-    "Business process improvements", "Cost optimization", "Operational restructuring",
-    "Performance management", "Compensation and rewards", "Data-driven decision making",
-    "Workforce strategy", "Upskilling and talent development", "Corporate governance",
-    "Partnership & alliances", "Mergers & acquisitions", "Post-merger integration",
-    "New revenue models", "Business model design", "Sales and marketing", "Pricing strategy",
-    "Fundraising story", "Capital and financing structure", "Financing of growth",
-    "IPO and third-party investing", "Liquidity and funding in crisis", "Working capital optimization",
+    "AI use-case assessment", "Agents and AI tools", "Process automation",
+    "Automated reporting", "Knowledge capture", "Team training and adoption",
+    "Invoice OCR", "Tender engine", "Chat-based AI assistant",
+    "360° diagnostic", "Corporate strategy", "Business model design",
+    "Lean operations", "Transformation office", "Dashboards and BI",
+    "Turnaround and restructuring", "Organizational productivity", "Deals and growth",
+    "Capital management", "Fundraising story", "Working capital",
+    "Interim C-level", "Business development as a service", "Embedded partner",
+    "Executive coaching",
   ];
 
   const heroEl = document.getElementById("heroMatrix");

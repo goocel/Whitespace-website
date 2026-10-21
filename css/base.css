@@ -144,6 +144,15 @@ h4 {
   color: var(--muted);
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 /* ---------- Layout ---------- */
 .container {
   width: min(100% - 2 * var(--gutter), var(--container));
@@ -390,29 +399,31 @@ h4 {
   transition: transform 0.2s ease;
 }
 
-.nav__dropdown {
+/* Practices panel: 2×2 grid of name + summary, hung just below the header and aligned to the
+   container's right edge (same as the live site). The 1px gap shows the --line background as rules. */
+.header__inner {
   position: relative;
+}
+
+.nav__dropdown {
+  position: static;
 }
 
 .nav__menu {
   position: absolute;
-  top: calc(100% + 18px);
-  left: -20px;
-  min-width: 300px;
-  padding: 8px 0;
-  background: var(--white);
-  border: 1px solid var(--line);
-  box-shadow: 0 16px 40px rgba(24, 25, 27, 0.08);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-6px);
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  top: calc(100% + 1px);
+  right: 0;
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  width: min(600px, 100%);
+  background: var(--line);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 18px 40px -18px rgba(21, 23, 26, 0.28);
 }
 
 .nav__dropdown.is-open .nav__menu {
-  opacity: 1;
-  visibility: visible;
-  transform: none;
+  display: grid;
 }
 
 .nav__dropdown.is-open .nav__link svg {
@@ -421,12 +432,35 @@ h4 {
 
 .nav__menu a {
   display: block;
-  padding: 10px 20px;
-  font-weight: 500;
+  height: 100%;
+  padding: 18px 18px 20px;
+  font-size: 0.9375rem;
+  background: var(--white);
+  color: var(--ink);
+  transition: background-color 0.25s;
+}
+
+/* Odd number of items: the last one spans the full row */
+.nav__menu li:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
 }
 
 .nav__menu a:hover {
   background: var(--panel);
+}
+
+.nav__menu strong {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 650;
+  font-stretch: 106%;
+}
+
+.nav__menu span {
+  display: block;
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--muted);
 }
 
 .nav__toggle {
@@ -584,18 +618,17 @@ h4 {
 
   .nav__menu {
     position: static;
-    min-width: 0;
-    padding: 0;
+    width: auto;
+    grid-template-columns: 1fr;
+    gap: 0;
+    background: var(--white);
     border: 0;
     box-shadow: none;
-    display: none;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
   }
 
-  .nav__dropdown.is-open .nav__menu {
-    display: block;
+  .nav__menu a {
+    padding: 14px 0 14px 16px;
+    border-bottom: 1px solid var(--line);
   }
 
   .nav .btn {
