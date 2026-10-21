@@ -98,19 +98,24 @@
   margin-top: var(--head-space);
 }
 
+/* ---------- GSAP mode (js/motion.js adds html.gsap-motion) ----------
+   GSAP draws the runway chart with inline styles, so its CSS transitions are switched off. */
+.gsap-motion .rw-line,
+.gsap-motion .rw-pivot,
+.gsap-motion .rw-end {
+  transition: none;
+}
+
 /* ---------- How it works ---------- */
+/* Runway case under the engagement example: thin rule and spacing, like case study → case study */
+.work__example + .case {
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+}
+
 .work .approach {
   grid-template-columns: repeat(4, 1fr);
   margin-bottom: var(--head-space);
-}
-
-.work__label {
-  margin-bottom: 16px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.table-wrap {
-  margin-top: 120px;
 }
 
 /* ---------- Responsive ---------- */
@@ -145,16 +150,4 @@
   .work .approach {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  .table-wrap {
-    margin-top: 80px;
-  }
-}
-
-/* ---------- GSAP mode (js/motion.js adds html.gsap-motion) ----------
-   GSAP draws the runway chart with inline styles, so its CSS transitions are switched off. */
-.gsap-motion .rw-line,
-.gsap-motion .rw-pivot,
-.gsap-motion .rw-end {
-  transition: none;
 }

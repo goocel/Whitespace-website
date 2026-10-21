@@ -18,6 +18,10 @@
   const heroCaption = document.getElementById("heroCaption");
   if (!heroEl || !heroCaption) return;
 
+  // Touch screens cannot hover, so they get the caption without the hover hint.
+  if (!window.matchMedia("(hover: hover)").matches) {
+    heroCaption.textContent = "Illustrative: your business as a matrix.";
+  }
   const defaultCaption = heroCaption.textContent;
   const HERO_SIZE = 9;
   const WHITESPACE_CELL = "5,4";

@@ -35,13 +35,13 @@ Menu: **About · What we do ▾ · Careers · [Start a conversation]**. Dropdown
 
 | Halaman | Section (urut) |
 | --- | --- |
-| `index.html` Home | Struktur dari user: Hero (matrix **3D three.js**, besar, terpotong kanan/bawah) → **The problem** "Most advice stops at the slide deck" (5 baris sebelum→sesudah, deck hal. 3) → **The solution** "Three ways we help" (matrix 3 pilar) → **How it works** "Start small, prove it, then grow" (4 langkah + 4 alur klien + grafik runway) → **Why Whitespace** (tabel + kartu Practical/Applicable/Affordable) → CTA |
-| `about.html` | Hero "We're not just consultants." (kubus **berubah bentuk 3× berulang**, 28 kubus) → "How we show up" (5 komitmen) → "Our workflow" 9 langkah (`#workflow`) → "Across industries" (18 industri + ikon garis). Section "The problem" sudah **dipindah ke Home** |
+| `index.html` Home | 6 section inti: Hero (matrix **3D three.js**; tombol Start a conversation + How it works → `#how`) → **The problem** "Most advice stops at the slide deck" (3 baris sebelum→sesudah) → **The solution** "Three ways we help" (matrix 3 pilar) → **How it works** "Start small, prove it, then grow" (4 langkah + 1 contoh engagement: Security services + grafik runway EBITDA beranimasi, dikembalikan atas permintaan user) → **Why Whitespace** (tabel + kartu Practical/Applicable/Affordable) → CTA "Where is your whitespace?" (Start a conversation). 3 alur klien lain dihapus (lihat `design-reference/content-archive.md`) |
+| `about.html` | Hero "We're not just consultants." (morph 28 kubus) → Our commitments "How we show up" (5) → Who we work with "Across industries" (18 industri dalam **6 grup**) → CTA. Workflow 9 langkah **dihapus** (arsip di `content-archive.md`); `about.html#workflow` tidak ada lagi |
 | `practices/ai-implementation.html` | Hero (ilustrasi `ai`) → What we do (3) → Our approach to AI (5 langkah) → AI at work (IT diagnostic, Invoice OCR, Tender engine + 6 contoh use case) → Three ways to work with us (3 model, diagram beranimasi) |
-| `practices/business-transformation.html` | Hero (`turnaround`) → What we do (4) → Services (4 praktik lama sebagai grup: Turnaround, Org productivity, Deals & growth, Capital management) → Engagements (7 baris) |
+| `practices/business-transformation.html` | Hero (`turnaround`) → What we do (4) → Services `#services` (4 praktik: Turnaround, Org productivity, Deals & growth, Capital management & advisory) → Engagements (**4 baris**, satu per praktik) |
 | `practices/fractional-leadership.html` | Hero (`capital`) → What we do (4) → What it looks like (2 alur klien) |
 | `careers.html` | Tidak berubah isinya |
-| `contact.html` | Topic: 3 pilar + `repskill` + `sales-assessment`. Slug praktik lama dipetakan ke `business-transformation` di `js/contact.js` |
+| `contact.html` | Topic: 3 pilar + `repskill` + `sales-assessment`; field **Practice** muncul hanya untuk Business Transformation (4 praktik). Slug praktik lama → Topic BT + Practice terisi. Validasi dengan pesan terlihat; submit = `mailto:` (tanpa backend), pesan status jujur (tidak bilang terkirim). Tanpa JS: `action="mailto:…"` sebagai cadangan |
 | 4 file praktik lama | Hanya redirect (`meta refresh`) ke `business-transformation.html#services` |
 
 - **Repskill & Sales Organization Assessment** sengaja **tidak tampil** di halaman mana pun (user: "terlalu sales");
@@ -88,7 +88,7 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
   Teks label tidak boleh sama dengan judulnya.
 - Kutipan "If we owned this company…" sengaja **dihapus** dari Home (sekarang tidak tampil di halaman mana pun).
 - Judul kolom "Whitespace Solutions" di tabel Why tanpa blok oranye; kolomnya dibedakan oleh sel oranye muda saja.
-- **Jaga halaman tetap ringkas.** Home ±6.400px (batas ±6.600px), tinggi `main` di 1440px.
+- **Jaga halaman tetap ringkas.** Tinggi `main` di 1440px (21 Okt): Home ±5.700, About ±2.400, AI ±4.950, BT ±3.900, FL ±2.350.
   Sebelum menambah section, pertimbangkan memindah/menggabung.
 - Angka "40+" cukup **sekali** per halaman.
 
@@ -102,6 +102,7 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
 
 **Animasi**
 - GSAP 3.12.5 + ScrollTrigger (CDN cdnjs) di semua halaman. Tanpa GSAP / reduced motion → animasi CSS / tampilan diam.
+- Caption hero Home: di layar sentuh (tanpa hover) teks "Hover to read a cell" dihilangkan (`js/home.js`).
 - **Hero Home 3D**: `js/hero-3d.js` memuat three.js 0.169.0 (jsDelivr, dynamic import) hanya kalau WebGL ada. Matrix-nya sama dengan
   SVG (`window.HeroMatrix` dari `js/home.js`); kanvas menutup SVG persis dan kamera dipaskan ke viewBox SVG, jadi layout tidak berubah.
   Kamera, lampu, warna dan intro meniru acuan (OrthographicCamera, orbit ikut kursor, kubus 0.94 bercelah). Tanpa WebGL → SVG + tilt lama.
@@ -143,8 +144,7 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
 3. Nomor telepon `021-39731400` (sama dengan acuan) belum dikonfirmasi user.
 4. Ikon Fractional di matrix Home (`fractional`) beda dengan hero-nya (`capital`) — user belum memutuskan perlu disamakan atau tidak.
 5. Branch `sesi-2` / `sesi-3` perlu di-merge dari `main` sebelum dipakai.
-6. **Menu baru "Who we serve" — HOLD** (user minta tunggu). Bahan: target, 40+ dan industri dari deck, 4 alur klien, dan tabel
-   Engagements di BT (5 dari 7 proyek startup series A) → dua jenis klien. Belum diputuskan: tabel dipindah atau disalin, dan apakah
-   data lama itu masih boleh tampil.
-7. Usulan ganti nama menu "What we do" → "Solutions" — belum dikonfirmasi user.
-8. Daftar industri situs (18) beda dengan deck (13). "What we do" di halaman AI masih pecah 2+1 di tablet (bisa pakai `.features--3`).
+6. **Keputusan navigasi (21 Okt):** menu tetap About · What we do ▾ · Careers · [Start a conversation]. Tidak ada menu "Who we serve",
+   tidak ganti nama ke "Solutions". Careers: judul "Open roles" tetap. Jangan ubah struktur tanpa konfirmasi user.
+7. Form kontak tanpa backend (mailto). Kalau perlu kirim langsung dari situs, butuh layanan form/backend (belum ada; jangan taruh kunci di front-end).
+8. Daftar industri situs (18, kini 6 grup) beda dengan deck (13).

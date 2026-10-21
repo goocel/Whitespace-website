@@ -14,9 +14,9 @@ Warna, font, skala tipografi, dan logo mengikuti situs asli: https://whitespace-
 | File | Halaman |
 | --- | --- |
 | `index.html` | Home: hero, founder + 40+, Three ways we help, What the work looks like, Why Whitespace, CTA |
-| `about.html` | About: hero, Most advice stops at the slide deck, How we show up, Our workflow (`#workflow`), Across industries |
+| `about.html` | About: hero, How we show up, Across industries (6 grup industri) |
 | `careers.html` | Careers: hero, Open roles |
-| `contact.html` | Contact: detail kantor + form (membuka aplikasi email; `?practice=<slug>` mengisi Topic otomatis) |
+| `contact.html` | Contact: detail kantor + form (validasi terlihat; membuka aplikasi email; `?practice=<slug>` mengisi Topic, slug praktik lama juga mengisi Practice) |
 | `practices/<slug>.html` | 3 halaman pilar (menu "What we do"): hero, What we do, lalu section khusus pilar, Next |
 
 Slug pilar: `ai-implementation`, `business-transformation`, `fractional-leadership`.
@@ -154,7 +154,9 @@ Untuk mengubah lebar seluruh situs, cukup ubah `--gutter` / `--container` di `cs
 | Studi kasus alur | `article.case-study` > `.case-study__text` + `ol.flow > li` (+ `.flow__ai` oranye muda, `.flow__person` gelap) + opsional `ul.tags`, `p.case-study__result` | AI Implementation "AI at work" |
 | Model kerja | `.models > article.model` > `.model__diagram` (SVG kotak 200×110) + caption + h3 + p | AI Implementation "Three ways to work with us" |
 | Deskripsi grup tile | `p.tile-group__desc` setelah `.tile-group__label` | Business Transformation Services |
-| Process | `.phases > .phase > ol.phase__steps > li.step[value]` | Home, About "Our workflow" |
+| Process | `.phases > .phase > ol.phase__steps > li.step[value]` | Tidak dipakai di halaman (workflow About diarsipkan); tetap di styleguide |
+| Grup industri | `ul.tiles.tiles--icons.tiles--groups > li.cell.cell--icon` (ikon + `h3` grup + `p` daftar industri) | About "Across industries" |
+| Field error / status form | `.field.is-invalid`, `p.field__error`, `p.form__status` (diisi `js/contact.js`) | Contact |
 | Tile grid | `ul.tiles > li.cell` (+ `.tiles--short`, `.tile-group`, `a.cell.cell--link`) | Sektor, Services |
 | Feature columns | `.features > .feature` (+ `.feature__num`) | "What we do" |
 | Case study | `.case > figure.case__chart + .case__text` | Home chart runway → EBITDA |

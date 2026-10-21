@@ -69,10 +69,11 @@
           </dl>
         </div>
 
-        <form class="form" id="contactForm" novalidate>
+        <form class="form" id="contactForm" action="mailto:contact@whitespace.id" method="post" enctype="text/plain" novalidate>
           <div class="field">
             <label for="f-name">Name</label>
-            <input id="f-name" type="text" name="name" autocomplete="name" required />
+            <input id="f-name" type="text" name="name" autocomplete="name" required aria-describedby="f-name-error" />
+            <p class="field__error" id="f-name-error" hidden></p>
           </div>
           <div class="field">
             <label for="f-position">Position <small>(optional)</small></label>
@@ -88,7 +89,8 @@
           </div>
           <div class="field field--full">
             <label for="f-email">Work email</label>
-            <input id="f-email" type="email" name="email" autocomplete="email" required />
+            <input id="f-email" type="email" name="email" autocomplete="email" required aria-describedby="f-email-error" />
+            <p class="field__error" id="f-email-error" hidden></p>
           </div>
           <div class="field field--full">
             <label for="f-practice">Topic <small>(optional)</small></label>
@@ -101,14 +103,27 @@
               <option value="sales-assessment">Sales Organization Assessment</option>
             </select>
           </div>
+          <!-- Shown only for Business Transformation: its four practices stay inside that pillar -->
+          <div class="field field--full" id="f-area-field" hidden>
+            <label for="f-area">Practice <small>(optional)</small></label>
+            <select id="f-area" name="area">
+              <option value="">Not sure yet</option>
+              <option value="turnaround-transformation">Turnaround &amp; transformation</option>
+              <option value="organizational-productivity">Organizational productivity</option>
+              <option value="deals-growth">Deals &amp; growth</option>
+              <option value="capital-management-advisory">Capital management &amp; advisory</option>
+            </select>
+          </div>
           <div class="field field--full">
             <label for="f-message">What should we talk about?</label>
-            <textarea id="f-message" name="message" rows="5" placeholder="Where the business stands, and where you want it to go." required></textarea>
+            <textarea id="f-message" name="message" rows="5" placeholder="Where the business stands, and where you want it to go." required aria-describedby="f-message-error"></textarea>
+            <p class="field__error" id="f-message-error" hidden></p>
           </div>
           <div class="form__footer">
             <p class="muted">Sending opens your email app with the message ready. Nothing is stored on this site.</p>
             <button type="submit" class="btn btn--orange">Compose email <span class="arrow" aria-hidden="true">→</span></button>
           </div>
+          <p class="form__status" id="formStatus" role="status" aria-live="polite" hidden></p>
         </form>
       </div>
     </section>
@@ -138,7 +153,7 @@
             <h4>Firm</h4>
             <ul>
               <li><a href="about.html">About</a></li>
-              <li><a href="about.html#workflow">How we work</a></li>
+              <li><a href="index.html#how">How it works</a></li>
               <li><a href="careers.html">Careers</a></li>
               <li><a href="contact.html">Contact</a></li>
             </ul>
