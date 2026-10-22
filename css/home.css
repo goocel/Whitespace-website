@@ -53,23 +53,6 @@
   margin: -4% -76% -26% 6%;
 }
 
-/* 3D version (js/hero-3d.js): the canvas covers the svg exactly, and the svg stays as the size
-   reference. It is hidden while three.js loads and comes back if WebGL fails. */
-.hero__svg {
-  position: relative;
-}
-
-.hero__gl {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.hero__svg[data-gl] .iso-svg {
-  visibility: hidden;
-}
-
 .hero__svg .vx-face[data-col] {
   cursor: crosshair;
 }

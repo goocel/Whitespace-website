@@ -480,5 +480,5 @@
     },
   };
 
-  window.Isometric = { render, box, heightMap, seeded, visibleOnly, project, darken, TONES, SEAM, ILLUSTRATIONS };
+  window.Isometric = { render, withMotion, box, heightMap, seeded, visibleOnly, project, darken, TONES, SEAM, ILLUSTRATIONS };
 })();

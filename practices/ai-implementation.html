@@ -6,6 +6,8 @@
   <meta name="description" content="AI built into how your company runs. Whitespace Solutions puts AI to work inside your real business processes: use-case assessment, agents and automation, team training." />
   <title>AI Implementation — Whitespace Solutions</title>
   <script>document.documentElement.classList.add("js");</script>
+  <!-- 3D hero: start downloading three.js with the page (same URL as js/iso-gl.js) -->
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js" crossorigin />
   <link rel="icon" href="../assets/images/brand/logo.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,7 +27,7 @@
         <ul class="nav__list">
           <li><a href="../about.html" class="nav__link">About</a></li>
           <li class="nav__dropdown">
-            <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-controls="practicesMenu">
+            <button class="nav__link nav__dropdown-toggle is-current" aria-expanded="false" aria-controls="practicesMenu">
               What we do
               <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
             </button>
@@ -65,7 +67,7 @@
 
     <section class="section">
       <div class="container">
-        <p class="section-label">What&#39;s included</p>
+        <p class="section-label">Core capabilities</p>
         <div class="split split--head">
           <h2 class="title">What we do</h2>
           <p class="lead">One team that understands both the business and the technology, from the first use case to a team that runs it.</p>
@@ -91,19 +93,19 @@
       <div class="container">
         <p class="section-label">How we start</p>
         <div class="split split--head">
-          <h2 class="title">Our approach<br /> to AI: start with<br /> the pain point.</h2>
+          <h2 class="title">Our approach<br /> to AI: start with<br /> the problem.</h2>
           <p class="lead">A real use case lives where technology meets business judgment: technology alone gives a demo, business alone gives a wish list. We work in the overlap, and a person checks the output at every step.</p>
         </div>
 
         <ol class="approach">
-          <li><span class="approach__num">1</span><h3>Start with pain points</h3><p>Where does time, cash or control leak?</p></li>
+          <li><span class="approach__num">1</span><h3>Find the real problem</h3><p>Where does time, cash or control leak?</p></li>
           <li><span class="approach__num">2</span><h3>Map the process</h3><p>How the work really flows today.</p></li>
           <li><span class="approach__num">3</span><h3>Check readiness</h3><p>Data, systems, people, controls.</p></li>
           <li><span class="approach__num">4</span><h3>Pick quick wins</h3><p>Value × feasibility × risk.</p></li>
           <li><span class="approach__num">5</span><h3>Pilot, scale, enable</h3><p>Train the team, track adoption with KPIs.</p></li>
         </ol>
 
-        <blockquote class="pullquote"><strong>Pain point first, tool last.</strong> The goal is not "using AI". It is hours saved, faster decisions and fewer manual steps.</blockquote>
+        <blockquote class="pullquote"><strong>Problem first, tool last.</strong> The goal is not "using AI". It is hours saved, faster decisions and fewer manual steps.</blockquote>
       </div>
     </section>
 
@@ -222,7 +224,7 @@
       <div class="container">
         <div class="contact__hero">
           <div class="contact__box">
-            <h2 class="title">Bring one<br /> AI pain point.</h2>
+            <h2 class="title">Bring us<br /> one problem.</h2>
             <p>One process where time, cash or control leaks, last month's exceptions, and the person who runs it. We'll map it with you in a discovery session.</p>
             <a href="../contact.html?practice=ai-implementation" class="btn btn--orange">Book a discovery session <span class="arrow" aria-hidden="true">→</span></a>
           </div>
@@ -279,5 +281,7 @@
   <script src="../js/isometric.js"></script>
   <script src="../js/site.js"></script>
   <script src="../js/motion.js"></script>
+  <script src="../js/iso-gl.js"></script>
+  <script src="../js/page-hero-3d.js"></script>
 </body>
 </html>

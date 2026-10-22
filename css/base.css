@@ -299,6 +299,24 @@ h4 {
   overflow: visible;
 }
 
+/* 3D versions (js/iso-gl.js): the canvas covers the svg exactly, and the svg stays as the size
+   reference. The svg is hidden while three.js loads and comes back if WebGL fails. */
+[data-gl] {
+  position: relative;
+}
+
+.iso-gl {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* events go to the area around it (e.g. hover on Home) */
+}
+
+[data-gl] > .iso-svg {
+  visibility: hidden;
+}
+
 /* Assemble animation: each cube <g class="c"> slides from (--bx, --by) to (--ax, --ay).
    js/isometric.js sets data-on="false" on render and "true" once the svg is in view. */
 .iso-svg .c {
@@ -342,7 +360,8 @@ h4 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: var(--header-h);
+  /* The 1px bottom border completes --header-h (64px), as on the live site */
+  min-height: calc(var(--header-h) - 1px);
 }
 
 /* Logo files: assets/images/brand/logo.svg (light bg) and logo-white.svg (dark bg) */
@@ -353,40 +372,53 @@ h4 {
 
 .logo img {
   width: auto;
-  height: 42px;
+  height: 43px;
 }
 
+/* Header type and sizes follow the live site: 15px / 550, 44px tall hit areas */
 .nav {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 14px;
 }
 
 .nav__list {
   display: flex;
   align-items: center;
-  gap: 36px;
+  gap: 4px;
 }
 
 .nav__link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 16px;
-  font-weight: 500;
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 15px;
+  font-weight: 550;
   color: var(--text);
   background: none;
   border: 0;
-  padding: 0;
   cursor: pointer;
 }
 
+.header .btn {
+  min-height: 44px;
+  padding: 0 18px;
+  font-size: 15px;
+  font-weight: 550;
+  letter-spacing: normal;
+}
+
+/* Current page. "What we do" is a button, so the pillar pages mark it with .is-current instead. */
 .nav__link:hover,
-.nav__link[aria-current="page"] {
+.nav__link[aria-current="page"],
+.nav__link.is-current {
   color: var(--ink);
 }
 
-.nav__link[aria-current="page"] {
+.nav__link[aria-current="page"],
+.nav__link.is-current {
   text-decoration: underline;
   text-decoration-color: var(--orange);
   text-decoration-thickness: 2px;
@@ -466,8 +498,12 @@ h4 {
 .nav__toggle {
   display: none;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 5px;
-  padding: 10px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   background: none;
   border: 0;
   cursor: pointer;
@@ -586,11 +622,12 @@ h4 {
     display: flex;
   }
 
+  /* Full-width panel: .header__inner sits inside the gutter, so the panel reaches past it */
   .nav {
     position: absolute;
     top: 100%;
-    left: 0;
-    right: 0;
+    left: calc(-1 * var(--gutter));
+    right: calc(-1 * var(--gutter));
     display: none;
     flex-direction: column;
     align-items: stretch;
@@ -612,7 +649,7 @@ h4 {
 
   .nav__list > li > .nav__link {
     width: 100%;
-    padding-block: 14px;
+    padding: 14px 0;
     border-bottom: 1px solid var(--line);
   }
 

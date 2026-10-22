@@ -6,6 +6,8 @@
   <meta name="description" content="Fix what holds the business back: diagnostics, corporate strategy, lean operations, a transformation office, deals and capital. Whitespace Solutions works inside the business until it runs." />
   <title>Business Transformation — Whitespace Solutions</title>
   <script>document.documentElement.classList.add("js");</script>
+  <!-- 3D hero: start downloading three.js with the page (same URL as js/iso-gl.js) -->
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js" crossorigin />
   <link rel="icon" href="../assets/images/brand/logo.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,7 +27,7 @@
         <ul class="nav__list">
           <li><a href="../about.html" class="nav__link">About</a></li>
           <li class="nav__dropdown">
-            <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-controls="practicesMenu">
+            <button class="nav__link nav__dropdown-toggle is-current" aria-expanded="false" aria-controls="practicesMenu">
               What we do
               <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
             </button>
@@ -65,7 +67,7 @@
 
     <section class="section">
       <div class="container">
-        <p class="section-label">What&#39;s included</p>
+        <p class="section-label">Core capabilities</p>
         <div class="split split--head">
           <h2 class="title">What we do</h2>
           <p class="lead">Common problems already have proven answers. Our edge is implementing them well in your context.</p>
@@ -266,5 +268,7 @@
   <script src="../js/isometric.js"></script>
   <script src="../js/site.js"></script>
   <script src="../js/motion.js"></script>
+  <script src="../js/iso-gl.js"></script>
+  <script src="../js/page-hero-3d.js"></script>
 </body>
 </html>

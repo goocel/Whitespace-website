@@ -61,9 +61,12 @@ js/isometric.js              renderer kubus + ILLUSTRATIONS; tiap kubus diberi d
 js/site.js                   nav, dropdown, render ilustrasi, reveal, highlight matrix
 js/motion.js                 GSAP semua halaman: intro hero, kubus, reveal, bar timeline
 js/home.js                   hero matrix SVG (hover cell, label sel); dibagikan ke hero-3d.js
-js/hero-3d.js                hero matrix 3D (three.js) di atas SVG; fallback ke SVG tanpa WebGL
+js/iso-gl.js                 dasar 3D bersama (cek WebGL, muat three.js, kamera dipaskan ke viewBox SVG, lampu, kamera ikut kursor)
+js/hero-3d.js                hero Home 3D di atas SVG (hover sel, caption); fallback ke SVG tanpa WebGL
+js/about-3d.js               hero About 3D: morph 28 kubus yang sama (data dari window.AboutMorph); fallback ke SVG
+js/page-hero-3d.js           hero 3D halaman pilar (AI, BT, FL) dan Careers: ilustrasi + intro yang sama dari isometric.js; kanvas bleed 35%
 js/home-motion.js            GSAP Home: intro hero, tilt ikut kursor, grafik runway (titik naik menyusuri kurva)
-js/about-morph.js            hero About: 44 kubus berubah 3 bentuk berulang (konstanta HOLD/MOVE/LIFT/RIPPLE)
+js/about-morph.js            hero About: 28 kubus berubah 3 bentuk berulang (HOLD 0.5s jeda, MOVE 1.1s, START 2.4s; dipakai juga oleh about-3d.js)
 js/contact.js                form → mailto; ?practice=<slug> mengisi Topic
 design-reference/            README (style guide + tabel komponen), styleguide.html, page-template.html
 ```
@@ -106,6 +109,8 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
 - **Hero Home 3D**: `js/hero-3d.js` memuat three.js 0.169.0 (jsDelivr, dynamic import) hanya kalau WebGL ada. Matrix-nya sama dengan
   SVG (`window.HeroMatrix` dari `js/home.js`); kanvas menutup SVG persis dan kamera dipaskan ke viewBox SVG, jadi layout tidak berubah.
   Kamera, lampu, warna dan intro meniru acuan (OrthographicCamera, orbit ikut kursor, kubus 0.94 bercelah). Tanpa WebGL → SVG + tilt lama.
+- **About hero 3D** (`js/about-3d.js`): bentuk, waktu dan lengkung gerak sama dengan morph SVG; kubus oranye pakai warna sisi
+  datar (atas oranye, kiri hitam, kanan abu) seperti acuan. Saat 3D aktif, loop SVG dimatikan (`AboutMorph.pauseSvg`).
 - **About morph**: ketiga bentuk = **28 kubus yang semuanya terlihat** (`Isometric.visibleOnly` membuang kubus tersembunyi).
   Bentuk baru wajib dicek jumlah kubus terlihatnya sama, supaya transisi tidak memunculkan kubus dari dalam.
 - **Diagram 3 model kerja** (halaman AI): animasi bercerita di `js/motion.js` (`modelMotion`), diputar ulang saat hover kartu.
@@ -148,3 +153,5 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
    tidak ganti nama ke "Solutions". Careers: judul "Open roles" tetap. Jangan ubah struktur tanpa konfirmasi user.
 7. Form kontak tanpa backend (mailto). Kalau perlu kirim langsung dari situs, butuh layanan form/backend (belum ada; jangan taruh kunci di front-end).
 8. Daftar industri situs (18, kini 6 grup) beda dengan deck (13).
+9. **Email karier — HOLD**: tombol Careers ("Apply", "Email us") masih ke `contact@whitespace.id`. Alamat khusus karier belum
+   ditentukan user. Setelah ada: ganti alamatnya, pertimbangkan isi email yang sudah terisi dan alamat sebagai teks cadangan.

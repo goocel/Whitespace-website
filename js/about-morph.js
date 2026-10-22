@@ -18,7 +18,7 @@
   const { project, darken, visibleOnly, TONES, SEAM } = Isometric;
   const COUNT = 28; // cubes in every shape
   const PAD = 0.4;
-  const HOLD = 1.2; // seconds each shape stays put
+  const HOLD = 0.5; // seconds each shape stays put
   const MOVE = 1.1; // seconds per cube move
   const LIFT = 0.9; // cubes travel in an arc this many cubes high, so they pass over each other
   const RIPPLE = 0.02; // seconds between depth steps of the back-to-front ripple
@@ -96,6 +96,18 @@
   );
   svg.setAttribute("viewBox", `${minX - PAD} ${minY - PAD} ${maxX - minX + PAD * 2} ${maxY - minY + PAD * 2}`);
 
+  // Shared with js/about-3d.js, which plays the same morph in WebGL on top of this svg:
+  // shapes[i][n] is where cube n sits in shape i. While the 3D version runs, the svg loop stays off.
+  const holder = svg.parentElement;
+  const in3d = () => Boolean(holder.dataset.gl);
+  window.AboutMorph = {
+    svg,
+    holder,
+    shapes: shapes.map((shape) => cubes.map((c) => ({ ...shape.get(c) }))),
+    timing: { HOLD, MOVE, LIFT, RIPPLE, START: 2.4 }, // START: right after the orange tops have landed
+    pauseSvg: () => {},
+  };
+
   const mm = gsap.matchMedia();
   mm.add("(prefers-reduced-motion: no-preference)", () => {
     if (!document.documentElement.classList.contains("gsap-motion")) return;
@@ -143,14 +155,15 @@
     });
 
     // Start once the intro has assembled the first shape; pause while the hero is off screen.
-    const begin = gsap.delayedCall(3.2, () => loop.play());
+    const begin = gsap.delayedCall(window.AboutMorph.timing.START, () => !in3d() && loop.play());
+    window.AboutMorph.pauseSvg = () => loop.pause();
     let trigger;
     if (ScrollTrigger) {
       trigger = ScrollTrigger.create({
         trigger: svg,
         start: "top bottom",
         end: "bottom top",
-        onToggle: (self) => (self.isActive ? begin.progress() === 1 && loop.resume() : loop.pause()),
+        onToggle: (self) => (self.isActive ? begin.progress() === 1 && !in3d() && loop.resume() : loop.pause()),
       });
     }
 

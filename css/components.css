@@ -1249,6 +1249,7 @@
 /* ---------- Page hero: title + lead left, illustration + note right ---------- */
 .page-hero {
   padding-block: clamp(56px, 8vw, 120px);
+  overflow-x: clip; /* the 3D hero canvas reaches past its box; never let it widen the page */
 }
 
 /* Columns are centred vertically: the illustration column is much taller than the title

@@ -3,27 +3,18 @@
  * js/home.js, drawn as lit cubes with thin gaps. The camera turns a little toward the cursor,
  * and hovering a column lights its top cube and updates the caption.
  *
- * The svg stays in the page as the size reference and the fallback: the canvas sits exactly on
- * top of it and uses the same frame (camera fitted to the svg's viewBox), so the layout, size
- * and cropping do not change. No WebGL, or three.js failed to load → the svg stays.
- * Camera, lights, colours and intro timing follow the live site's hero.
+ * Renderer, camera fit and lights come from js/iso-gl.js: the canvas sits exactly on top of the
+ * svg and uses its frame, so the layout, size and cropping do not change. No WebGL, or three.js
+ * failed to load → the svg stays. Colours and intro timing follow the live site's hero.
  */
 (function () {
-  const THREE_URL = "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js";
-
   const hero = window.HeroMatrix;
   const holder = document.getElementById("heroMatrix");
-  if (!hero || !holder) return;
-
-  const probe = document.createElement("canvas");
-  const probeGl = probe.getContext("webgl2") || probe.getContext("webgl");
-  if (!probeGl) return;
-  const lose = probeGl.getExtension("WEBGL_lose_context");
-  if (lose) lose.loseContext();
+  if (!hero || !holder || !window.IsoGL || !IsoGL.supported()) return;
 
   // Hides the svg while three.js loads; js/home-motion.js also skips its svg tilt.
   holder.dataset.gl = "loading";
-  import(THREE_URL)
+  IsoGL.load()
     .then(start)
     .catch(() => delete holder.dataset.gl);
 
@@ -31,51 +22,15 @@
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const finePointer = window.matchMedia("(pointer: fine)").matches;
 
-    let renderer;
+    const size = Math.max(...hero.voxels.map((v) => Math.max(v.x, v.y))) + 1;
+    let gl;
     try {
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      gl = IsoGL.stage(THREE, { holder, svg: hero.svg, target: [size / 2, size / 2, 1] });
     } catch (error) {
       delete holder.dataset.gl;
       return;
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    const canvas = renderer.domElement;
-    canvas.className = "hero__gl";
-    canvas.setAttribute("aria-hidden", "true");
-    holder.appendChild(canvas);
-
-    /* ---------- Camera: isometric, fitted to the svg's frame ----------
-       Voxel (x, y, z) sits at three.js (x, z, y). In the svg, one cube edge is 1 unit long;
-       on an isometric camera it is √(2/3), so the svg frame scales by K. */
-    const K = Math.sqrt(2 / 3);
-    const COS = Math.cos(Math.PI / 6);
-    const [vbX, vbY, vbW, vbH] = hero.svg.getAttribute("viewBox").split(" ").map(Number);
-    const size = Math.max(...hero.voxels.map((v) => Math.max(v.x, v.y))) + 1;
-    const target = new THREE.Vector3(size / 2, 1, size / 2);
-    // Where the target lands in svg units (svg y runs down)
-    const tx = (target.x - target.z) * COS;
-    const ty = (target.x + target.z) * 0.5 - target.y;
-
-    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 200);
-    const YAW = Math.PI / 4;
-    const PITCH = Math.atan(1 / Math.SQRT2);
-    const orbit = (yaw, pitch) => {
-      const a = PITCH + pitch;
-      camera.position.set(
-        target.x + 40 * Math.cos(a) * Math.sin(YAW + yaw),
-        target.y + 40 * Math.sin(a),
-        target.z + 40 * Math.cos(a) * Math.cos(YAW + yaw)
-      );
-      camera.lookAt(target);
-    };
-    orbit(0, 0);
-
-    const scene = new THREE.Scene();
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x8d939a, 1.6));
-    const sun = new THREE.DirectionalLight(0xffffff, 2.2);
-    sun.position.set(14, 20, -6);
-    scene.add(sun);
+    const { scene, camera, canvas, draw } = gl;
 
     /* ---------- Cubes ---------- */
     const cubes = hero.voxels.filter((v) => v.tone !== "ghost");
@@ -127,34 +82,11 @@
       });
     }
 
-    /* ---------- Size: the canvas covers the svg; the frustum is the svg's frame ---------- */
-    const fit = () => {
-      const w = holder.clientWidth;
-      const h = holder.clientHeight;
-      if (!w || !h) return;
-      renderer.setSize(w, h, false);
-      // Match the svg's "meet" fit: the frame is centred, scaled by the tighter side.
-      const scale = Math.min(w / vbW, h / vbH);
-      const halfW = w / scale / 2;
-      const halfH = h / scale / 2;
-      const cx = vbX + vbW / 2 - tx;
-      const cy = vbY + vbH / 2 - ty;
-      camera.left = (cx - halfW) * K;
-      camera.right = (cx + halfW) * K;
-      camera.top = -(cy - halfH) * K;
-      camera.bottom = -(cy + halfH) * K;
-      camera.updateProjectionMatrix();
-      draw();
-    };
-
     /* ---------- Frame loop: intro, then only while the camera is still easing ---------- */
     const dummy = new THREE.Object3D();
-    let yaw = 0, pitch = 0, goalYaw = 0, goalPitch = 0;
     let startedAt = null;
     let frame = 0;
     let onScreen = true;
-
-    const draw = () => renderer.render(scene, camera);
     const clamp01 = (n) => Math.min(1, Math.max(0, n));
 
     const tick = (now) => {
@@ -177,11 +109,8 @@
         ghostLines.material.opacity = g;
         ghostFill.material.opacity = 0.12 * g;
       }
-      yaw += (goalYaw - yaw) * 0.08;
-      pitch += (goalPitch - pitch) * 0.08;
-      orbit(yaw, pitch);
+      const easing = gl.step();
       draw();
-      const easing = Math.abs(goalYaw - yaw) > 5e-4 || Math.abs(goalPitch - pitch) > 5e-4;
       if (onScreen && ((startedAt !== null && t < 2000) || easing)) frame = requestAnimationFrame(tick);
     };
     const wake = () => {
@@ -203,16 +132,10 @@
     };
 
     stage.addEventListener("pointermove", (event) => {
-      const box = canvas.getBoundingClientRect();
-      const nx = ((event.clientX - box.left) / box.width) * 2 - 1;
-      const ny = -((event.clientY - box.top) / box.height) * 2 + 1;
-      if (!reduced) {
-        const s = stage.getBoundingClientRect();
-        goalYaw = 0.12 * (((event.clientX - s.left) / s.width) * 2 - 1);
-        goalPitch = -0.05 * (((event.clientY - s.top) / s.height) * 2 - 1);
-      }
+      if (!reduced) gl.aim(...IsoGL.pointerIn(stage, event));
       if (finePointer) {
-        pointer.set(nx, ny);
+        const [nx, ny] = IsoGL.pointerIn(canvas, event);
+        pointer.set(nx, -ny);
         ray.setFromCamera(pointer, camera);
         const hit = ray.intersectObject(mesh)[0];
         const onGhost = !hit && ghostFill && ray.intersectObject(ghostFill).length > 0;
@@ -226,16 +149,12 @@
       wake();
     });
     stage.addEventListener("pointerleave", () => {
-      goalYaw = 0;
-      goalPitch = 0;
+      gl.aim(0, 0);
       light(-1);
       hero.caption.textContent = hero.defaultCaption;
       stage.style.cursor = "";
       wake();
     });
-
-    new ResizeObserver(fit).observe(holder);
-    fit();
 
     // Hide every cube until the intro starts, then play it once the hero is on screen.
     tick(0);
