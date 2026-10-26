@@ -13,8 +13,8 @@ Warna, font, skala tipografi, dan logo mengikuti situs asli: https://whitespace-
 
 | File | Halaman |
 | --- | --- |
-| `index.html` | Home: hero, founder + 40+, Three ways we help, What the work looks like, Why Whitespace, CTA |
-| `about.html` | About: hero, How we show up, Across industries (6 grup industri) |
+| `index.html` | Home: hero 3D, The problem (Most advice stops at the slide deck), The solution (Three ways we help), How it works (Start small, prove it, then grow), Why Whitespace (Business sense and AI in one team), CTA |
+| `about.html` | About: hero 3D (morph 28 kubus), Our commitments (How we show up), Who we work with (Across industries: 13 industri deck dalam 6 grup), CTA |
 | `careers.html` | Careers: hero, Open roles |
 | `contact.html` | Contact: detail kantor + form (validasi terlihat; membuka aplikasi email; `?practice=<slug>` mengisi Topic, slug praktik lama juga mengisi Practice) |
 | `practices/<slug>.html` | 3 halaman pilar (menu "What we do"): hero, What we do, lalu section khusus pilar, Next |
@@ -109,7 +109,7 @@ Latar warna dan garis pemisah section membentang penuh selebar layar; isinya tet
 | --- | --- | --- |
 | `--gutter` | `clamp(16px, 4vw, 72px)` | Jarak kiri = kanan. **72px** di desktop (layar ≥1800px), di bawahnya 4% lebar layar, minimum **16px** di HP |
 | `--container` | `1760px` | Lebar konten maksimal; baru terasa di monitor sangat lebar (>1904px) |
-| `--section-space` | `clamp(72px, 8vw, 120px)` | Padding atas & bawah tiap section → jarak antar section maks **240px** di desktop (situs asli 320px, sengaja dirapatkan) |
+| `--section-space` | `clamp(48px, 6vw, 96px)` | Padding atas & bawah tiap section → jarak antar section maks **192px** di desktop (layar ≥1600px; situs asli 320px, sengaja dirapatkan), **96px** di HP |
 | `--head-space` | `clamp(48px, 6vw, 80px)` | Jarak judul section (`.split--head`) ke isinya, sama dengan situs asli |
 | `--header-h` | `64px` | Tinggi header (sticky) |
 | `--tile-gap` | `3px` | Jarak antar tile abu |
@@ -121,6 +121,19 @@ Catatan: situs asli memakai gutter maks 48px dan lebar maks 1360px. Di proyek in
 - **Hero Home**: 2 kolom sama lebar di dalam container, tinggi `min(100svh − header, 900px)`.
 - **Hero halaman dalam** (`.page-hero`): judul + lead di kiri, ilustrasi + catatan di kanan, kedua kolom **rata tengah vertikal** (situs asli rata bawah, tapi itu menyisakan ruang kosong besar di atas judul).
 - **Pola kepala section** (`.split.split--head`): judul besar di kiri, `.lead` di kanan dan rata bawah, jarak `--head-space` ke konten.
+- **HP / ≤900px**: label section, judul + lead (kepala section, hero Home & halaman dalam, intro Contact), breadcrumb, serta isi kotak CTA
+  **rata tengah** (blok di akhir `css/components.css`; hero Home di `css/home.css`, termasuk tombolnya). Juga rata tengah: kartu
+  `.value` (Home, About), baris sebelum → sesudah (`.compare`), teks contoh engagement Home (`.work__example`), teks studi kasus
+  runway (`.case__text`) + caption grafiknya, kartu `why-table` (mode kartu ≤700px), ilustrasi + teks samping hero halaman
+  dalam (`.page-hero__aside`), kartu grup industri (`.tiles--groups`), fitur (`.feature`, nomor di atas judul), teks semua
+  studi kasus (`.case-study__text`, garis oranye `.case-study__result` pindah ke atas), langkah `.flow`, `.cases__more`,
+  kartu `.journey` dan `.model`, label + deskripsi grup layanan (`.tile-group__label/__desc`), tabel `.data-table`
+  (mode baris bertumpuk) dan caption di bawahnya (`.table-wrap .caption`), lowongan Careers (`.role`, tombol Apply ikut di tengah).
+  Judul yang di HP harus lebih sedikit barisnya: `<br class="br-wide" />` (hanya memotong di desktop) + class `.title--fit`
+  (ukuran ikut lebar kolom supaya baris terpanjang muat). Dipakai di Home "Start small, prove it, / then grow.".
+  Juga langkah bernomor `.approach`. `.feature` di HP diberi padding
+  14px kiri-kanan (desktop hanya kanan). Yang masih rata kiri: `.pullquote`, kotak tile, form.
+  Desktop tidak berubah.
 - **Grup tile**: garis `--ink` 1.5px di atas, lalu tile abu berjarak **3px** (`--tile-gap`). Tanpa border radius dan bayangan.
 - **CTA + footer** adalah satu blok gelap (`div.dark`): kotak CTA bergaris oranye + ilustrasi, lalu kolom footer (brand, Practices, Firm, Office dengan alamat lengkap). Tidak ada garis pemisah di antaranya. Halaman Contact hanya memakai footer.
 - Breakpoint: **1100px** (grid mengecil), **900px** (nav mobile, 1 kolom), **600px** (ponsel).
@@ -140,15 +153,15 @@ Untuk mengubah lebar seluruh situs, cukup ubah `--gutter` / `--container` di `cs
 | Value cards | `ul.values > li.value` (+ `<div class="iso value__art" data-illustration="…" data-pad="0.4">`); area gambar 170px, ikon setinggi 120px (90px di HP), sama dengan situs asli; hover: latar `--panel` → `--cell` | Home, About |
 | Practice matrix | `.matrix > article.practice` (+ `.cell`, `.cell--whitespace`); 11 cell + 1 whitespace per pilar = tepat 2 baris | Home "Three ways we help" |
 | Value cards (3 kolom) | `ul.values.values--3`; `<strong>` di dalam `<p>` jadi kalimat pembuka hitam | Home Practical / Applicable / Affordable |
-| Angka besar | `p.stat > span.stat__num + span.stat__label` (angka oranye, ukuran `--step-5`) | Home "40+ companies served" |
+| Angka besar | `p.stat > span.stat__num + span.stat__label` (angka oranye, ukuran `--step-5`) | Belum dipakai di halaman; contoh ada di styleguide |
 | Pull quote | `blockquote.pullquote` (+ `<strong>` untuk bagian yang ditekankan); garis kiri oranye. Maks. satu per section | Penutup section |
-| Sebelum → sesudah | `.compare` > `p.compare__head` ×2 + `.compare__row` > `.compare__from` + `span.compare__arrow` + `.compare__to` | About "Most advice stops at the slide deck" |
+| Sebelum → sesudah | `.compare` > `p.compare__head` ×2 + `.compare__row` > `.compare__from` + `span.compare__arrow` + `.compare__to` | Home "Most advice stops at the slide deck." |
 | Bisnis × teknologi | `.overlap` > `.overlap__side` (h3 + `ul.tags` + `.blindspot`) + `.overlap__core` (blok oranye) + `.overlap__side` | Belum dipakai di halaman (dihapus dari AI Implementation agar tidak terlalu panjang); contoh ada di styleguide |
 | Tag | `ul.tags > li` (kotak kecil bergaris) | Venn, dimensi IT diagnostic |
 | Langkah bernomor | `ol.approach > li` > `span.approach__num` + h3 + p; langkah 1 oranye | AI Implementation "Our approach to AI" |
-| Kartu alur / use case | `ul.journeys > li.journey` (caption + h3 + p); 4 kolom, `.journeys--3` / `.journeys--2` untuk 3 / 2 kolom; kartu pertama bergaris oranye | Home alur klien, AI use cases |
+| Kartu alur / use case | `ul.journeys > li.journey` (caption + h3 + p); 4 kolom, `.journeys--3` / `.journeys--2` untuk 3 / 2 kolom; kartu pertama bergaris oranye | Fractional Leadership alur klien, AI use cases |
 | Label section | `p.section-label` tepat sebelum `.split--head` (teks huruf besar oranye + kotak kecil). Teksnya tidak boleh sama dengan judul | Semua section isi, kecuali hero & CTA |
-| Fitur 3 kolom | `.features.features--3`: tetap satu baris sampai 800px (tidak pecah 2 + 1) | Belum dipakai; cocok untuk "What we do" di halaman AI |
+| Fitur 3 kolom | `.features.features--3`: tetap satu baris sampai 800px (tidak pecah 2 + 1) | AI Implementation "What we do" |
 | Tabel perbandingan | `.why__wrap > table.why-table`; kolom kita `.why-table__us`; tanda `span.mark.mark--yes / --no / --part`. Setiap `td` wajib `data-label` (di HP tabel jadi kartu per baris) | Home "Why Whitespace" |
 | Kartu penawaran | `.offer-grid > article.offer` (+ `.offer--dark`) | Belum dipakai di halaman (dihapus dari Home); contoh ada di styleguide |
 | Studi kasus alur | `article.case-study` > `.case-study__text` + `ol.flow > li` (+ `.flow__ai` oranye muda, `.flow__person` gelap) + opsional `ul.tags`, `p.case-study__result` | AI Implementation "AI at work" |
@@ -207,7 +220,8 @@ Detail teknis:
 - Ikon praktik (`turnaround`, `productivity`, `deals`, `capital`) memakai bentuk dan gerakan **persis** situs asli: tangga meluncur dari belakang; 18 kubus berkumpul dari posisi acak (hash sama dengan situs asli); dua blok bertemu dari kiri-kanan lalu 2 kubus oranye jatuh; lapisan dasar, cincin hitam, lalu 3 kubus oranye jatuh berurutan.
 - Elemen lain bisa memakai `data-reveal`: `js/site.js` memberi `data-on="true"` saat 40% elemen terlihat. Sembunyikan state awal hanya dengan selector `.js [data-reveal]:not([data-on="true"])`, supaya konten tetap tampil kalau JavaScript mati.
 - Setiap halaman wajib punya `<script>document.documentElement.classList.add("js");</script>` di `<head>` (sudah ada di template).
-- Hero 3D (three.js) dari situs asli **belum** diterapkan.
+- Semua hero kubus (Home, About, 3 pilar, Careers) dirender 3D dengan three.js 0.169.0 lewat `js/iso-gl.js` (kanvas `.iso-gl`
+  menutup SVG persis; tanpa WebGL → SVG). Detail dan aturannya di `HANDOFF.md` bagian "Animasi & 3D".
 
 ### GSAP (semua halaman)
 

@@ -48,8 +48,9 @@ style guide). Illustrations `pre`, `engagement`, `partnership` are still in `js/
 
 ## About — industries
 
-All 18 industries are still on the page, now in six groups. The individual icon for each industry
-(one tile per industry) is in git history (commit `618d2eb`, `about.html`). Grouping:
+The page now shows the deck's 13 industries in six groups. Earlier it showed 18 industries; that
+grouping is kept below. The individual icon for each industry (one tile per industry) is in git
+history (commit `618d2eb`, `about.html`). Earlier grouping (18 industries):
 
 | Group | Industries |
 | --- | --- |
@@ -60,7 +61,9 @@ All 18 industries are still on the page, now in six groups. The individual icon 
 | Health & finance | Pharma & health · Financial services |
 | Technology & media | Consumer electronics · Smart home technology · Ticketing technology · Metaverse technology · Media & entertainment |
 
-The deck lists 13 industries and folds the technology sectors into "Technology".
+The deck lists 13 industries and folds the technology sectors into "Technology". Removed from the page:
+Manufacturing & retail, Consumer electronics, Smart home technology, Ticketing technology, Metaverse
+technology, Media & entertainment. Agencies moved from "Services & logistics" to "Technology & agencies".
 
 ## Business Transformation — engagements not shown
 

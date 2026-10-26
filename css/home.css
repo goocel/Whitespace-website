@@ -109,8 +109,32 @@
     min-height: 0;
   }
 
+  /* Headline, lead and buttons centred, like every section head on mobile (css/components.css) */
   .hero__text {
     padding-bottom: 16px;
+    text-align: center;
+  }
+
+  .hero__text .display,
+  .hero__text .lead {
+    margin-inline: auto;
+  }
+
+  /* Four lines on phones: "Practical business / transformation, / now built / around AI."
+     "Practical business" is 9.9em wide, so the box allows 10.2em and the size follows the column
+     (cqi = 1% of .hero__text) so that line always fits. "around&nbsp;AI." keeps AI. off its own line. */
+  .hero__text {
+    container-type: inline-size;
+  }
+
+  .hero__text .display {
+    max-width: 10.2em;
+    font-size: min(clamp(2.5rem, 1.5rem + 3.4vw, 5rem), 9.6cqi);
+    text-wrap: balance;
+  }
+
+  .hero__actions {
+    justify-content: center;
   }
 
   .hero__matrix {
@@ -126,8 +150,9 @@
 
   .hero__caption {
     position: static;
-    align-self: flex-start;
+    align-self: center;
     margin-top: 12px;
+    text-align: center;
   }
 
   .work .approach {

@@ -40,7 +40,7 @@ Dropdown "What we do" = panel 2×2 berisi 3 pilar (kotak ketiga melebar). Tidak 
 | Halaman | Section (urut) — `[LABEL]` = label section |
 | --- | --- |
 | `index.html` Home | Hero 3D "Practical business transformation, now built around AI." (Start a conversation · How it works → `#how`) → `[THE PROBLEM]` "Most advice stops at the slide deck." (3 baris sebelum→sesudah) → `[THE SOLUTION]` "Three ways we help." (matrix 3 pilar) → `[HOW IT WORKS]` "Start small, prove it, then grow." (4 langkah + 1 contoh engagement Security services + grafik runway EBITDA beranimasi) → `[WHY WHITESPACE]` "Business sense and AI in one team." (tabel + kartu Practical/Applicable/Affordable) → CTA "Where is your whitespace?" |
-| `about.html` | Hero 3D "We're not just consultants." (morph 28 kubus) → `[OUR COMMITMENTS]` "How we show up" (5) → `[WHO WE WORK WITH]` "Across industries" (18 industri dalam 6 grup) → CTA. Workflow 9 langkah dihapus; `about.html#workflow` tidak ada lagi |
+| `about.html` | Hero 3D "We're not just consultants." (morph 28 kubus) → `[OUR COMMITMENTS]` "How we show up" (5) → `[WHO WE WORK WITH]` "Across industries" (13 industri deck dalam 6 grup) → CTA. Workflow 9 langkah dihapus; `about.html#workflow` tidak ada lagi |
 | `practices/ai-implementation.html` | Hero 3D (`ai`) → `[CORE CAPABILITIES]` What we do (3) → `[HOW WE START]` "Our approach to AI: start with the problem." (5 langkah) → `[CASE STUDIES]` AI at work (3 kasus + 6 use case) → `[WORKING MODELS]` Three ways to work with us (3 diagram beranimasi) → CTA "Bring us one problem." |
 | `practices/business-transformation.html` | Hero 3D (`turnaround`) → `[CORE CAPABILITIES]` What we do (4) → `[OUR PRACTICES]` Services `#services` (4 praktik) → `[TRACK RECORD]` Engagements (4 baris, satu per praktik) → CTA |
 | `practices/fractional-leadership.html` | Hero 3D (`capital`) → `[CORE CAPABILITIES]` What we do (4) → `[CLIENT EXAMPLES]` What it looks like (2 alur klien) → CTA |
@@ -80,11 +80,14 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
 ## Keputusan & preferensi user (jangan diubah tanpa ditanya)
 
 **Layout & gaya**
-- `--gutter: clamp(16px, 4vw, 72px)`, `--container: 1760px`, jarak section `--section-space: clamp(64px, 6vw, 96px)`.
+- `--gutter: clamp(16px, 4vw, 72px)`, `--container: 1760px`, jarak section `--section-space: clamp(48px, 6vw, 96px)`
+  (minimum diturunkan dari 64px ke 48px atas permintaan user, supaya jarak antar section di HP tidak terlalu jauh; desktop tidak berubah).
 - **Header = sama persis dengan acuan**: link menu 15px / tebal 550 / area klik 44px (padding 0 14px), tombol header 44px tinggi
   (padding 0 18px, 15px/550), logo tinggi 43px, header total 64px (termasuk garis 1px), tombol menu HP 44×44.
   Halaman aktif = garis bawah oranye (`aria-current="page"`; "What we do" di halaman pilar pakai `.is-current`).
   Panel menu HP selebar layar.
+- **HP (≤900px): semua headline + sub-headline rata tengah** (label section, hero, kepala section, kotak CTA; tombol di bawahnya ikut).
+  Desktop tetap rata kiri seperti semula — user minta hanya versi mobile yang berubah.
 - CTA + footer = satu blok gelap. Judul section dipotong manual dengan `<br />`, huruf kecil biasa (bukan Title Case).
 - Warna, font Archivo, skala tipografi, logo = sama dengan acuan. Sudut kotak **tidak membulat**; oranye hanya aksen.
 - Tombol oranye: panel hitam menyapu dari kiri saat hover. CTA global = **"Start a conversation"**.
@@ -161,11 +164,14 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
 
 1. **Email karier — HOLD**: tombol Careers ("Apply", "Email us") masih ke `contact@whitespace.id`. Tunggu alamat dari user;
    setelah ada: ganti alamatnya, pertimbangkan isi email yang sudah terisi dan alamat sebagai teks cadangan.
-2. Form kontak tanpa backend (mailto). Kirim langsung dari situs butuh layanan form/backend — belum ada; jangan taruh kunci di front-end.
+2. **Form kontak — HOLD**: masih `mailto:` tanpa backend. User menunggu keputusan email/endpoint penerima. Usulan yang sudah
+   disampaikan: Formspree (gratis ±50/bulan, hanya ID form di HTML), alternatif Web3Forms (±250/bulan). Setelah ada: ubah
+   `js/contact.js` ke `fetch`, status terkirim/gagal yang jujur, `mailto:` tetap sebagai cadangan tanpa JS. Jangan taruh kunci rahasia di front-end.
 3. Nomor telepon `021-39731400` (sama dengan acuan) belum dikonfirmasi user.
 4. Ikon Fractional di matrix Home (`fractional`) beda dengan hero-nya (`capital`) — user belum memutuskan.
 5. Ilustrasi `deck`, ikon fase proses (`pre`/`engagement`/`partnership`) dan `night` belum sama dengan acuan. Kubus di luar hero
    (ikon kartu, blok CTA gelap) masih SVG.
-6. Daftar industri situs (18, dalam 6 grup) beda dengan deck (13).
+6. ~~Daftar industri situs beda dengan deck~~ — selesai: About memakai 13 industri deck (6 grup). Engagement di BT
+   dan contoh Home masih menyebut sektor klien lama (Consumer electronics, Metaverse, dll.) — itu catatan proyek, bukan daftar industri.
 7. Branch `sesi-2` / `sesi-3` perlu di-merge dari `main` sebelum dipakai.
 8. Belum dites di Safari, Firefox dan perangkat fisik (hanya headless Edge).

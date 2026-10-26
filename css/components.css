@@ -433,11 +433,12 @@
     border-bottom: 1px solid var(--line);
   }
 
+  /* Centred on phones, like every other block (overrides .num's right alignment) */
   .data-table th,
   .data-table td {
     padding: 4px 0 !important;
     border: 0;
-    text-align: left !important;
+    text-align: center !important;
   }
 
   .data-table tbody th {
@@ -1148,6 +1149,7 @@
     width: auto;
     padding: 6px 0;
     border: 0;
+    text-align: center;
   }
 
   .why-table tbody th {
@@ -1205,6 +1207,10 @@
   .compare__row {
     grid-template-columns: 1fr;
     margin-bottom: 16px;
+  }
+
+  .compare__row:last-child {
+    margin-bottom: 0;
   }
 
   .compare__arrow {
@@ -1730,5 +1736,147 @@
 @media (max-width: 600px) {
   .tiles--groups {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Mobile: headlines and their sub-headlines centred ----------
+   One column from 900px down, so every section head, inner-page hero and CTA box is centred.
+   Home hero: css/home.css. Content below the heads (cards, tables, forms) stays left-aligned. */
+@media (max-width: 900px) {
+  .section-label,
+  .breadcrumb {
+    justify-content: center;
+  }
+
+  .split--head,
+  .page-hero__text,
+  .contact-page__intro,
+  .contact__box {
+    text-align: center;
+  }
+
+  .split--head .lead {
+    justify-self: center;
+  }
+
+  .page-hero__text .display,
+  .page-hero__text .lead,
+  .contact-page__intro .lead,
+  .contact__box {
+    margin-inline: auto;
+  }
+
+  .contact__box p,
+  .contact-page__art {
+    margin-inline: auto;
+  }
+
+  /* Value cards (Home, About), before → after rows (Home "The problem"),
+     and the Home engagement example + runway case text */
+  .value,
+  .compare,
+  .case-study__text,
+  .case__chart .caption,
+  .case__text {
+    text-align: center;
+  }
+
+  /* AI Implementation (and the same components elsewhere): feature columns, case-study flow
+     steps, use-case cards, working models */
+  .feature,
+  .flow li,
+  .cases__more,
+  .journey,
+  .model,
+  .approach li {
+    text-align: center;
+  }
+
+  .flow li,
+  .approach li {
+    align-items: center;
+  }
+
+  /* Desktop columns have padding on the right only, which pushed the centred text left.
+     Equal padding both sides: centred in one column, clear of the divider in two.
+     !important beats the per-column padding-left rules above (:nth-child(odd), :first-child). */
+  .feature {
+    padding-inline: 14px !important;
+  }
+
+  /* Number above the title instead of beside it, so the title centres cleanly */
+  .feature h3 {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .feature p {
+    margin-inline: auto;
+  }
+
+  /* Service groups (Business Transformation): label and description centred; the tiles stay as they are */
+  .tile-group__label,
+  .tile-group__desc,
+  .table-wrap .caption {
+    text-align: center;
+  }
+
+  .tile-group__desc {
+    margin-inline: auto;
+  }
+
+  /* Open roles (Careers): title, level, description and the Apply button centred */
+  .role {
+    text-align: center;
+  }
+
+  .role .btn {
+    justify-self: center;
+  }
+
+  /* Result line: the orange rule moves from the left edge to the top */
+  .case-study__result {
+    padding: 14px 0 0;
+    border-left: 0;
+    border-top: 3px solid var(--orange);
+  }
+
+  .case__text {
+    margin-inline: auto;
+  }
+
+  /* Inner-page hero: illustration and the note under it (About, Careers, pillar pages) */
+  .page-hero__aside {
+    text-align: center;
+  }
+
+  .page-hero__art {
+    align-self: center;
+  }
+
+  .page-hero__aside p {
+    margin-inline: auto;
+  }
+
+  /* Industry group tiles (About): icon, group name and industries centred */
+  .tiles--groups .cell {
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Fewer lines on phones: br.br-wide only breaks on desktop. A .title--fit heading follows the
+     column width (cqi) so its longest line fits, e.g. Home "Start small, prove it, / then grow."
+     (10.6em wide → 9.2cqi). */
+  .br-wide {
+    display: none;
+  }
+
+  .split--head:has(.title--fit) {
+    container-type: inline-size;
+  }
+
+  .title--fit {
+    font-size: min(var(--step-4), 9.2cqi);
   }
 }
