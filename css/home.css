@@ -89,18 +89,6 @@
   transition: none;
 }
 
-/* ---------- How it works ---------- */
-/* Runway case under the engagement example: thin rule and spacing, like case study → case study */
-.work__example + .case {
-  padding-top: 40px;
-  border-top: 1px solid var(--line);
-}
-
-.work .approach {
-  grid-template-columns: repeat(4, 1fr);
-  margin-bottom: var(--head-space);
-}
-
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .hero__inner {
@@ -129,8 +117,584 @@
     align-self: flex-start;
     margin-top: 12px;
   }
+}
 
-  .work .approach {
-    grid-template-columns: repeat(2, 1fr);
+/* =========================================================
+   Home: point lists styled after nalarx.com
+   ========================================================= */
+
+/* ---------- How it works: rows that open one at a time, as on nalarx.com ----------
+   The open row gets a full-width tint, a dash before its title and a small card in the middle.
+   Without JS every row is open (the cards only collapse under html.js). */
+.how-list {
+  margin-bottom: var(--head-space);
+  border-bottom: 1px solid var(--line);
+}
+
+.how-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 40px;
+  padding-block: 34px;
+  border-top: 1px solid var(--line);
+  isolation: isolate;
+  --how-ease: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Tint runs edge to edge, past the container, as one layer that fades in and out
+   (.work clips it sideways, so it never adds page scroll) */
+.how-step::before {
+  content: "";
+  position: absolute;
+  inset: 0 -100vmax;
+  z-index: -1;
+  background: rgba(255, 255, 255, 0.04);
+  opacity: 0;
+  transition: opacity 0.6s var(--how-ease);
+}
+
+.how-step.is-open::before {
+  opacity: 1;
+}
+
+.work {
+  overflow-x: clip;
+}
+
+.how-step__toggle {
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+/* The whole row is the click target */
+.how-step__toggle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.how-step__title {
+  display: flex;
+  align-items: center;
+  font-size: var(--step-2);
+  font-weight: 600;
+  font-stretch: 104%;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  color: var(--muted);
+  transition: color 0.3s ease;
+}
+
+.how-step__toggle:hover .how-step__title,
+.how-step.is-open .how-step__title {
+  color: var(--ink);
+}
+
+.how-step__dash {
+  flex: none;
+  width: 0;
+  height: 1.5px;
+  margin-right: 0;
+  background: var(--orange);
+  transition: width 0.6s var(--how-ease), margin 0.6s var(--how-ease);
+}
+
+.how-step.is-open .how-step__dash {
+  width: 36px;
+  margin-right: 18px;
+}
+
+.how-step__num {
+  margin-right: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.how-step__body {
+  display: flex;
+  align-items: center;
+}
+
+.how-step__visual {
+  display: grid;
+  grid-template-rows: 1fr;
+  width: 380px;
+  padding-right: 40px;
+  /* Opening: the space opens first, then the card fades and rises in */
+  transition:
+    grid-template-rows 0.6s var(--how-ease),
+    opacity 0.45s ease 0.2s;
+}
+
+.how-step__visual > div {
+  overflow: hidden;
+}
+
+.how-card {
+  transition: transform 0.6s var(--how-ease) 0.15s;
+}
+
+.js .how-step:not(.is-open) .how-step__visual {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  /* Closing: the card fades first, then the space folds away */
+  transition:
+    grid-template-rows 0.55s var(--how-ease) 0.12s,
+    opacity 0.25s ease;
+}
+
+.js .how-step:not(.is-open) .how-card {
+  transform: translateY(10px);
+  transition-delay: 0s;
+}
+
+.how-step__text {
+  width: 320px;
+  font-size: 15px;
+  color: var(--muted);
+  transition: color 0.5s ease;
+}
+
+.how-step.is-open .how-step__text {
+  color: var(--text);
+}
+
+/* Small card in the open row: fine grid texture, as on Nalar */
+.how-card {
+  padding: 18px 20px;
+  font-size: 13px;
+  line-height: 1.4;
+  background-color: var(--panel);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 5px 5px;
+  border: 1px solid var(--line);
+}
+
+.how-card__label {
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.how-card__rows li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+
+.how-card__rows li span:first-child {
+  color: var(--ink);
+}
+
+.how-card__rows li span:last-child {
+  color: var(--muted);
+  text-align: right;
+}
+
+.how-card__rows--check li span:last-child {
+  color: var(--orange);
+}
+
+.how-card__chips {
+  display: flex;
+  gap: 8px;
+}
+
+.how-card__chips li {
+  flex: 1;
+  padding: 10px 0;
+  text-align: center;
+  font-weight: 600;
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+}
+
+.how-card__formula {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.how-card__formula span {
+  flex: 1;
+  padding: 10px 0;
+  text-align: center;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--orange-soft);
+  border: 1px solid var(--orange);
+}
+
+.how-card__foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.how-card__foot span:last-child {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .how-step::before,
+  .how-step__dash,
+  .how-step__visual,
+  .how-card,
+  .js .how-step:not(.is-open) .how-step__visual {
+    transition: none;
+  }
+
+  .js .how-step:not(.is-open) .how-card {
+    transform: none;
+  }
+}
+
+@media (hover: hover) {
+  /* Why Whitespace: the card under the pointer stays bright, the others step back */
+  .why .values:hover .value:not(:hover) > * {
+    opacity: 0.45;
+  }
+}
+
+.why .value > * {
+  transition: opacity 0.4s var(--ease-out);
+}
+
+@media (max-width: 1000px) {
+  .how-step {
+    grid-template-columns: 1fr;
+    padding-block: 24px;
+  }
+
+  .how-step__body {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .how-step__text {
+    order: -1;
+    width: auto;
+    margin-top: 10px;
+  }
+
+  .how-step__visual {
+    width: auto;
+    max-width: 400px;
+    padding: 16px 0 0;
+  }
+}
+
+/* ---------- The solution: three practice cards with points that open, as on nalarx.com ----------
+   Cards align to the top, so opening a point only grows its own card. Without JS every point
+   stays open (the panels only collapse under html.js). */
+.solutions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: start;
+  gap: 20px;
+}
+
+.solution {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  background: var(--white);
+  transition: border-color 0.3s var(--ease-out);
+}
+
+.solution:hover,
+.solution:focus-within {
+  border-color: var(--line-strong);
+}
+
+.solution__head {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  align-items: center;
+  column-gap: 18px;
+  padding: 26px 26px 24px;
+  background: linear-gradient(160deg, var(--orange-soft), var(--panel) 65%);
+  border-bottom: 1px solid var(--line);
+}
+
+#practice-transformation .solution__head {
+  background: linear-gradient(160deg, var(--cell), var(--panel) 65%);
+}
+
+#practice-fractional .solution__head {
+  background: linear-gradient(160deg, #eef1f4, var(--panel) 65%);
+}
+
+.solution__art svg {
+  width: 72px;
+  height: 72px;
+}
+
+.solution__head h3 {
+  font-size: var(--step-1);
+  font-weight: 650;
+  font-stretch: 104%;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.solution__head .caption {
+  margin-top: 4px;
+}
+
+.solution__lead {
+  grid-column: 1 / -1;
+  margin-top: 20px;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.solution__points {
+  margin: 10px 26px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.point--whitespace .point__toggle {
+  color: var(--orange-deep);
+}
+
+.solution__link {
+  margin: 20px 26px 24px;
+  align-self: flex-start;
+}
+
+/* Narrower screens: cards swipe sideways, as on nalarx.com, instead of stacking ~2,600px tall */
+@media (max-width: 1100px) {
+  .solutions {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: min(82vw, 420px);
+    gap: 14px;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 0 var(--gutter) 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .solutions::-webkit-scrollbar {
+    display: none;
+  }
+
+  .solution {
+    scroll-snap-align: start;
+  }
+}
+
+/* The runway chart sets its zone, grid and target line as svg attributes; re-colour them on black */
+.section--dark .chart rect {
+  fill: var(--orange-soft);
+}
+
+.section--dark .chart g[stroke] {
+  stroke: var(--line);
+}
+
+.section--dark .chart line[stroke] {
+  stroke: var(--line-strong);
+}
+
+/* ---------- The problem: looping card stack, after archive-devin-ai.lusion.co ----------
+   Default (no JS, reduced motion, phones): the three cards sit in a plain list.
+   js/home.js adds .is-stack: the cards stack up and take the front in turn, on a loop,
+   while earlier cards step back to the left.
+   data-d on a card = how far it sits behind the front one (0 front, 1–2 behind). */
+.problem {
+  position: relative;
+  overflow-x: clip;
+}
+
+.problem__pin {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(40px, 6vw, 112px);
+}
+
+.problem__intro .lead {
+  max-width: 460px;
+  margin-top: 28px;
+}
+
+.problem__stage {
+  position: relative;
+  display: grid;
+  gap: 16px;
+}
+
+/* Warm glow behind the cards */
+.problem__stage::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10% -20% 10%;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(242, 144, 42, 0.16), transparent);
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+.shift {
+  display: grid;
+  background:
+    radial-gradient(120% 80% at 100% 100%, rgba(242, 144, 42, 0.1), transparent 60%),
+    linear-gradient(180deg, #23272d, #191c20);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 30px 70px rgba(0, 0, 0, 0.45);
+}
+
+.shift__from,
+.shift__to {
+  padding: 28px 32px;
+}
+
+.shift__from {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.shift__tag {
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.shift__to .shift__tag {
+  color: var(--orange);
+}
+
+.shift h3 {
+  margin-bottom: 8px;
+  font-size: var(--step-2);
+  font-weight: 650;
+  font-stretch: 104%;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+
+.shift p:not(.shift__tag) {
+  font-size: 15px;
+}
+
+.shift__from h3 {
+  color: var(--muted);
+}
+
+.shift__to {
+  position: relative;
+}
+
+.shift__to::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: var(--orange);
+}
+
+/* ---------- Stack mode ---------- */
+/* Cards share one grid cell, so the stage is exactly as tall as the tallest card */
+.problem.is-stack .problem__stage {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.problem.is-stack .shift {
+  --ease: cubic-bezier(0.65, 0, 0.35, 1);
+  grid-area: 1 / 1;
+  /* Front card sits right of the stage, so the fanned-out cards stay inside it */
+  margin-left: 20%;
+  transform-origin: left center;
+  transition: transform 0.7s var(--ease), opacity 0.7s var(--ease), filter 0.7s var(--ease);
+}
+
+.problem.is-stack .shift[data-d="0"] {
+  z-index: 3;
+}
+
+/* Cards behind fan out to the left, so a strip of each stays visible */
+.problem.is-stack .shift[data-d="1"] {
+  z-index: 2;
+  transform: translateX(-14%) scale(0.9);
+  opacity: 0.5;
+  filter: blur(1px);
+}
+
+.problem.is-stack .shift[data-d="2"] {
+  z-index: 1;
+  transform: translateX(-25%) scale(0.8);
+  opacity: 0.25;
+  filter: blur(2px);
+}
+
+/* Inside the front card the new way rises in.
+   The card at the back resets, so it plays again when the loop brings it to the front. */
+.problem.is-stack .shift__to > * {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease 0.35s, transform 0.5s var(--ease) 0.35s;
+}
+
+.problem.is-stack .shift__to::before {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.5s var(--ease) 0.3s;
+}
+
+.problem.is-stack .shift[data-d="0"] .shift__to > *,
+.problem.is-stack .shift[data-d="1"] .shift__to > * {
+  opacity: 1;
+  transform: none;
+}
+
+.problem.is-stack .shift[data-d="0"] .shift__to::before,
+.problem.is-stack .shift[data-d="1"] .shift__to::before {
+  transform: none;
+}
+
+
+@media (max-width: 900px) {
+  .problem__pin {
+    grid-template-columns: 1fr;
+  }
+
+  .shift__from,
+  .shift__to {
+    padding: 22px;
+  }
+
+  /* No deep drop shadow in the plain list: it would spill onto the white section below */
+  .shift {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
   }
 }

@@ -14,10 +14,14 @@ Warna, font, skala tipografi, dan logo mengikuti situs asli: https://whitespace-
 | File | Halaman |
 | --- | --- |
 | `index.html` | Home: hero, founder + 40+, Three ways we help, What the work looks like, Why Whitespace, CTA |
-| `about.html` | About: hero, How we show up, Across industries (6 grup industri) |
+| `about.html` | About: hero, How we show up (+ link ke Industries) |
+| `services.html` | Services: hero, Three ways we help (`ol.service-list > li.service-row`), AI at work (3 kartu insight) |
+| `industries.html` | Industries: hero, Industries we know (6 grup industri, pindahan dari About), How the work grows with a client (`ul.journeys.journeys--steps`) |
+| `insights.html` | Insights: filter (`js/insights.js`) + `div.insight-grid > article.insight-card` (kartu pertama `--featured`) |
+| `insights/<slug>.html` | 6 artikel pendek dari deck: `section.article-hero` + `.article` (`aside.article__aside` + `div.article__body`) + More insights |
 | `careers.html` | Careers: hero, Open roles |
 | `contact.html` | Contact: detail kantor + form (validasi terlihat; membuka aplikasi email; `?practice=<slug>` mengisi Topic, slug praktik lama juga mengisi Practice) |
-| `practices/<slug>.html` | 3 halaman pilar (menu "What we do"): hero, What we do, lalu section khusus pilar, Next |
+| `practices/<slug>.html` | 3 halaman pilar (menu "Services"): hero, What we do, lalu section khusus pilar, Next |
 
 Slug pilar: `ai-implementation`, `business-transformation`, `fractional-leadership`.
 Topic tambahan di form Contact: `repskill`, `sales-assessment`.

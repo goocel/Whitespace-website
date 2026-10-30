@@ -71,3 +71,34 @@ The page keeps one engagement per practice. Anonymized, client names withheld.
 | Ticketing technology | Revamped the business and operating models of a series A ticketing startup, establishing operational excellence. | Turnaround & transformation | 3 months |
 | Consumer electronics | Built an internal data infrastructure for a series A startup, turning it into a data-centric company. | Organizational productivity | Not disclosed |
 | Manufacturing & retail | Evaluated potential revenue streams from sustainable investments, opening strategic growth options. | Deals & growth, capital management | Not disclosed |
+
+## Home — "Three ways we help" points not shown
+
+The Home practice cards keep four points per practice (plus "Your whitespace"). These were the
+matrix cells before; most still appear on the practice pages.
+
+| Practice | Point no longer listed on Home | Now covered by |
+| --- | --- | --- |
+| AI Implementation | Process automation | Agents, automation and AI tools |
+| AI Implementation | Automated reporting · Chat-based AI assistant · Connected workflows and CRM · Document reading and OCR | AI in daily work |
+| AI Implementation | Leadership knowledge base · Team training and adoption | Knowledge capture and team training |
+| AI Implementation | IT team productivity · Blind-spot analysis | AI page, "AI at work" |
+| Business Transformation | Business model design | Corporate strategy and business model |
+| Business Transformation | Turnaround and restructuring · Lean operations and cost optimization | Lean operations and turnaround |
+| Business Transformation | Dashboards and BI | Transformation office, KPIs and BI |
+| Business Transformation | Performance and talent management | BT page, Organizational productivity |
+| Business Transformation | Partnerships, M&A and integration · New revenue models and pricing | BT page, Deals & growth |
+| Business Transformation | Fundraising and capital structure | BT page, Capital management |
+| Fractional Leadership | Interim CEO office · Interim COO · Interim CFO · Interim strategy lead | Interim C-level |
+| Fractional Leadership | Opening new markets · Winning customers | Business development as a service |
+| Fractional Leadership | Driving execution | Embedded partner |
+| Fractional Leadership | Building the leaders you have | Executive coaching |
+
+## Home — engagement example under "How it works"
+
+Removed from Home (user, 29 Oct). Still on `practices/fractional-leadership.html` as a client example.
+
+- Caption: Example · Security services · Client name withheld
+- Title: From strategy to AI-enabled sales.
+- Text: One engagement that grew step by step, from direction-setting to AI in the sales process.
+- Flow: Corporate strategy → Go-to-market transformation → Sales force enablement → AI quote-to-cash (AI step highlighted)

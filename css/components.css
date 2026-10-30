@@ -763,14 +763,36 @@
   font-size: 15px;
 }
 
-/* ---------- Comparison table (Why Whitespace) ---------- */
+/* ---------- Comparison table (Why Whitespace) ----------
+   The Whitespace column sits on a dark raised panel (.why__inner::before) that reaches
+   past the top and bottom of the table; the other two columns stay quiet. */
 .why__wrap {
   overflow-x: auto;
 }
 
-.why-table {
-  width: 100%;
+.why__inner {
+  position: relative;
   min-width: 720px;
+  padding-block: 28px;
+}
+
+.why__inner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 30%;
+  background:
+    radial-gradient(90% 50% at 100% 0%, rgba(242, 144, 42, 0.18), transparent 70%),
+    linear-gradient(180deg, var(--night-2), var(--night));
+  border-top: 3px solid var(--orange);
+  box-shadow: 0 40px 80px -30px rgba(18, 20, 23, 0.55);
+}
+
+.why-table {
+  position: relative;
+  width: 100%;
   border-collapse: collapse;
   font-size: 16px;
 }
@@ -781,17 +803,23 @@
   text-align: left;
   vertical-align: middle;
   border-bottom: 1px solid var(--line);
+  transition: background-color 0.3s ease;
 }
 
 .why-table thead th {
+  width: 21%;
+  padding-top: 0;
   font-size: var(--step-0);
   font-weight: 700;
   color: var(--ink);
   border-bottom: 1.5px solid var(--ink);
 }
 
-.why-table tbody th {
+.why-table thead th:first-child {
   width: 28%;
+}
+
+.why-table tbody th {
   padding-left: 0;
   font-weight: 650;
   color: var(--ink);
@@ -801,15 +829,34 @@
   color: var(--muted);
 }
 
+/* The Whitespace column: light text on the dark panel */
 .why-table .why-table__us {
-  background: var(--orange-soft);
-  color: var(--ink);
+  width: 30%;
+  padding-left: 32px;
+  color: #fff;
   font-weight: 600;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
 }
 
-/* Header cell looks like the others; the soft orange cells below mark the column */
 .why-table thead .why-table__us {
-  background: none;
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.why-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+/* Row under the pointer lights up across the table */
+.why-table tbody tr:hover > :not(.why-table__us) {
+  background: var(--cell);
+}
+
+.why-table tbody tr:hover > .why-table__us {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.why-table tbody tr:hover .mark--yes {
+  transform: scale(1.15);
 }
 
 .mark {
@@ -823,11 +870,16 @@
   vertical-align: middle;
   position: relative;
   top: -2px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .mark--yes {
   background: var(--orange);
   color: var(--ink);
+}
+
+.why-table__us .mark--yes {
+  box-shadow: 0 0 0 4px rgba(242, 144, 42, 0.18);
 }
 
 .mark--no {
@@ -1167,13 +1219,33 @@
     color: var(--muted);
   }
 
+  .why__inner {
+    min-width: 0;
+    padding-block: 0;
+  }
+
+  .why__inner::before {
+    display: none;
+  }
+
   .why-table .why-table__us {
+    width: auto;
     margin-top: 6px;
-    padding: 10px 12px;
+    padding: 12px 14px;
+    background: var(--night);
+    border-top: 2px solid var(--orange);
   }
 
   .why-table .why-table__us::before {
-    color: var(--orange-deep);
+    color: var(--orange);
+  }
+
+  .why-table tbody tr:hover > * {
+    background: none;
+  }
+
+  .why-table tbody tr:hover > .why-table__us {
+    background: var(--night);
   }
 }
 
@@ -1732,3 +1804,754 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* =====================================================================
+   Services, Industries and Insights (menu restructure, October 2026)
+   ===================================================================== */
+
+/* Section variants: tinted band, and a section that follows a hero without a rule */
+.section--tint {
+  background: var(--panel);
+}
+
+.section--flush {
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* Page hero without an illustration (Insights) */
+.page-hero--plain .lead {
+  max-width: 640px;
+  margin-top: 28px;
+}
+
+/* ---------- Service rows (services.html) ----------
+   One row per service: illustration, name, what it covers, arrow. The whole row is one link. */
+.service-list {
+  border-top: 1.5px solid var(--ink);
+}
+
+.service-row {
+  border-bottom: 1px solid var(--line);
+}
+
+.service-row__link {
+  position: relative;
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr) minmax(0, 1.1fr) 48px;
+  align-items: center;
+  gap: clamp(24px, 3vw, 56px);
+  padding-block: 36px;
+  color: inherit;
+}
+
+/* Full-width tint on hover, behind the row */
+.service-row__link::before {
+  content: "";
+  position: absolute;
+  inset: 0 calc(var(--gutter) * -1);
+  z-index: -1;
+  background: var(--panel);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.service-row__link:hover::before,
+.service-row__link:focus-visible::before {
+  opacity: 1;
+}
+
+.service-row__art .iso {
+  height: 130px;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.service-row__link:hover .service-row__art .iso {
+  transform: translateY(-6px);
+}
+
+.service-row__num {
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--orange-deep);
+}
+
+.service-row__head h3 {
+  font-size: var(--step-3);
+  font-weight: 750;
+  font-stretch: 110%;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--ink);
+}
+
+.service-row__lead {
+  margin-top: 12px;
+  font-size: var(--step-1);
+}
+
+.service-row__items {
+  display: grid;
+  gap: 10px;
+  font-size: 15px;
+}
+
+.service-row__items li {
+  position: relative;
+  padding-left: 20px;
+}
+
+.service-row__items li::before {
+  content: "";
+  position: absolute;
+  top: 0.55em;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  background: var(--orange);
+}
+
+.service-row__go {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  font-size: 20px;
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.service-row__link:hover .service-row__go {
+  background: var(--orange);
+  border-color: var(--orange);
+  transform: translateX(4px);
+}
+
+/* ---------- Client journeys with numbered steps (industries.html) ---------- */
+/* Cards align to the top, so opening a step only grows its own card */
+.journeys--steps {
+  align-items: start;
+  margin-bottom: 0;
+}
+
+.journey__steps {
+  margin-top: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* ---------- Insight cards (insights.html, services.html, under each article) ---------- */
+.insight-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  padding-top: 24px;
+  border-top: 1.5px solid var(--ink);
+}
+
+.insight-filter {
+  min-height: 40px;
+  padding: 0 16px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  background: none;
+  border: 1px solid var(--line-strong);
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.insight-filter:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.insight-filter[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--white);
+}
+
+.insight-filters__count {
+  margin-left: auto;
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+.insight-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 48px 24px;
+}
+
+.insight-card[hidden] {
+  display: none;
+}
+
+.insight-card__link {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  color: inherit;
+}
+
+.insight-card__art {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--cell);
+}
+
+.section--tint .insight-card__art {
+  background: var(--white);
+}
+
+/* Width and height both set, so tall illustrations (tower) shrink to fit instead of being cut off */
+.insight-card__art .iso {
+  width: 62%;
+  height: 78%;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.insight-card__link:hover .insight-card__art .iso {
+  transform: scale(1.06) translateY(-4px);
+}
+
+.insight-card__text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 12px;
+}
+
+.insight-card__meta {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange-deep);
+}
+
+.insight-card h2,
+.insight-card h3 {
+  font-size: var(--step-2);
+  font-weight: 700;
+  font-stretch: 105%;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  color: var(--ink);
+  transition: color 0.25s ease;
+}
+
+.insight-card__link:hover h2,
+.insight-card__link:hover h3 {
+  color: var(--orange-deep);
+}
+
+.insight-card__text > p:not(.insight-card__meta) {
+  font-size: 15px;
+}
+
+.insight-card .link-arrow {
+  margin-top: auto;
+  padding-top: 4px;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.insight-card__link:hover .link-arrow span {
+  transform: translateX(4px);
+}
+
+/* Featured: the first insight takes the whole row, art left and text right */
+.insight-card--featured {
+  grid-column: 1 / -1;
+}
+
+.insight-card--featured .insight-card__link {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--line);
+}
+
+.insight-card--featured .insight-card__art {
+  aspect-ratio: 16 / 10;
+  background:
+    radial-gradient(70% 60% at 80% 20%, rgba(242, 144, 42, 0.12), transparent 70%),
+    var(--cell);
+}
+
+.insight-card--featured .insight-card__art .iso {
+  width: 46%;
+  height: 74%;
+}
+
+.insight-card--featured h2 {
+  font-size: var(--step-3);
+  font-weight: 750;
+  font-stretch: 110%;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+}
+
+.insight-card--featured .insight-card__text > p:not(.insight-card__meta) {
+  font-size: var(--step-1);
+}
+
+.insight-card--featured .insight-card__text {
+  flex: none;
+  gap: 16px;
+}
+
+/* ---------- Article (insights/<slug>.html) ---------- */
+.article-hero {
+  padding-block: clamp(40px, 6vw, 88px) clamp(48px, 6vw, 96px);
+}
+
+.article-hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 96px);
+}
+
+.article-hero__meta {
+  margin-bottom: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange-deep);
+}
+
+.article-hero .title {
+  max-width: 14em;
+  font-size: clamp(34px, 4.4vw, 64px);
+}
+
+.article-hero .lead {
+  max-width: 620px;
+  margin-top: 24px;
+}
+
+.article-hero__art {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  max-height: 380px;
+  background: var(--panel);
+}
+
+.article-hero__art .iso {
+  width: 64%;
+  height: 78%;
+}
+
+.article {
+  display: grid;
+  grid-template-columns: minmax(180px, 260px) minmax(0, 760px);
+  gap: clamp(32px, 6vw, 120px);
+  padding-top: 40px;
+  border-top: 1.5px solid var(--ink);
+}
+
+.article__aside {
+  align-self: start;
+  position: sticky;
+  top: calc(var(--header-h) + 32px);
+}
+
+.article__facts {
+  display: grid;
+  gap: 20px;
+}
+
+.article__facts dt {
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.article__facts dd {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.article__facts a {
+  text-decoration: underline;
+  text-decoration-color: var(--orange);
+  text-underline-offset: 4px;
+}
+
+.article__body > * + * {
+  margin-top: 20px;
+}
+
+.article__body h2 {
+  margin-top: 56px;
+  font-size: var(--step-2);
+  font-weight: 700;
+  font-stretch: 105%;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.article__body h2:first-child {
+  margin-top: 0;
+}
+
+.article__body > p,
+.article__list {
+  font-size: var(--step-1);
+  line-height: 1.6;
+}
+
+.article__body .overlap,
+.article__body .flow,
+.article__body .approach,
+.article__body .tags {
+  margin-top: 28px;
+}
+
+.article__body .pullquote {
+  margin-top: 56px;
+}
+
+.article__list {
+  display: grid;
+  gap: 14px;
+}
+
+.article__list li {
+  position: relative;
+  padding-left: 24px;
+}
+
+.article__list li::before {
+  content: "";
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--orange);
+}
+
+.article__list strong {
+  color: var(--ink);
+}
+
+/* Narrow column: steps and flows go top to bottom */
+.approach--stack,
+.flow--stack {
+  grid-template-columns: 1fr;
+  grid-auto-flow: row;
+}
+
+.tags--wide li {
+  padding: 8px 14px;
+  font-size: 15px;
+  background: var(--panel);
+}
+
+.article__body .overlap {
+  grid-template-columns: 1fr;
+}
+
+@media (max-width: 1100px) {
+  .service-row__link {
+    grid-template-columns: 140px minmax(0, 1fr) 48px;
+  }
+
+  .service-row__items {
+    grid-column: 2 / 3;
+  }
+
+  .service-row__go {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .insight-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .insight-card--featured .insight-card__link,
+  .article-hero__inner,
+  .article {
+    grid-template-columns: 1fr;
+  }
+
+  .article-hero__art {
+    display: none;
+  }
+
+  .article__aside {
+    position: static;
+  }
+
+  .article__facts {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+
+  .journeys--steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .service-row__link {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .service-row__art {
+    display: none;
+  }
+
+  .service-row__items,
+  .service-row__go {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .insight-grid,
+  .journeys--steps {
+    grid-template-columns: 1fr;
+  }
+
+  .insight-filters__count {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+/* ---------- Points that open (li.point > button.point__toggle + div.point__panel) ----------
+   Opened on point by js/site.js (Home practice cards, Industries client journeys). Without JS every
+   point stays open. Plus icon turns into a cross when open. */
+.point + .point {
+  border-top: 1px solid var(--line);
+}
+
+.point__toggle {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  width: 100%;
+  padding: 13px 0;
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.4;
+  text-align: left;
+  color: var(--text);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.point__toggle:hover,
+.point.is-open .point__toggle {
+  color: var(--ink);
+}
+
+.point.is-open .point__toggle {
+  font-weight: 600;
+}
+
+/* Plus that turns into a cross when the point is open */
+.point__icon {
+  position: relative;
+  order: -1;
+  flex: none;
+  width: 10px;
+  height: 10px;
+  color: var(--muted);
+  transition: transform 0.35s var(--ease-out), color 0.2s ease;
+}
+
+.point__icon::before,
+.point__icon::after {
+  content: "";
+  position: absolute;
+  inset: 4.5px 0 auto;
+  height: 1px;
+  background: currentColor;
+}
+
+.point__icon::after {
+  transform: rotate(90deg);
+}
+
+.point__toggle:hover .point__icon {
+  color: var(--ink);
+}
+
+.point.is-open .point__icon {
+  transform: rotate(45deg);
+  color: var(--orange-deep);
+}
+
+.point__panel {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.45s var(--ease-out);
+}
+
+.point__panel > div {
+  overflow: hidden;
+}
+
+.point__panel p {
+  margin: 0 0 16px 4px;
+  padding: 2px 0 2px 18px;
+  border-left: 1px solid var(--line-strong);
+  font-size: 14px;
+  color: var(--text);
+}
+
+.point.is-open .point__panel p {
+  border-left-color: var(--orange);
+}
+
+.js .point:not(.is-open) .point__panel {
+  grid-template-rows: 0fr;
+}
+
+.point__panel .link-arrow {
+  display: inline-flex;
+  margin-top: 8px;
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .point__panel,
+  .point__icon {
+    transition: none;
+  }
+}
+
+/* Client journeys: numbered steps that open; number left, plus icon right */
+.journey__steps .point:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.journey__steps .point__toggle {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) 10px;
+  align-items: baseline;
+  gap: 0;
+  padding: 11px 0;
+  font-size: 15px;
+}
+
+.journey__steps .point__num {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.journey__steps .point__icon {
+  order: 0;
+  align-self: center;
+}
+
+.journey__steps .point:last-child .point__toggle {
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.journey__steps .point:last-child .point__num,
+.journey__steps .point.is-open .point__num {
+  color: var(--orange-deep);
+}
+
+.journey__steps .point__panel p {
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+/* ---------- Black and white bands, as on nalarx.com ----------
+   Content sections alternate: after the white hero, black, white, black … then the black CTA and
+   footer. Dark bands re-map the colour tokens, so the components inside them need no colours of
+   their own; the few with fixed light colours are re-coloured at the end of this block. */
+.section--dark {
+  --ink: var(--white);
+  --text: #c3c8ce;
+  --muted: var(--night-muted);
+  --line: var(--night-line);
+  --line-strong: #474c53;
+  --panel: var(--night-2);
+  --cell: #24282d;
+  --cell-dark: #2b3036;
+  --orange-deep: var(--orange);
+  --orange-soft: rgba(242, 144, 42, 0.14);
+  color: var(--text);
+  background: var(--night);
+}
+
+/* Black bands sit as rounded cards inset from the page edges, as on nalarx.com. The container
+   inside gets the inset back, so content still lines up with the white sections. */
+.section--dark {
+  --band-inset: clamp(8px, 1.2vw, 20px);
+  margin: var(--band-inset);
+  border-radius: clamp(20px, 2.4vw, 36px);
+  overflow: clip;
+}
+
+.section--dark > .container {
+  width: min(100% - 2 * (var(--gutter) - var(--band-inset)), var(--container));
+}
+
+/* The colour change marks the break between bands, so the hairline between sections goes */
+.section--dark,
+.section--dark + .section,
+.section--dark + .dark {
+  border-top: 0;
+}
+
+.section--dark .flow .flow__ai h4 {
+  color: var(--white);
+}
+
+/* A black band right before the black CTA + footer: leave a clear white gap between the two */
+main > .section--dark:last-child {
+  margin-bottom: clamp(32px, 5vw, 80px);
+}
+
+/* Fixed light colours inside a dark band */
+.section--dark .tags li {
+  background: var(--panel);
+}
+
+.section--dark .insight-card__art {
+  background: var(--cell);
+}
+
+/* Last line of a headline on a dark band: orange to light-orange gradient */
+.title-accent {
+  background: linear-gradient(100deg, var(--orange) 10%, #ffd2a1 90%);
+  /* Each wrapped line gets the full gradient */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+

@@ -137,6 +137,8 @@
     reveal(".approach > li", { stagger: 0.08 });
     reveal(".journeys > .journey", { stagger: 0.08 });
     reveal(".offer-grid > .offer", { stagger: 0.1 });
+    reveal(".service-list > .service-row", { stagger: 0.08 });
+    reveal(".insight-grid, .insight-filters");
     reveal(".pullquote, .why__wrap");
     reveal(".table-wrap");
     reveal(".next-link");

@@ -76,8 +76,13 @@
         return gsap.fromTo(state, { offset: 1 }, { offset: 0, ...vars, onStart: apply, onUpdate: apply });
       };
 
-      const tl = gsap.timeline({ paused: true });
+      // Loops while the chart is on screen: hold on break-even, fade the drawing out, start again.
+      const drawn = chart.querySelectorAll(".rw-line, .rw-pivot, .rw-end, .chart__label text:nth-child(2)");
+      const tl = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 0.5 });
       tl.set(goal, { autoAlpha: 0 })
+        .set(chart.querySelectorAll(".rw-line"), { autoAlpha: 1 }, 0)
+        // draw() writes the offset in onUpdate, which a repeat does not call: undraw both lines here
+        .call(() => chart.querySelectorAll(".rw-line").forEach((line) => (line.style.strokeDashoffset = "1")), null, 0)
         .add(draw(chart.querySelector(".rw-before"), { duration: 1.1, ease: "power2.in" }), 0)
         .fromTo(chart.querySelector(".rw-pivot"), { autoAlpha: 0, scale: 0, transformOrigin: "50% 50%" }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: "back.out(2.5)" }, 1)
         // Line and point share timing and ease, so the line ends exactly under the moving point.
@@ -85,8 +90,14 @@
         .fromTo(climb, { progress: 0 }, { progress: 1, ...CLIMB, onUpdate: moveEnd, onStart: moveEnd }, 1.3)
         .fromTo(end, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25 }, 1.3)
         .to(end, { scale: 1.45, transformOrigin: "50% 50%", duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out" }, 3.5)
-        .to(goal, { autoAlpha: 1, duration: 0.4 }, 3.5);
-      ScrollTrigger.create({ trigger: chart, start: "top 80%", once: true, onEnter: () => tl.play() });
+        .to(goal, { autoAlpha: 1, duration: 0.4 }, 3.5)
+        .to(drawn, { autoAlpha: 0, duration: 0.5, ease: "power1.in" }, 6.5);
+      ScrollTrigger.create({
+        trigger: chart,
+        start: "top 80%",
+        end: "bottom 20%",
+        onToggle: (self) => (self.isActive ? tl.play() : tl.pause()),
+      });
     }
 
     /* ---------- Home-only content reveals on scroll ---------- */
@@ -100,7 +111,21 @@
       });
     };
 
-    reveal(".matrix > .practice");
+    reveal(".solutions > .solution", { stagger: 0.1 });
+    reveal(".how-list > .how-step", { stagger: 0.08 });
     reveal(".case__text > *");
+
+    /* Comparison table: the Whitespace ticks pop in one by one */
+    if (document.querySelector(".why-table")) {
+      gsap.from(".why-table__us .mark", {
+        scale: 0,
+        duration: 0.6,
+        ease: "back.out(2.5)",
+        stagger: 0.08,
+        delay: 0.3,
+        clearProps: "transform",
+        scrollTrigger: { trigger: ".why-table", start: "top 75%", once: true },
+      });
+    }
   });
 })();

@@ -21,24 +21,28 @@
   <header class="header">
     <div class="container header__inner">
       <a href="index.html" class="logo" aria-label="Whitespace Solutions home">
-        <img src="assets/images/brand/logo.svg" alt="Whitespace Solutions" width="147" height="42" />
+        <img class="logo__on-light" src="assets/images/brand/logo.svg" alt="Whitespace Solutions" width="147" height="42" />
+        <img class="logo__on-dark" src="assets/images/brand/logo-white.svg" alt="" aria-hidden="true" width="147" height="42" />
       </a>
 
       <nav class="nav" id="nav" aria-label="Main">
         <ul class="nav__list">
-          <li><a href="about.html" class="nav__link">About</a></li>
+          <li><a href="insights.html" class="nav__link">Insights</a></li>
           <li class="nav__dropdown">
             <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-controls="practicesMenu">
-              What we do
+              Services
               <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
             </button>
             <ul class="nav__menu" id="practicesMenu">
               <li><a href="practices/ai-implementation.html"><strong>AI Implementation</strong><span>AI built into how your company runs: use-case assessment, agents and automation, team training.</span></a></li>
               <li><a href="practices/business-transformation.html"><strong>Business Transformation</strong><span>Fix what holds the business back: strategy, lean operations, deals, capital and a transformation office.</span></a></li>
               <li><a href="practices/fractional-leadership.html"><strong>Fractional Leadership</strong><span>Senior capacity without full-time hires: interim C-level, business development, executive coaching.</span></a></li>
+              <li><a href="services.html"><strong>All services</strong><span>How the three fit together, and where to start.</span></a></li>
             </ul>
           </li>
+          <li><a href="industries.html" class="nav__link">Industries</a></li>
           <li><a href="careers.html" class="nav__link">Careers</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
         </ul>
         <a href="contact.html" class="btn btn--dark">Start a conversation</a>
       </nav>
@@ -54,7 +58,7 @@
     <section class="hero">
       <div class="container hero__inner">
         <div class="hero__text">
-          <h1 class="display">Practical business transformation, now built around AI.</h1>
+          <h1 class="display">Practical business transformation, now built around AI</h1>
           <p class="lead">We help companies put AI to work inside their real business processes, and fix the business around it. One team that understands both the business and the technology.</p>
           <div class="hero__actions">
             <a href="contact.html" class="btn btn--orange">Start a conversation <span class="arrow" aria-hidden="true">→</span></a>
@@ -69,33 +73,50 @@
     </section>
 
     <!-- ================= THE PROBLEM ================= -->
-    <section class="section problem" id="problem">
-      <div class="container">
-        <p class="section-label">The problem</p>
-        <div class="split split--head">
-          <h2 class="title">Most advice<br /> stops at the<br /> slide deck.</h2>
+    <section class="section section--dark problem" id="problem">
+      <div class="container problem__pin">
+        <div class="problem__intro">
+          <p class="section-label">The problem</p>
+          <h2 class="title">Most advice<br /> stops at the<br /> <span class="title-accent">slide deck</span></h2>
           <p class="lead">Companies pay for strategy, then struggle to turn it into change. We don't hand over a deck and leave.</p>
         </div>
-
-        <div class="compare">
-          <p class="caption compare__head">What usually happens</p>
-          <p class="caption compare__head compare__head--to">What we do instead</p>
-
-          <div class="compare__row">
-            <div class="compare__from"><h3>Strategy without execution</h3><p>The report is delivered, the consultants leave.</p></div>
-            <span class="compare__arrow" aria-hidden="true">→</span>
-            <div class="compare__to"><h3>Hands-on execution</h3><p>We work inside the business until it runs.</p></div>
-          </div>
-          <div class="compare__row">
-            <div class="compare__from"><h3>Slow and theoretical</h3><p>Months of analysis before anything changes.</p></div>
-            <span class="compare__arrow" aria-hidden="true">→</span>
-            <div class="compare__to"><h3>Quick wins first</h3><p>Proven practices, applied fast, improved as we go.</p></div>
-          </div>
-          <div class="compare__row">
-            <div class="compare__from"><h3>No accountability</h3><p>Nobody owns whether it actually worked.</p></div>
-            <span class="compare__arrow" aria-hidden="true">→</span>
-            <div class="compare__to"><h3>Measured results</h3><p>Clear KPIs, tracked with you over time.</p></div>
-          </div>
+        <div class="problem__stage">
+          <article class="shift" data-d="0">
+            <div class="shift__from">
+              <p class="shift__tag">What usually happens</p>
+              <h3>Strategy without execution</h3>
+              <p>The report is delivered, the consultants leave.</p>
+            </div>
+            <div class="shift__to">
+              <p class="shift__tag">What we do instead</p>
+              <h3>Hands-on execution</h3>
+              <p>We work inside the business until it runs.</p>
+            </div>
+          </article>
+          <article class="shift" data-d="0">
+            <div class="shift__from">
+              <p class="shift__tag">What usually happens</p>
+              <h3>Slow and theoretical</h3>
+              <p>Months of analysis before anything changes.</p>
+            </div>
+            <div class="shift__to">
+              <p class="shift__tag">What we do instead</p>
+              <h3>Quick wins first</h3>
+              <p>Proven practices, applied fast, improved as we go.</p>
+            </div>
+          </article>
+          <article class="shift" data-d="0">
+            <div class="shift__from">
+              <p class="shift__tag">What usually happens</p>
+              <h3>No accountability</h3>
+              <p>Nobody owns whether it actually worked.</p>
+            </div>
+            <div class="shift__to">
+              <p class="shift__tag">What we do instead</p>
+              <h3>Measured results</h3>
+              <p>Clear KPIs, tracked with you over time.</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -105,109 +126,195 @@
       <div class="container">
         <p class="section-label">The solution</p>
         <div class="split split--head">
-          <h2 class="title">Three ways<br /> we help.</h2>
+          <h2 class="title">Three ways<br /> we help</h2>
           <p class="lead">AI first, grounded in business. AI only pays off when the process around it is right, so we do both, and lend you senior capacity when you need it.</p>
         </div>
 
-        <div class="matrix" id="practiceMatrix">
-          <article class="practice is-active" id="practice-ai">
-            <div class="practice__info">
-              <h3>AI Implementation</h3>
-              <div class="iso practice__art" data-illustration="ai"></div>
-              <a href="practices/ai-implementation.html" class="link-arrow">View practice <span aria-hidden="true">→</span></a>
-            </div>
-            <ul class="practice__cells">
-              <li class="cell">AI readiness and use-case assessment</li>
-              <li class="cell">Agents and AI tools</li>
-              <li class="cell">Process automation</li>
-              <li class="cell">Automated reporting</li>
-              <li class="cell">Chat-based AI assistant</li>
-              <li class="cell">Connected workflows and CRM</li>
-              <li class="cell">Document reading and OCR</li>
-              <li class="cell">Leadership knowledge base</li>
-              <li class="cell">IT team productivity</li>
-              <li class="cell">Blind-spot analysis</li>
-              <li class="cell">Team training and adoption</li>
-              <li class="cell cell--whitespace">Your whitespace</li>
+        <div class="solutions">
+          <article class="solution" id="practice-ai">
+            <header class="solution__head">
+              <div class="iso solution__art" data-illustration="ai" data-pad="0.4"></div>
+              <div>
+                <h3>AI Implementation</h3>
+                <p class="caption">Practice 01</p>
+              </div>
+              <p class="solution__lead">AI built into how your company runs.</p>
+            </header>
+            <ul class="solution__points">
+              <li class="point is-open">
+                <button type="button" class="point__toggle" aria-expanded="true" aria-controls="sol-ai-1">AI readiness and use-case assessment<span class="point__icon" aria-hidden="true"></span></button>
+                <div class="point__panel" id="sol-ai-1"><div><p>We find where AI pays off first: the processes, data, systems and controls that are ready, and the ones that are not yet.</p></div></div>
+              </li>
+              <li class="point">
+                <button type="button" class="point__toggle" aria-expanded="false" aria-controls="sol-ai-2">Agents, automation and AI tools<span class="point__icon" aria-hidden="true"></span></button>
+                <div class="point__panel" id="sol-ai-2"><div><p>Agents that take actions instead of only answering, automation that removes manual steps, and tools chosen for the need, not the vendor.</p></div></div>
+              </li>
+              <li class="point">
+                <button type="button" class="point__toggle" aria-expanded="false" aria-controls="sol-ai-3">AI in daily work<span class="point__icon" aria-hidden="true"></span></button>
+                <div class="point__panel" id="sol-ai-3"><div><p>Automated reports, chat-based assistants, document reading and workflows linked to your CRM, so data is entered once.</p></div></div>
+              </li>
+              <li class="point">
+                <button type="button" class="point__toggle" aria-expanded="false" aria-controls="sol-ai-4">Knowledge capture and team training<span class="point__icon" aria-hidden="true"></span></button>
+                <div class="point__panel" id="sol-ai-4"><div><p>Founder and senior know-how turned into answers the whole team can use, and a team trained to keep it running after we leave.</p></div></div>
+              </li>
+              <li class="point point--whitespace">
+                <button type="button" class="point__toggle" aria-expanded="false" aria-controls="sol-ai-5">Your whitespace<span class="point__icon" aria-hidden="true"></span></button>
+                <div class="point__panel" id="sol-ai-5"><div><p>Not on the list? Bring us one problem and we'll map it with you. <a href="contact.html" class="link-arrow">Start a conversation <span aria-hidden="true">→</span></a></p></div></div>
+              </li>
             </ul>
+            <a href="practices/ai-implementation.html" class="link-arrow solution__link">View practice <span aria-hidden="true">→</span></a>
           </article>
-
-          <article class="practice" id="practice-transformation">
-            <div class="practice__info">
-              <h3>Business Transformation</h3>
-              <div class="iso practice__art" data-illustration="turnaround"></div>
-              <a href="practices/business-transformation.html" class="link-arrow">View practice <span aria-hidden="true">→</span></a>
-            </div>
-            <ul class="practice__cells">
-              <li class="cell">360° diagnostic</li>
-              <li class="cell">Corporate strategy and roadmap</li>
-              <li class="cell">Business model design</li>
-              <li class="cell">Turnaround and restructuring</li>
-              <li class="cell">Lean operations and cost optimization</li>
-              <li class="cell">Transformation office, OKRs and KPIs</li>
-              <li class="cell">Dashboards and BI</li>
-              <li class="cell">Performance and talent management</li>
-              <li class="cell">Partnerships, M&amp;A and integration</li>
-              <li class="cell">New revenue models and pricing</li>
-              <li class="cell">Fundraising and capital structure</li>
-              <li class="cell cell--whitespace">Your whitespace</li>
+          <article class="solution" id="practice-transformation">
+            <header class="solution__head">
+              <div class="iso solution__art" data-illustration="turnaround" data-pad="0.4"></div>
+              <div>
+                <h3>Business Transformation</h3>
+                <p class="caption">Practice 02</p>
+              </div>
+              <p class="solution__lead">Fix what holds the business back.</p>
+            </header>
+            <ul class="solution__points">
+              <li class="point">
+                <button type="button" class="point__toggle" aria-expanded="false" aria-controls="sol-transformation-1">360° diagnostic<span class="point__icon" aria-hidden="true"></span></button>
+                <div class="point__panel" id="sol-transformation-1"><div><p>Strategy, governance, organization and processes: one honest picture of where the business stands.</p></div></div>
+              </li>
+              <li class="point">
+                <button type="button" class="point__toggle" aria-expanded="false" aria-controls="sol-transformation-2">Corporate strategy and business model<span class="point__icon" aria-hidden="true"></span></button>
+                <div class="point__panel" id="sol-transformation-2"><div><p>Direction, a business model and a roadmap the leadership team can actually run.</p></div></div>
+              </li>
+              <li class="point">
+                <button type="button" class="point__toggle" aria-expanded="false" aria-controls="sol-transformation-3">Lean operations and turnaround<span class="point__icon" aria-hidden="true"></span></button>
+                <div class="point__panel" id="sol-transformation-3"><div><p>Remove waste and fix process bottlenecks, or turn around a business under pressure.</p></div></div>
+              </li>
+              <li class="point">
+                <button type="button" class="point__toggle" aria-expanded="false" aria-controls="sol-transformation-4">Transformation office, KPIs and BI<span class="point__icon" aria-hidden="true"></span></button>
+                <div class="point__panel" id="sol-transformation-4"><div><p>OKRs, KPIs and dashboards for one view of performance, with steady follow-through after the plan is agreed.</p></div></div>
+              </li>
+              <li class="point point--whitespace">
+                <button type="button" class="point__toggle" aria-expanded="false" aria-controls="sol-transformation-5">Your whitespace<span class="point__icon" aria-hidden="true"></span></button>
+                <div class="point__panel" id="sol-transformation-5"><div><p>Not on the list? Bring us one problem and we'll map it with you. <a href="contact.html" class="link-arrow">Start a conversation <span aria-hidden="true">→</span></a></p></div></div>
+              </li>
             </ul>
+            <a href="practices/business-transformation.html" class="link-arrow solution__link">View practice <span aria-hidden="true">→</span></a>
           </article>
-
-          <article class="practice" id="practice-fractional">
-            <div class="practice__info">
-              <h3>Fractional Leadership</h3>
-              <div class="iso practice__art" data-illustration="fractional"></div>
-              <a href="practices/fractional-leadership.html" class="link-arrow">View practice <span aria-hidden="true">→</span></a>
-            </div>
-            <ul class="practice__cells">
-              <li class="cell">Interim CEO office</li>
-              <li class="cell">Interim COO</li>
-              <li class="cell">Interim CFO</li>
-              <li class="cell">Interim strategy lead</li>
-              <li class="cell">Business development as a service</li>
-              <li class="cell">Opening new markets</li>
-              <li class="cell">Winning customers</li>
-              <li class="cell">Embedded partner</li>
-              <li class="cell">Driving execution</li>
-              <li class="cell">Executive coaching</li>
-              <li class="cell">Building the leaders you have</li>
-              <li class="cell cell--whitespace">Your whitespace</li>
+          <article class="solution" id="practice-fractional">
+            <header class="solution__head">
+              <div class="iso solution__art" data-illustration="fractional" data-pad="0.4"></div>
+              <div>
+                <h3>Fractional Leadership</h3>
+                <p class="caption">Practice 03</p>
+              </div>
+              <p class="solution__lead">Senior capacity, without full-time hires.</p>
+            </header>
+            <ul class="solution__points">
+              <li class="point">
+                <button type="button" class="point__toggle" aria-expanded="false" aria-controls="sol-fractional-1">Interim C-level<span class="point__icon" aria-hidden="true"></span></button>
+                <div class="point__panel" id="sol-fractional-1"><div><p>CEO office, COO, CFO or strategy roles, filled while you build or search.</p></div></div>
+              </li>
+              <li class="point">
+                <button type="button" class="point__toggle" aria-expanded="false" aria-controls="sol-fractional-2">Business development as a service<span class="point__icon" aria-hidden="true"></span></button>
+                <div class="point__panel" id="sol-fractional-2"><div><p>Open new markets and win customers, with a team that sells for you.</p></div></div>
+              </li>
+              <li class="point">
+                <button type="button" class="point__toggle" aria-expanded="false" aria-controls="sol-fractional-3">Embedded partner<span class="point__icon" aria-hidden="true"></span></button>
+                <div class="point__panel" id="sol-fractional-3"><div><p>We sit in the business and drive execution, week after week.</p></div></div>
+              </li>
+              <li class="point">
+                <button type="button" class="point__toggle" aria-expanded="false" aria-controls="sol-fractional-4">Executive coaching<span class="point__icon" aria-hidden="true"></span></button>
+                <div class="point__panel" id="sol-fractional-4"><div><p>Build the leaders you already have.</p></div></div>
+              </li>
+              <li class="point point--whitespace">
+                <button type="button" class="point__toggle" aria-expanded="false" aria-controls="sol-fractional-5">Your whitespace<span class="point__icon" aria-hidden="true"></span></button>
+                <div class="point__panel" id="sol-fractional-5"><div><p>Not on the list? Bring us one problem and we'll map it with you. <a href="contact.html" class="link-arrow">Start a conversation <span aria-hidden="true">→</span></a></p></div></div>
+              </li>
             </ul>
+            <a href="practices/fractional-leadership.html" class="link-arrow solution__link">View practice <span aria-hidden="true">→</span></a>
           </article>
         </div>
       </div>
     </section>
 
     <!-- ================= HOW IT WORKS ================= -->
-    <section class="section work" id="how">
+    <section class="section section--dark work" id="how">
       <div class="container">
         <p class="section-label">How it works</p>
         <div class="split split--head">
-          <h2 class="title">Start small,<br /> prove it,<br /> then grow.</h2>
+          <h2 class="title">Start small,<br /> prove it,<br /> <span class="title-accent">then grow</span></h2>
           <p class="lead">Four steps, and you decide at the end of each one.</p>
         </div>
 
-        <ol class="approach">
-          <li><span class="approach__num">1</span><h3>Talk it through</h3><p>A first conversation about where the business is stuck.</p></li>
-          <li><span class="approach__num">2</span><h3>Diagnose</h3><p>We look at the process, data and people behind the problem.</p></li>
-          <li><span class="approach__num">3</span><h3>Build with your team</h3><p>Early changes that pay back, with AI where it fits.</p></li>
-          <li><span class="approach__num">4</span><h3>Run and measure</h3><p>Your team runs it, and we check results against the goals set at the start.</p></li>
+        <ol class="how-list">
+          <li class="how-step is-open">
+            <button type="button" class="how-step__toggle" aria-expanded="true" aria-controls="how-01">
+              <span class="how-step__title"><span class="how-step__dash" aria-hidden="true"></span><span class="how-step__num">01</span>Talk it through</span>
+            </button>
+            <div class="how-step__body" id="how-01">
+              <div class="how-step__visual"><div>
+                <div class="how-card" aria-hidden="true">
+                  <p class="how-card__label">Bring to the first conversation</p>
+                  <ul class="how-card__rows">
+                    <li><span>One process</span><span>where it leaks</span></li>
+                    <li><span>Last month's exceptions</span><span>cases that needed a person</span></li>
+                    <li><span>The person who runs it</span><span>knows where it breaks</span></li>
+                  </ul>
+                </div>
+              </div></div>
+              <p class="how-step__text">A first conversation about where the business is stuck.</p>
+            </div>
+          </li>
+          <li class="how-step">
+            <button type="button" class="how-step__toggle" aria-expanded="false" aria-controls="how-02">
+              <span class="how-step__title"><span class="how-step__dash" aria-hidden="true"></span><span class="how-step__num">02</span>Diagnose</span>
+            </button>
+            <div class="how-step__body" id="how-02">
+              <div class="how-step__visual"><div>
+                <div class="how-card" aria-hidden="true">
+                  <p class="how-card__label">Where does the business leak?</p>
+                  <ul class="how-card__chips">
+                    <li>Time</li>
+                    <li>Cash</li>
+                    <li>Control</li>
+                  </ul>
+                  <p class="how-card__foot"><span>Looked at</span><span>Process · Data · People</span></p>
+                </div>
+              </div></div>
+              <p class="how-step__text">We look at the process, data and people behind the problem.</p>
+            </div>
+          </li>
+          <li class="how-step">
+            <button type="button" class="how-step__toggle" aria-expanded="false" aria-controls="how-03">
+              <span class="how-step__title"><span class="how-step__dash" aria-hidden="true"></span><span class="how-step__num">03</span>Build with your team</span>
+            </button>
+            <div class="how-step__body" id="how-03">
+              <div class="how-step__visual"><div>
+                <div class="how-card" aria-hidden="true">
+                  <p class="how-card__label">Picking the quick wins</p>
+                  <p class="how-card__formula"><span>Value</span>×<span>Feasibility</span>×<span>Risk</span></p>
+                  <p class="how-card__foot"><span>Built</span><span>with your team, not for it</span></p>
+                </div>
+              </div></div>
+              <p class="how-step__text">Early changes that pay back, with AI where it fits.</p>
+            </div>
+          </li>
+          <li class="how-step">
+            <button type="button" class="how-step__toggle" aria-expanded="false" aria-controls="how-04">
+              <span class="how-step__title"><span class="how-step__dash" aria-hidden="true"></span><span class="how-step__num">04</span>Run and measure</span>
+            </button>
+            <div class="how-step__body" id="how-04">
+              <div class="how-step__visual"><div>
+                <div class="how-card" aria-hidden="true">
+                  <p class="how-card__label">At the end of each step</p>
+                  <ul class="how-card__rows how-card__rows--check">
+                    <li><span>Goals set at the start</span><span>✓</span></li>
+                    <li><span>Results checked with you</span><span>✓</span></li>
+                  </ul>
+                  <p class="how-card__foot"><span>Next step</span><span>Your call</span></p>
+                </div>
+              </div></div>
+              <p class="how-step__text">Your team runs it, and we check results against the goals set at the start.</p>
+            </div>
+          </li>
         </ol>
-
-        <article class="case-study work__example">
-          <div class="case-study__text">
-            <p class="caption">Example · Security services · Client name withheld</p>
-            <h3 class="subtitle">From strategy to AI-enabled sales.</h3>
-            <p>One engagement that grew step by step, from direction-setting to AI in the sales process.</p>
-          </div>
-          <ol class="flow">
-            <li><h4>Corporate strategy</h4></li>
-            <li><h4>Go-to-market transformation</h4></li>
-            <li><h4>Sales force enablement</h4></li>
-            <li class="flow__ai"><h4>AI quote-to-cash</h4></li>
-          </ol>
-        </article>
 
         <div class="case">
           <figure class="case__chart">
@@ -256,59 +363,62 @@
       <div class="container">
         <p class="section-label">Why Whitespace</p>
         <div class="split split--head">
-          <h2 class="title">Business sense<br /> and AI in<br /> one team.</h2>
+          <h2 class="title">Business sense<br /> and AI in<br /> one team</h2>
           <p class="lead">Traditional consultants know the business but rarely build. Software vendors build, but only their own tool. We do both, and stay through rollout.</p>
         </div>
 
-        <div class="why__wrap">
-          <table class="why-table">
-            <thead>
-              <tr>
-                <th scope="col"><span class="sr-only">Criteria</span></th>
-                <th scope="col">Traditional consulting</th>
-                <th scope="col">AI / software vendor</th>
-                <th scope="col" class="why-table__us">Whitespace Solutions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Understands your business processes</th>
-                <td data-label="Traditional consulting"><span class="mark mark--yes" role="img" aria-label="Yes">✓</span>Yes</td>
-                <td data-label="AI / software vendor"><span class="mark mark--no" role="img" aria-label="No">✕</span>Limited</td>
-                <td class="why-table__us" data-label="Whitespace Solutions"><span class="mark mark--yes" role="img" aria-label="Yes">✓</span>Yes, from 40+ companies</td>
-              </tr>
-              <tr>
-                <th scope="row">Builds AI into your workflows</th>
-                <td data-label="Traditional consulting"><span class="mark mark--no" role="img" aria-label="No">✕</span>Rarely</td>
-                <td data-label="AI / software vendor"><span class="mark mark--part" role="img" aria-label="Partly">~</span>Their own tool only</td>
-                <td class="why-table__us" data-label="Whitespace Solutions"><span class="mark mark--yes" role="img" aria-label="Yes">✓</span>Tool-neutral, fit to need</td>
-              </tr>
-              <tr>
-                <th scope="row">Executes hands-on with your team</th>
-                <td data-label="Traditional consulting"><span class="mark mark--no" role="img" aria-label="No">✕</span>Report and leave</td>
-                <td data-label="AI / software vendor"><span class="mark mark--part" role="img" aria-label="Partly">~</span>Setup and support</td>
-                <td class="why-table__us" data-label="Whitespace Solutions"><span class="mark mark--yes" role="img" aria-label="Yes">✓</span>Alongside your team</td>
-              </tr>
-              <tr>
-                <th scope="row">Thinks like the owner</th>
-                <td data-label="Traditional consulting"><span class="mark mark--part" role="img" aria-label="Partly">~</span>Framework-driven</td>
-                <td data-label="AI / software vendor"><span class="mark mark--no" role="img" aria-label="No">✕</span>Product-driven</td>
-                <td class="why-table__us" data-label="Whitespace Solutions"><span class="mark mark--yes" role="img" aria-label="Yes">✓</span>Founder's lens</td>
-              </tr>
-              <tr>
-                <th scope="row">Practical and affordable</th>
-                <td data-label="Traditional consulting"><span class="mark mark--no" role="img" aria-label="No">✕</span>Premium fees</td>
-                <td data-label="AI / software vendor"><span class="mark mark--part" role="img" aria-label="Partly">~</span>Licences add up</td>
-                <td class="why-table__us" data-label="Whitespace Solutions"><span class="mark mark--yes" role="img" aria-label="Yes">✓</span>Fees sized to the problem</td>
-              </tr>
-              <tr>
-                <th scope="row">Accountable for results</th>
-                <td data-label="Traditional consulting"><span class="mark mark--no" role="img" aria-label="No">✕</span>Ends at delivery</td>
-                <td data-label="AI / software vendor"><span class="mark mark--part" role="img" aria-label="Partly">~</span>Uptime, not outcomes</td>
-                <td class="why-table__us" data-label="Whitespace Solutions"><span class="mark mark--yes" role="img" aria-label="Yes">✓</span>Goals measured with you</td>
-              </tr>
-            </tbody>
-          </table>
+        <!-- Comparison table hidden for now; remove "hidden" to bring it back -->
+        <div class="why__wrap" hidden>
+          <div class="why__inner">
+            <table class="why-table">
+              <thead>
+                <tr>
+                  <th scope="col"><span class="sr-only">Criteria</span></th>
+                  <th scope="col">Traditional consulting</th>
+                  <th scope="col">AI / software vendor</th>
+                  <th scope="col" class="why-table__us">Whitespace Solutions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Understands your business processes</th>
+                  <td data-label="Traditional consulting"><span class="mark mark--yes" role="img" aria-label="Yes">✓</span>Yes</td>
+                  <td data-label="AI / software vendor"><span class="mark mark--no" role="img" aria-label="No">✕</span>Limited</td>
+                  <td class="why-table__us" data-label="Whitespace Solutions"><span class="mark mark--yes" role="img" aria-label="Yes">✓</span>Yes, from 40+ companies</td>
+                </tr>
+                <tr>
+                  <th scope="row">Builds AI into your workflows</th>
+                  <td data-label="Traditional consulting"><span class="mark mark--no" role="img" aria-label="No">✕</span>Rarely</td>
+                  <td data-label="AI / software vendor"><span class="mark mark--part" role="img" aria-label="Partly">~</span>Their own tool only</td>
+                  <td class="why-table__us" data-label="Whitespace Solutions"><span class="mark mark--yes" role="img" aria-label="Yes">✓</span>Tool-neutral, fit to need</td>
+                </tr>
+                <tr>
+                  <th scope="row">Executes hands-on with your team</th>
+                  <td data-label="Traditional consulting"><span class="mark mark--no" role="img" aria-label="No">✕</span>Report and leave</td>
+                  <td data-label="AI / software vendor"><span class="mark mark--part" role="img" aria-label="Partly">~</span>Setup and support</td>
+                  <td class="why-table__us" data-label="Whitespace Solutions"><span class="mark mark--yes" role="img" aria-label="Yes">✓</span>Alongside your team</td>
+                </tr>
+                <tr>
+                  <th scope="row">Thinks like the owner</th>
+                  <td data-label="Traditional consulting"><span class="mark mark--part" role="img" aria-label="Partly">~</span>Framework-driven</td>
+                  <td data-label="AI / software vendor"><span class="mark mark--no" role="img" aria-label="No">✕</span>Product-driven</td>
+                  <td class="why-table__us" data-label="Whitespace Solutions"><span class="mark mark--yes" role="img" aria-label="Yes">✓</span>Founder's lens</td>
+                </tr>
+                <tr>
+                  <th scope="row">Practical and affordable</th>
+                  <td data-label="Traditional consulting"><span class="mark mark--no" role="img" aria-label="No">✕</span>Premium fees</td>
+                  <td data-label="AI / software vendor"><span class="mark mark--part" role="img" aria-label="Partly">~</span>Licences add up</td>
+                  <td class="why-table__us" data-label="Whitespace Solutions"><span class="mark mark--yes" role="img" aria-label="Yes">✓</span>Fees sized to the problem</td>
+                </tr>
+                <tr>
+                  <th scope="row">Accountable for results</th>
+                  <td data-label="Traditional consulting"><span class="mark mark--no" role="img" aria-label="No">✕</span>Ends at delivery</td>
+                  <td data-label="AI / software vendor"><span class="mark mark--part" role="img" aria-label="Partly">~</span>Uptime, not outcomes</td>
+                  <td class="why-table__us" data-label="Whitespace Solutions"><span class="mark mark--yes" role="img" aria-label="Yes">✓</span>Goals measured with you</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <ul class="values values--3">
@@ -338,7 +448,7 @@
       <div class="container">
         <div class="contact__hero">
           <div class="contact__box">
-            <h2 class="title">Where is your<br /> whitespace?</h2>
+            <h2 class="title"><span class="title-accent">Where is your</span><br /> whitespace?</h2>
             <p>Bring one problem to a discovery session: the process where time, cash or control leaks, last month's exceptions, and the person who runs it. We'll map it with you.</p>
             <a href="contact.html" class="btn btn--orange">Start a conversation <span class="arrow" aria-hidden="true">→</span></a>
           </div>
@@ -357,7 +467,7 @@
             <p>Practical business transformation, now built around AI. Practical. Applicable. Affordable.</p>
           </div>
           <div>
-            <h4>What we do</h4>
+            <h4>Services</h4>
             <ul>
               <li><a href="practices/ai-implementation.html">AI Implementation</a></li>
               <li><a href="practices/business-transformation.html">Business Transformation</a></li>
@@ -367,8 +477,9 @@
           <div>
             <h4>Firm</h4>
             <ul>
+              <li><a href="insights.html">Insights</a></li>
+              <li><a href="industries.html">Industries</a></li>
               <li><a href="about.html">About</a></li>
-              <li><a href="index.html#how">How it works</a></li>
               <li><a href="careers.html">Careers</a></li>
               <li><a href="contact.html">Contact</a></li>
             </ul>

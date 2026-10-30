@@ -1,6 +1,6 @@
 # Handoff — Whitespace Solutions Website
 
-Diperbarui **2026-10-22** dari sesi utama (`main`, commit terakhir `5f64522`). Baca file ini dulu sebelum mengerjakan
+Diperbarui **2026-10-30** dari sesi utama (`main`). Baca file ini dulu sebelum mengerjakan
 apa pun, lalu `design-reference/README.md` untuk aturan gaya dan daftar komponen lengkap.
 
 ## Ringkasan
@@ -33,27 +33,33 @@ Gaya visual meniru situs acuan https://whitespace-web-lilac.vercel.app/ (Next.js
 
 ## Navigasi & isi halaman
 
-Menu (**final, jangan diubah tanpa ditanya**): **About · What we do ▾ · Careers · [Start a conversation]**.
-Dropdown "What we do" = panel 2×2 berisi 3 pilar (kotak ketiga melebar). Tidak ada menu "Who we serve", tidak ganti nama ke
-"Solutions". Deals & Growth dan Capital Management tetap praktik **di dalam** Business Transformation, bukan pilar.
+Menu (30 Okt, meniru EY/KPMG): **Insights · Services ▾ · Industries · Careers · About · [Start a conversation]** — sama di
+**semua** halaman termasuk Home. Dropdown Services = panel 2×2: 3 pilar + "All services" (`services.html`).
+Header bergaya nalarx.com: di paling atas penuh & polos; setelah scroll (`.is-scrolled`) menyempit jadi satu bar membulat
+melayang. `.is-dark` (dari `js/site.js`) saat header di atas band gelap → bar, teks, tombol dan logo (`logo__on-light` /
+`logo__on-dark`, dua `<img>` di header) ganti versi gelap. Menu aktif = teks oranye.
 
-| Halaman | Section (urut) — `[LABEL]` = label section |
+Section isi berselang-seling: hero putih → **band hitam** (`section--dark`, kartu membulat masuk dari tepi, baris terakhir judul
+`span.title-accent` gradasi oranye) → putih → hitam … → blok CTA + footer hitam.
+
+| Halaman | Section (urut) — **tebal** = band hitam |
 | --- | --- |
-| `index.html` Home | Hero 3D "Practical business transformation, now built around AI." (Start a conversation · How it works → `#how`) → `[THE PROBLEM]` "Most advice stops at the slide deck." (3 baris sebelum→sesudah) → `[THE SOLUTION]` "Three ways we help." (matrix 3 pilar) → `[HOW IT WORKS]` "Start small, prove it, then grow." (4 langkah + 1 contoh engagement Security services + grafik runway EBITDA beranimasi) → `[WHY WHITESPACE]` "Business sense and AI in one team." (tabel + kartu Practical/Applicable/Affordable) → CTA "Where is your whitespace?" |
-| `about.html` | Hero 3D "We're not just consultants." (morph 28 kubus) → `[OUR COMMITMENTS]` "How we show up" (5) → `[WHO WE WORK WITH]` "Across industries" (18 industri dalam 6 grup) → CTA. Workflow 9 langkah dihapus; `about.html#workflow` tidak ada lagi |
-| `practices/ai-implementation.html` | Hero 3D (`ai`) → `[CORE CAPABILITIES]` What we do (3) → `[HOW WE START]` "Our approach to AI: start with the problem." (5 langkah) → `[CASE STUDIES]` AI at work (3 kasus + 6 use case) → `[WORKING MODELS]` Three ways to work with us (3 diagram beranimasi) → CTA "Bring us one problem." |
-| `practices/business-transformation.html` | Hero 3D (`turnaround`) → `[CORE CAPABILITIES]` What we do (4) → `[OUR PRACTICES]` Services `#services` (4 praktik) → `[TRACK RECORD]` Engagements (4 baris, satu per praktik) → CTA |
-| `practices/fractional-leadership.html` | Hero 3D (`capital`) → `[CORE CAPABILITIES]` What we do (4) → `[CLIENT EXAMPLES]` What it looks like (2 alur klien) → CTA |
-| `careers.html` | Hero 3D (`careers`, kubus oranye naik tangga) → Open roles (tanpa label, sengaja) → CTA "Don't see your role?" |
-| `contact.html` | Form: Topic = 3 pilar + `repskill` + `sales-assessment`; field **Practice** muncul hanya untuk Business Transformation. Validasi dengan pesan terlihat; submit = `mailto:` (tanpa backend), pesan status jujur (tidak bilang terkirim); tanpa JS: `action="mailto:…"` |
-| 4 file praktik lama | Redirect (`meta refresh`) ke `business-transformation.html#services`; slug lama di `?practice=` mengisi Topic BT + Practice |
+| `index.html` Home | Hero 3D → **The problem** (3 kartu bertumpuk, loop 2,8 dtk, berhenti saat hover / di luar layar; HP = daftar biasa) → The solution (3 kartu, poin terbuka saat hover) → **How it works** (4 baris ala Nalar, kembali ke baris 1 saat kursor keluar; grafik runway EBITDA loop) → Why Whitespace (tabel perbandingan **disembunyikan** `hidden`, kartu Practical/Applicable/Affordable) → CTA |
+| `services.html` | Hero 3D → **Three ways we help** (`ol.service-list > li.service-row`) → AI at work (3 kartu case study) |
+| `industries.html` | Hero 3D → **Industries we know** (6 grup, pindahan dari About) → How the work grows with a client (4 kartu, tiap langkah dropdown `data-points`) |
+| `insights.html` | Hero polos → filter All/Perspectives/Case studies (`js/insights.js`) + grid kartu (kartu pertama `--featured`) |
+| `insights/<slug>.html` (6) | Artikel pendek dari deck hal. 4, 5, 7, 8, 9, 10: hero + kolom info + isi → **More insights** |
+| `about.html` | Hero 3D → **How we show up** (+ link "Next: Industries we know") |
+| `careers.html` | Hero 3D → **Open roles** |
+| 3 halaman pilar | AI: **What we do** → approach → **AI at work** → working models. BT: **What we do** → Services → **Engagements**. FL: **What we do** → client examples. Breadcrumb = Services |
+| `contact.html` | Form, tidak berubah |
 
-- Footer semua halaman: What we do (3 pilar) · Firm (About · How it works → `index.html#how` · Careers · Contact) · Office.
-- **Repskill & Sales Organization Assessment** sengaja tidak tampil di halaman (user: "terlalu sales"); hanya lewat Topic Contact.
-- Case study AI **tetap di halaman AI** (keputusan user 22 Okt). Halaman "Case studies" sendiri baru masuk akal kalau sudah ada
-  4–6 kasus nyata dengan hasil terukur dari ketiga pilar.
-- Konten yang diturunkan dari halaman disimpan utuh di `design-reference/content-archive.md`.
-- `reports/Perbandingan-Website-vs-Company-Overview.pdf` = analisis website vs deck — **jangan di-commit** (repo public).
+- Footer semua halaman: Services (3 pilar) · Firm (Insights · Industries · About · Careers · Contact) · Office.
+- Teks penjelasan yang **ditulis sendiri** (bukan dari deck) dan perlu review user: poin kartu The Solution, frasa `how-card`,
+  langkah client journeys di Industries, kalimat penghubung di artikel Insights.
+- **Repskill & Sales Organization Assessment** sengaja tidak tampil (user: "terlalu sales"); hanya lewat Topic Contact.
+- Konten yang diturunkan dari halaman disimpan di `design-reference/content-archive.md`.
+- `reports/` = analisis website vs deck — **jangan di-commit** (repo public).
 
 ## Struktur file
 
@@ -81,16 +87,16 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
 
 **Layout & gaya**
 - `--gutter: clamp(16px, 4vw, 72px)`, `--container: 1760px`, jarak section `--section-space: clamp(64px, 6vw, 96px)`.
-- **Header = sama persis dengan acuan**: link menu 15px / tebal 550 / area klik 44px (padding 0 14px), tombol header 44px tinggi
-  (padding 0 18px, 15px/550), logo tinggi 43px, header total 64px (termasuk garis 1px), tombol menu HP 44×44.
-  Halaman aktif = garis bawah oranye (`aria-current="page"`; "What we do" di halaman pilar pakai `.is-current`).
-  Panel menu HP selebar layar.
+- **Header** (`--header-h` 76px desktop / 64px HP): link 15px/550, area klik 44px; logo 34px di bar; tombol pil.
+  Halaman aktif = teks oranye (`aria-current="page"`; tombol Services di halaman layanan pakai `.is-current`).
+  Dropdown & panel menu HP = kartu membulat di bawah bar.
 - CTA + footer = satu blok gelap. Judul section dipotong manual dengan `<br />`, huruf kecil biasa (bukan Title Case).
-- Warna, font Archivo, skala tipografi, logo = sama dengan acuan. Sudut kotak **tidak membulat**; oranye hanya aksen.
+- Warna, font Archivo, skala tipografi, logo = sama dengan acuan. Sudut kotak tidak membulat, **kecuali** header, dropdown dan band hitam (gaya Nalar); oranye hanya aksen.
 - Tombol oranye: panel hitam menyapu dari kiri saat hover. CTA global = **"Start a conversation"**.
 - Teks yang diketik di form = ukuran sama dengan label (`--step--1`).
 - Hero Home: matrix `width: 170%; margin: -4% -76% -26% 6%` di desktop, `135%` di HP. Disetel user bertahap — jangan diubah.
-- Tabel Why: judul kolom "Whitespace Solutions" tanpa blok oranye; kolomnya dibedakan sel oranye muda saja.
+- Tabel Why (sekarang `hidden`): kolom Whitespace = panel hitam terangkat; centang muncul bergiliran.
+- Judul section di Home **tanpa titik di akhir**.
 
 **Isi & teks**
 - **Tidak boleh ada konten dobel dalam satu halaman** (kalimat/judul sama di dua section). Cek setiap menambah konten.
@@ -134,7 +140,8 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
 - **Urutan gambar kubus SVG**: kubus yang bergerak digambar menurut posisi terdekat antara awal & akhir; kubus yang jatuh dari
   atas ke samping kubus lain bisa menutupi tetangganya. Untuk ilustrasi padat: gerak menyamping / dari bawah / fade di tempat.
 - **GSAP membulatkan `stroke-dashoffset`** → garis `pathLength="1"` meloncat. Tulis nilainya lewat proxy + `onUpdate` (`draw()` di home-motion.js).
-- **Header & footer ditulis ulang di setiap halaman** (7 halaman + `design-reference/page-template.html`). Ubah semuanya.
+- **Header & footer ditulis ulang di setiap halaman** (16 halaman + `design-reference/page-template.html`). Ubah semuanya.
+  Halaman Services/Industries/Insights/artikel dibuat dengan generator di scratchpad sesi 30 Okt (tidak ikut repo) — edit HTML-nya langsung.
 - Semua path **relatif** (situs jalan di sub-folder `/Whitespace-website/`). Tiap halaman wajib
   `<script>document.documentElement.classList.add("js");</script>` di `<head>`.
 - `why-table`: setiap `td` wajib `data-label` (di HP jadi kartu). `.field` punya `display:flex` → atribut `hidden` butuh `.field[hidden]`.
@@ -167,5 +174,6 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
 5. Ilustrasi `deck`, ikon fase proses (`pre`/`engagement`/`partnership`) dan `night` belum sama dengan acuan. Kubus di luar hero
    (ikon kartu, blok CTA gelap) masih SVG.
 6. Daftar industri situs (18, dalam 6 grup) beda dengan deck (13).
+9. Insights belum punya tanggal per artikel selain "October 2026" (tanggal deck); artikel baru = salin salah satu file di `insights/`.
 7. Branch `sesi-2` / `sesi-3` perlu di-merge dari `main` sebelum dipakai.
 8. Belum dites di Safari, Firefox dan perangkat fisik (hanya headless Edge).

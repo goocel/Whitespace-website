@@ -73,3 +73,69 @@
   // Shared with js/hero-3d.js, which draws the same matrix in WebGL on top of this svg.
   window.HeroMatrix = { svg: heroSvg, voxels: heroVoxels, caption: heroCaption, defaultCaption, cellLabel };
 })();
+
+/* Home page only: practice cards and "How it works" rows open on point (window.openOnPoint, js/site.js).
+   Card points close again once the pointer leaves the list; "How it works" goes back to its first row. */
+(function () {
+  const { openOnPoint, canHover } = window.Points;
+  document.querySelectorAll(".solution").forEach((card) =>
+    openOnPoint([...card.querySelectorAll(".point")], ".point__toggle", {
+      closable: !canHover,
+      closeOnLeave: card.querySelector(".solution__points"),
+    })
+  );
+  openOnPoint([...document.querySelectorAll(".how-step")], ".how-step__toggle", {
+    closeOnLeave: document.querySelector(".how-list"),
+    restoreOnLeave: true,
+  });
+})();
+
+/* Home page only: "The problem" card stack loops on its own (wide screens, motion allowed).
+   Runs only while the section is on screen and pauses while the pointer is on the cards. */
+(function () {
+  const section = document.querySelector(".problem");
+  const stage = section && section.querySelector(".problem__stage");
+  if (!stage) return;
+  const cards = [...section.querySelectorAll(".shift")];
+  const mq = window.matchMedia("(min-width: 901px) and (prefers-reduced-motion: no-preference)");
+  const STEP_TIME = 2800;
+
+  let step = 0;
+  let timer = 0;
+  let inView = false;
+  let hovered = false;
+
+  const show = (next) => {
+    step = next;
+    const n = cards.length;
+    cards.forEach((card, i) => (card.dataset.d = (step - i + n) % n));
+  };
+
+  const run = () => {
+    clearInterval(timer);
+    timer = 0;
+    if (mq.matches && inView && !hovered) timer = setInterval(() => show((step + 1) % cards.length), STEP_TIME);
+  };
+
+  new IntersectionObserver(([entry]) => {
+    inView = entry.isIntersecting;
+    run();
+  }, { threshold: 0.35 }).observe(stage);
+  stage.addEventListener("mouseenter", () => {
+    hovered = true;
+    run();
+  });
+  stage.addEventListener("mouseleave", () => {
+    hovered = false;
+    run();
+  });
+
+  const setMode = () => {
+    section.classList.toggle("is-stack", mq.matches);
+    if (mq.matches) show(0);
+    else cards.forEach((card) => (card.dataset.d = 0));
+    run();
+  };
+  setMode();
+  mq.addEventListener("change", setMode);
+})();

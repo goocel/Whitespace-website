@@ -42,7 +42,7 @@
   --gutter: clamp(16px, 4vw, 72px);
   --section-space: clamp(64px, 6vw, 96px);
   --head-space: clamp(48px, 6vw, 80px);
-  --header-h: 64px;
+  --header-h: 76px;
   --tile-gap: 3px;
 }
 
@@ -346,33 +346,103 @@ h4 {
   }
 }
 
-/* ---------- Header ---------- */
+/* ---------- Header ----------
+   After nalarx.com: at the top of the page a plain full-width header; once the page scrolls
+   (js/site.js adds .is-scrolled) it narrows into one floating rounded bar. The header itself has no
+   background; .is-dark (added while a dark band — .section--dark, .dark — sits under it) switches the
+   bar, text, button and logo to their dark versions. */
 .header {
+  --hb-bg: rgba(255, 255, 255, 0.86);
+  --hb-line: rgba(21, 23, 26, 0.08);
+  --hb-shadow: 0 10px 30px -12px rgba(21, 23, 26, 0.18);
+  --hb-text: var(--text);
+  --hb-strong: var(--ink);
+  --hb-btn-bg: var(--ink);
+  --hb-btn-text: var(--white);
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--line);
+  padding-top: 10px;
+  color: var(--hb-text);
 }
 
+.header.is-dark {
+  --hb-bg: rgba(32, 36, 42, 0.8);
+  --hb-line: rgba(255, 255, 255, 0.09);
+  --hb-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
+  --hb-text: #c3c8ce;
+  --hb-strong: var(--white);
+  --hb-btn-bg: rgba(255, 255, 255, 0.1);
+  --hb-btn-text: var(--white);
+}
+
+/* --header-h (76px) = 10px above + 60px bar + 6px below.
+   At the top the bar is invisible and spans the container, so logo and button line up with the page. */
 .header__inner {
+  --ease-bar: cubic-bezier(0.65, 0, 0.35, 1);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* The 1px bottom border completes --header-h (64px), as on the live site */
-  min-height: calc(var(--header-h) - 1px);
+  gap: clamp(16px, 2vw, 40px);
+  min-height: 60px;
+  margin-bottom: 6px;
+  padding: 7px 0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  transition:
+    width 0.5s var(--ease-bar),
+    padding 0.5s var(--ease-bar),
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
-/* Logo files: assets/images/brand/logo.svg (light bg) and logo-white.svg (dark bg) */
+/* Scrolled: the bar narrows by --bar-inset on each side and stays centred */
+.header.is-scrolled .header__inner {
+  --bar-inset: clamp(0px, 5vw, 96px);
+  width: min(100% - 2 * var(--gutter) - 2 * var(--bar-inset), var(--container) - 2 * var(--bar-inset));
+  padding-inline: clamp(16px, 2vw, 28px) 7px;
+  background: var(--hb-bg);
+  border-color: var(--hb-line);
+  box-shadow: var(--hb-shadow);
+  backdrop-filter: blur(18px) saturate(1.5);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+}
+
+/* Logo files: assets/images/brand/logo.svg (light bg) and logo-white.svg (dark bg).
+   The header carries both and cross-fades between them. */
 .logo {
+  position: relative;
   display: inline-flex;
   flex-shrink: 0;
 }
 
+.header .logo img {
+  transition: opacity 0.35s ease;
+}
+
+.logo .logo__on-dark {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.header.is-dark .logo__on-light {
+  opacity: 0;
+}
+
+.header.is-dark .logo__on-dark {
+  opacity: 1;
+}
+
 .logo img {
   width: auto;
-  height: 43px;
+  height: 39px;
+}
+
+.header .logo img {
+  height: 34px;
 }
 
 /* Header type and sizes follow the live site: 15px / 550, 44px tall hit areas */
@@ -380,6 +450,18 @@ h4 {
   display: flex;
   align-items: center;
   gap: 14px;
+}
+
+/* Links sit in the middle of the bar, the button at its right end */
+@media (min-width: 901px) {
+  .nav {
+    flex: 1;
+    justify-content: space-between;
+  }
+
+  .nav__list {
+    margin-inline: auto;
+  }
 }
 
 .nav__list {
@@ -396,33 +478,43 @@ h4 {
   padding: 0 14px;
   font-size: 15px;
   font-weight: 550;
-  color: var(--text);
+  color: var(--hb-text);
   background: none;
   border: 0;
   cursor: pointer;
+  transition: color 0.25s ease;
 }
 
 .header .btn {
   min-height: 44px;
-  padding: 0 18px;
+  padding: 0 20px;
   font-size: 15px;
   font-weight: 550;
   letter-spacing: normal;
+  border-radius: 999px;
 }
 
-/* Current page. "What we do" is a button, so the pillar pages mark it with .is-current instead. */
-.nav__link:hover,
-.nav__link[aria-current="page"],
-.nav__link.is-current {
+.header .btn--dark {
+  background: var(--hb-btn-bg);
+  color: var(--hb-btn-text);
+  box-shadow: inset 0 0 0 1px var(--hb-line);
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.header .btn--dark:hover {
+  background: var(--orange);
   color: var(--ink);
 }
 
+/* Current page: the link turns orange. "Services" is a button, so the service pages mark it
+   with .is-current instead. */
+.nav__link:hover {
+  color: var(--hb-strong);
+}
+
 .nav__link[aria-current="page"],
 .nav__link.is-current {
-  text-decoration: underline;
-  text-decoration-color: var(--orange);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 8px;
+  color: var(--orange);
 }
 
 .nav__link svg {
@@ -443,7 +535,7 @@ h4 {
 
 .nav__menu {
   position: absolute;
-  top: calc(100% + 1px);
+  top: calc(100% - 4px);
   right: 0;
   display: none;
   grid-template-columns: 1fr 1fr;
@@ -451,6 +543,8 @@ h4 {
   width: min(600px, 100%);
   background: var(--line);
   border: 1px solid var(--line-strong);
+  border-radius: 20px;
+  overflow: hidden;
   box-shadow: 0 18px 40px -18px rgba(21, 23, 26, 0.28);
 }
 
@@ -512,7 +606,7 @@ h4 {
 .nav__toggle span {
   width: 22px;
   height: 2px;
-  background: var(--ink);
+  background: var(--hb-strong);
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
@@ -618,23 +712,69 @@ h4 {
 }
 
 @media (max-width: 900px) {
+  :root {
+    --header-h: 64px;
+  }
+
+  /* 8px above + 52px bar + 4px below */
+  .header {
+    padding-top: 8px;
+  }
+
+  .header__inner {
+    min-height: 52px;
+    margin-bottom: 4px;
+    padding-block: 4px;
+  }
+
+  .header.is-scrolled .header__inner {
+    --bar-inset: 0px;
+    padding-inline: 16px 6px;
+  }
+
+  .header .logo img {
+    height: 30px;
+  }
+
   .nav__toggle {
     display: flex;
   }
 
-  /* Full-width panel: .header__inner sits inside the gutter, so the panel reaches past it */
+  .nav .nav__link {
+    color: var(--text);
+  }
+
+  .nav .nav__link:hover {
+    color: var(--ink);
+  }
+
+  .nav .nav__link[aria-current="page"],
+  .nav .nav__link.is-current {
+    color: var(--orange);
+  }
+
+  .nav .btn--dark {
+    background: var(--ink);
+    color: var(--white);
+  }
+
+  /* Menu panel: a rounded card hung under the bar, as wide as the bar */
   .nav {
     position: absolute;
-    top: 100%;
-    left: calc(-1 * var(--gutter));
-    right: calc(-1 * var(--gutter));
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
     display: none;
     flex-direction: column;
     align-items: stretch;
     gap: 24px;
-    padding: 16px var(--gutter) 28px;
+    max-height: calc(100svh - var(--header-h) - 24px);
+    overflow-y: auto;
+    padding: 12px 20px 24px;
     background: var(--white);
-    border-bottom: 1px solid var(--line);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: 0 18px 40px -18px rgba(21, 23, 26, 0.28);
   }
 
   .nav.is-open {
@@ -660,6 +800,7 @@ h4 {
     gap: 0;
     background: var(--white);
     border: 0;
+    border-radius: 0;
     box-shadow: none;
   }
 

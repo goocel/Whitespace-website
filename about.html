@@ -20,24 +20,28 @@
   <header class="header">
     <div class="container header__inner">
       <a href="index.html" class="logo" aria-label="Whitespace Solutions home">
-        <img src="assets/images/brand/logo.svg" alt="Whitespace Solutions" width="147" height="42" />
+        <img class="logo__on-light" src="assets/images/brand/logo.svg" alt="Whitespace Solutions" width="147" height="42" />
+        <img class="logo__on-dark" src="assets/images/brand/logo-white.svg" alt="" aria-hidden="true" width="147" height="42" />
       </a>
 
       <nav class="nav" id="nav" aria-label="Main">
         <ul class="nav__list">
-          <li><a href="about.html" class="nav__link" aria-current="page">About</a></li>
+          <li><a href="insights.html" class="nav__link">Insights</a></li>
           <li class="nav__dropdown">
             <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-controls="practicesMenu">
-              What we do
+              Services
               <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
             </button>
             <ul class="nav__menu" id="practicesMenu">
               <li><a href="practices/ai-implementation.html"><strong>AI Implementation</strong><span>AI built into how your company runs: use-case assessment, agents and automation, team training.</span></a></li>
               <li><a href="practices/business-transformation.html"><strong>Business Transformation</strong><span>Fix what holds the business back: strategy, lean operations, deals, capital and a transformation office.</span></a></li>
               <li><a href="practices/fractional-leadership.html"><strong>Fractional Leadership</strong><span>Senior capacity without full-time hires: interim C-level, business development, executive coaching.</span></a></li>
+              <li><a href="services.html"><strong>All services</strong><span>How the three fit together, and where to start.</span></a></li>
             </ul>
           </li>
+          <li><a href="industries.html" class="nav__link">Industries</a></li>
           <li><a href="careers.html" class="nav__link">Careers</a></li>
+          <li><a href="about.html" class="nav__link" aria-current="page">About</a></li>
         </ul>
         <a href="contact.html" class="btn btn--dark">Start a conversation</a>
       </nav>
@@ -64,11 +68,11 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section--dark">
       <div class="container">
         <p class="section-label">Our commitments</p>
         <div class="split split--head">
-          <h2 class="title">How we<br /> show up</h2>
+          <h2 class="title">How we<br /> <span class="title-accent">show up</span></h2>
           <p class="lead">Five commitments that hold on every engagement.</p>
         </div>
         <ul class="values">
@@ -98,25 +102,7 @@
             <p>We engage deeply with your situation, so the solution fits today's problem and tomorrow's growth.</p>
           </li>
         </ul>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <p class="section-label">Who we work with</p>
-        <div class="split split--head">
-          <h2 class="title">Across industries</h2>
-          <p class="lead">40+ companies across many industries. Wide exposure means we have usually seen your problem before, in another industry.</p>
-        </div>
-        <!-- 18 industries in six groups (full list: design-reference/content-archive.md). Icons: 24×24 line drawings; .accent is orange -->
-        <ul class="tiles tiles--icons tiles--groups">
-          <li class="cell cell--icon"><svg class="cell__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9l1.8-5h13.4l1.8 5" /><path d="M3.5 9a2.8 2.8 0 0 0 5.67 0 2.8 2.8 0 0 0 5.66 0 2.8 2.8 0 0 0 5.67 0" /><path d="M5 12v8h14v-8" /><path class="accent" d="M10 20v-4.5h4V20" /></svg><div><h3>Consumer goods &amp; retail</h3><p>Consumer goods · Retail · Manufacturing &amp; retail</p></div></li>
-          <li class="cell cell--icon"><svg class="cell__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21v-9" /><path d="M12 12C12 8 9 5 5 5c0 4 3 7 7 7z" /><path class="accent" d="M12 15c0-3.5 2.5-6 6.5-6 0 3.5-2.5 6-6.5 6z" /></svg><div><h3>Food &amp; agriculture</h3><p>Food &amp; beverage · Agri-food</p></div></li>
-          <li class="cell cell--icon"><svg class="cell__icon" viewBox="0 0 24 24" aria-hidden="true"><path class="accent" d="M13.5 3L5 13.5h6.5L10.5 21 19 10.5h-6.5z" /></svg><div><h3>Industry &amp; energy</h3><p>Automotive · Energy services · Natural resources</p></div></li>
-          <li class="cell cell--icon"><svg class="cell__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 16V6H3v10h2.5" /><path d="M14 9.5h4l3 3.5v3h-2.5M9 16h6.5" /><circle class="accent" cx="7" cy="17" r="1.8" /><circle class="accent" cx="17" cy="17" r="1.8" /></svg><div><h3>Services &amp; logistics</h3><p>Security services · Logistics · Agencies</p></div></li>
-          <li class="cell cell--icon"><svg class="cell__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2" /><path class="accent" d="M12 8v8M8 12h8" /></svg><div><h3>Health &amp; finance</h3><p>Pharma &amp; health · Financial services</p></div></li>
-          <li class="cell cell--icon"><svg class="cell__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="1.5" /><path class="accent" d="M11 17.5h2" /></svg><div><h3>Technology &amp; media</h3><p>Consumer electronics · Smart home technology · Ticketing technology · Metaverse technology · Media &amp; entertainment</p></div></li>
-        </ul>
+        <a href="industries.html" class="next-link">Next: Industries we know <span aria-hidden="true">→</span></a>
       </div>
     </section>
   </main>
@@ -146,7 +132,7 @@
             <p>Practical business transformation, now built around AI. Practical. Applicable. Affordable.</p>
           </div>
           <div>
-            <h4>What we do</h4>
+            <h4>Services</h4>
             <ul>
               <li><a href="practices/ai-implementation.html">AI Implementation</a></li>
               <li><a href="practices/business-transformation.html">Business Transformation</a></li>
@@ -156,8 +142,9 @@
           <div>
             <h4>Firm</h4>
             <ul>
+              <li><a href="insights.html">Insights</a></li>
+              <li><a href="industries.html">Industries</a></li>
               <li><a href="about.html">About</a></li>
-              <li><a href="index.html#how">How it works</a></li>
               <li><a href="careers.html">Careers</a></li>
               <li><a href="contact.html">Contact</a></li>
             </ul>
