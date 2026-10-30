@@ -472,7 +472,12 @@
    offer cards.
    ========================================================= */
 
-/* ---------- Section label (small tag above a section title) ---------- */
+/* ---------- Section label (small tag above a section title) ----------
+   Hidden for now on every page (user request, 30 Oct). Delete the rule below to bring the labels back. */
+.section-label {
+  display: none !important;
+}
+
 .section-label {
   display: flex;
   align-items: center;
