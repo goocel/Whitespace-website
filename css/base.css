@@ -56,6 +56,13 @@
     --page-zoom: 0.9;
     --screen-h: calc(100svh / var(--page-zoom));
     zoom: var(--page-zoom);
+    /* The header stays at 100% (below), so in the page's zoomed pixels it is 76px / 0.9 tall */
+    --header-h: calc(76px / var(--page-zoom));
+  }
+
+  /* Header and menu keep their full size: at 90% the menu read too small */
+  .header {
+    zoom: calc(1 / var(--page-zoom));
   }
 }
 
