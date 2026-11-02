@@ -87,10 +87,12 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
 ## Keputusan & preferensi user (jangan diubah tanpa ditanya)
 
 **Layout & gaya**
-- `--gutter: clamp(16px, 4vw, 72px)`, `--container: 1760px`, jarak section `--section-space: clamp(64px, 6vw, 96px)`.
+- `--gutter: clamp(16px, 4vw, 72px)`, `--container: 1760px`, jarak section `--section-space: clamp(48px, 6vw, 96px)` (minimum 48px di HP, desktop tidak berubah).
 - **Header** (`--header-h` 76px desktop / 64px HP): link 15px/550, area klik 44px; logo 34px di bar; tombol pil.
   Halaman aktif = teks oranye (`aria-current="page"`; tombol Services di halaman layanan pakai `.is-current`).
   Dropdown & panel menu HP = kartu membulat di bawah bar.
+- **HP (≤900px): konten rata tengah, desktop tetap rata kiri** — user minta hanya versi mobile yang berubah.
+  Detail di bagian "Tampilan mobile" di bawah.
 - CTA + footer = satu blok gelap. Judul section dipotong manual dengan `<br />`, huruf kecil biasa (bukan Title Case).
 - Warna, font Archivo, skala tipografi, logo = sama dengan acuan. Sudut kotak tidak membulat, **kecuali** header, dropdown dan band hitam (gaya Nalar); oranye hanya aksen.
 - Tombol oranye: panel hitam menyapu dari kiri saat hover. CTA global = **"Start a conversation"**.
@@ -129,7 +131,36 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
   terlihatnya sama. Jeda 0.5s (user minta lebih cepat), mulai 2.4s setelah intro.
 - Caption hero Home di layar sentuh tanpa "Hover to read a cell".
 
+## Tampilan mobile (≤900px) — keputusan sesi 2
+
+User meminta per bagian, lewat screenshot, agar versi HP **rata tengah**; desktop **tidak boleh berubah**.
+Semua aturannya ada di satu blok `@media (max-width: 900px)` di **akhir `css/components.css`** (komentar
+"Mobile: headlines and their sub-headlines centred"); hero Home di bagian responsif `css/home.css`.
+
+- **Rata tengah di HP:** label section, judul + lead (`.split--head`), hero Home (judul, lead, tombol, caption matrix),
+  hero halaman dalam (breadcrumb, judul, lead, ilustrasi + teks samping `.page-hero__aside`), intro Contact + menara,
+  kotak CTA gelap (judul, teks, tombol), kartu `.value`, baris sebelum→sesudah `.compare`, teks contoh engagement +
+  studi kasus runway + caption grafik, tabel Why (mode kartu ≤700px), kartu grup industri (Industries), fitur `.feature`
+  (nomor di atas judul), langkah `.approach` & `.flow`, teks semua `.case-study`, `.cases__more`, kartu `.journey` & `.model`,
+  label + deskripsi grup Services, tabel Engagements (`.data-table`) + caption-nya, lowongan Careers (`.role` + tombol Apply).
+- **Masih rata kiri di HP** (belum diminta): kutipan `.pullquote`, isi kotak tile abu (Services, matrix Home),
+  form Contact, link "Next: …" (`.next-link`). Tanya user sebelum mengubahnya.
+- Garis oranye kiri `.case-study__result` dipindah ke atas di HP (garis kiri janggal untuk teks rata tengah).
+- `.feature` di HP: padding 14px kiri-kanan dengan `!important` (desktop hanya padding kanan → teks tergeser ±14px;
+  aturan `:nth-child(odd)` lama lebih spesifik, karena itu `!important`).
+- **Mengurangi baris judul di HP:** `<br class="br-wide" />` = potongan baris yang hanya berlaku di desktop; class
+  `.title--fit` = ukuran judul ikut lebar kolom (`cqi`, container `.split--head:has(.title--fit)`) supaya baris terpanjang muat.
+  Dipakai di "Start small, prove it, / then grow." (±32px di 390px, judul lain 37px).
+- **Hero Home di HP:** `max-width: 10.2em` + `font-size: min(clamp(...), 9.6cqi)` (container `.hero__text`) + `text-wrap: balance`
+  → "Practical business / transformation, / now built / around AI." (±33px di 390px). Di HTML ada `around&nbsp;AI.`
+  supaya "AI." tidak pernah sendirian.
+
 ## Jebakan teknis (sudah pernah kena)
+
+- **User melihat CSS lama**: beberapa kali user mengirim screenshot yang belum memuat perubahan terakhir. Kalau hasil cek
+  headless sudah benar tapi screenshot user berbeda, minta refresh **Ctrl+F5**.
+- **Headless Edge punya scrollbar 15px** → lebar konten 390px jadi 343px, bukan 358px. Untuk mengukur tampilan HP yang
+  sebenarnya pakai `setViewport({ width: 390, height: 844, deviceScaleFactor: 3, isMobile: true, hasTouch: true })`.
 
 - **Find-replace mengenai tempat yang salah.** Pola seperti `</article>\n        </div>\n      </div>\n    </section>` muncul di
   lebih dari satu section; replace pertama pernah menghapus `</div>` yang salah. Pastikan pola unik (hitung kemunculan dulu)
@@ -169,12 +200,15 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
 
 1. **Email karier — HOLD**: tombol Careers ("Apply", "Email us") masih ke `contact@whitespace.id`. Tunggu alamat dari user;
    setelah ada: ganti alamatnya, pertimbangkan isi email yang sudah terisi dan alamat sebagai teks cadangan.
-2. Form kontak tanpa backend (mailto). Kirim langsung dari situs butuh layanan form/backend — belum ada; jangan taruh kunci di front-end.
+2. **Form kontak — HOLD**: masih `mailto:` tanpa backend. User menunggu keputusan email/endpoint penerima. Usulan yang sudah
+   disampaikan: Formspree (gratis ±50/bulan, hanya ID form di HTML), alternatif Web3Forms (±250/bulan). Setelah ada: ubah
+   `js/contact.js` ke `fetch`, status terkirim/gagal yang jujur, `mailto:` tetap sebagai cadangan tanpa JS. Jangan taruh kunci rahasia di front-end.
 3. Nomor telepon `021-39731400` (sama dengan acuan) belum dikonfirmasi user.
 4. Ikon Fractional di matrix Home (`fractional`) beda dengan hero-nya (`capital`) — user belum memutuskan.
 5. Ilustrasi `deck`, ikon fase proses (`pre`/`engagement`/`partnership`) dan `night` belum sama dengan acuan. Kubus di luar hero
    (ikon kartu, blok CTA gelap) masih SVG.
-6. Daftar industri situs (18, dalam 6 grup) beda dengan deck (13).
+6. ~~Daftar industri situs beda dengan deck~~ — selesai: Industries memakai 13 industri deck (6 grup). Engagement di BT
+   dan contoh Home masih menyebut sektor klien lama (Consumer electronics, Metaverse, dll.) — itu catatan proyek, bukan daftar industri.
 9. Insights belum punya tanggal per artikel selain "October 2026" (tanggal deck); artikel baru = salin salah satu file di `insights/`.
-7. Branch `sesi-2` / `sesi-3` perlu di-merge dari `main` sebelum dipakai.
+7. `sesi-2` sudah di-merge ke `main` (2 Nov). `sesi-2` / `sesi-3` perlu `git merge main` sebelum dipakai lagi.
 8. Belum dites di Safari, Firefox dan perangkat fisik (hanya headless Edge).
