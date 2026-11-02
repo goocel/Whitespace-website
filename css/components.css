@@ -4675,3 +4675,25 @@ main > .section--dark:last-child {
     font-size: min(var(--step-4), 9.2cqi);
   }
 }
+
+/* ---------- Phones and tablets: nodes meet the centred mobile layout ----------
+   Section heads, heroes and cards are centred below 900px; the node components follow:
+   hero button and model numbers centre, the feature arrows run down the middle, and the
+   approach steps (number beside the text) stay left-aligned as a list. */
+@media (max-width: 900px) {
+  .page-hero__actions {
+    justify-content: center;
+  }
+
+  .features--linked {
+    --a-left: calc(50% - 5px);
+  }
+
+  .approach--pipeline li {
+    text-align: left;
+  }
+
+  .models--canvas .model > .caption {
+    margin-inline: auto;
+  }
+}
