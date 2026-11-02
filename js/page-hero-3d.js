@@ -1,9 +1,9 @@
 /*
  * Inner-page hero illustration in 3D (three.js, WebGL), like the Home and About heroes. Used on
- * the three practice pages and Careers: the cubes of the page's <div class="page-hero__art"
- * data-illustration="…"> come from the same builder in js/isometric.js, and play the same intro
- * (where each cube starts, its delay, whether it fades in) with GSAP, as js/motion.js does for
- * the svg.
+ * the three practice pages, Careers and Contact: the cubes of the page's <div class="page-hero__art">
+ * (or .contact-page__art) with data-illustration="…" come from the same builder in
+ * js/isometric.js, and play the same intro (where each cube starts, its delay, whether it fades
+ * in) with GSAP, as js/motion.js does for the svg.
  *
  * Renderer, camera fit and lights come from js/iso-gl.js, so the canvas lands exactly on the svg
  * and the layout does not change. The canvas reaches past the svg (bleed) so cubes that fly in
@@ -12,7 +12,7 @@
  */
 (function () {
   const { gsap, Isometric } = window;
-  const holder = document.querySelector(".page-hero__art[data-illustration]");
+  const holder = document.querySelector(".page-hero__art[data-illustration], .contact-page__art[data-illustration]");
   const svg = holder && holder.querySelector(".iso-svg");
   const build = holder && Isometric && Isometric.ILLUSTRATIONS[holder.dataset.illustration];
   if (!svg || !build || !gsap || !window.IsoGL || !IsoGL.supported()) return;
@@ -41,9 +41,9 @@
     const { scene, draw } = gl;
 
     /* ---------- Cubes: lit greys; orange keeps the svg's flat faces, as on the live site ---------- */
-    const TONE = { paper: "#f6f7f8", light: "#e9ebee", mid: "#b9bec4", dark: "#3a3f45", night: "#30353b", nightHi: "#3c4148" };
+    const TONE = { paper: "#f6f7f8", light: "#e9ebee", mid: "#cdd1d6", dark: "#5b6169", night: "#30353b", nightHi: "#3c4148" };
     // BoxGeometry faces: +x (right), −x, +y (top), −y, +z (left), −z
-    const ORANGE_FACES = ["#999999", "#1a1a1a", "#f2902a", "#1a1a1a", "#1a1a1a", "#999999"];
+    const ORANGE_FACES = ["#a3a8ae", "#363a40", "#f2902a", "#363a40", "#363a40", "#a3a8ae"];
     const geometry = new THREE.BoxGeometry(0.94, 0.94, 0.94);
     const at = (p, [x, y, z]) => p.set(x + 0.5, z + 0.5, y + 0.5);
 
@@ -70,7 +70,15 @@
       });
     }
 
-    /* ---------- Draw only while something moves: the intro or the camera ---------- */
+    /* ---------- Floating cubes (voxel.float, e.g. Contact "meet"): bob gently once they land ---------- */
+    const floaters = cubes.filter(({ v }) => v.float);
+    if (!reduced) {
+      floaters.forEach(({ mesh }) =>
+        intro.to(mesh.position, { y: "+=0.22", duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: -1 })
+      );
+    }
+
+    /* ---------- Draw only while something moves: the intro, a floating cube or the camera ---------- */
     let wasActive = false;
     const render = () => {
       const turning = gl.step();
@@ -80,7 +88,7 @@
       wasActive = active;
     };
 
-    const stage = holder.closest(".page-hero") || holder;
+    const stage = holder.closest(".page-hero, .contact-page") || holder;
     if (!reduced) {
       stage.addEventListener("pointermove", (event) => gl.aim(...IsoGL.pointerIn(stage, event)));
       stage.addEventListener("pointerleave", () => gl.aim(0, 0));

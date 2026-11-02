@@ -1033,13 +1033,6 @@
   font-size: 16px;
 }
 
-.cases__more {
-  padding: 40px 0 16px;
-  border-top: 1.5px solid var(--ink);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 .case-study__result {
   margin-top: 16px;
   padding-left: 16px;
@@ -1537,6 +1530,7 @@
 /* ---------- Contact page ---------- */
 .contact-page {
   padding-block: clamp(56px, 8vw, 120px);
+  overflow-x: clip; /* the 3D canvas reaches past its box; never let it widen the page */
 }
 
 .contact-page__inner {
@@ -1551,32 +1545,79 @@
   margin-top: 28px;
 }
 
-/* Same as the live site: 150px wide, height from the illustration */
+/* Contact illustration (deck p.17): your business, technology and the whitespace between them.
+   3D via js/page-hero-3d.js; the legend names the three parts, left to right. */
+.contact-page__figure {
+  width: min(100%, 420px);
+  margin: 40px 0 0;
+}
+
 .contact-page__art {
-  width: 150px;
-  margin-block: 40px;
+  width: 100%;
 }
 
-.details {
-  border-top: 1.5px solid var(--ink);
+.contact-page__legend {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--muted);
 }
 
-.details > div {
-  padding-block: 16px;
-  border-bottom: 1px solid var(--line);
-}
-
-.details dt {
-  margin-bottom: 4px;
-}
-
-.details dd {
-  font-size: var(--step-1);
-  color: var(--ink);
-}
-
-.details a:hover {
+.contact-page__legend-ws {
   color: var(--orange-deep);
+}
+
+/* Desktop: the whole page (title, illustration, form and button) fits one screen without
+   scrolling. Spacing, title, illustration and message box scale with the screen height. */
+@media (min-width: 901px) {
+  .contact-page {
+    display: grid;
+    align-content: center;
+    min-height: calc(var(--screen-h) - var(--header-h) - 10px);
+    padding-block: clamp(16px, 3.5vh, 48px);
+  }
+
+  .contact-page__inner {
+    align-items: center;
+  }
+
+  .contact-page__intro .display {
+    font-size: min(var(--step-5), 9.5vh);
+  }
+
+  .contact-page__intro .lead {
+    margin-top: clamp(12px, 2.4vh, 28px);
+  }
+
+  .contact-page__figure {
+    width: min(100%, 420px, 34vh);
+    margin-top: clamp(16px, 3vh, 40px);
+  }
+
+  .contact-page .field {
+    padding-block: clamp(9px, 1.4vh, 14px);
+  }
+
+  .contact-page .field textarea {
+    min-height: clamp(64px, 13vh, 140px);
+  }
+
+  .contact-page .form__footer {
+    margin-top: clamp(8px, 1.4vh, 16px);
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-page__legend {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
 }
 
 /* ---------- Form ---------- */
@@ -1807,6 +1848,185 @@
 @media (max-width: 600px) {
   .tiles--groups {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Industry icons (Industries): slow line animations, Nalar-style cards ----------
+   Each icon loops gently on its own; hovering a card warms it with an orange glow. */
+.tiles--live .cell {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1b1d21 0%, #23252a 60%, #2a2724 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: border-color 0.4s ease;
+}
+
+.tiles--live .cell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 70% at 15% 0%, rgba(242, 144, 42, 0.16), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.tiles--live .cell:hover {
+  border-color: rgba(242, 144, 42, 0.35);
+}
+
+.tiles--live .cell:hover::before {
+  opacity: 1;
+}
+
+.ind-icon {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  fill: none;
+  stroke: #c3c8ce;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible;
+}
+
+.ind-icon .accent {
+  stroke: var(--orange);
+}
+
+.ind-rail,
+.ind-route,
+.ind-base {
+  stroke: rgba(255, 255, 255, 0.28);
+}
+
+.ind-rail,
+.ind-route {
+  stroke-dasharray: 2 4;
+}
+
+/* Retail: goods ride the rail and fade into the store */
+.ind-item {
+  fill: var(--orange);
+  stroke: none;
+  animation: ind-ride 3s linear infinite;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes ind-ride {
+  0% { transform: translateX(0); opacity: 0; }
+  15%, 75% { opacity: 1; }
+  100% { transform: translateX(28px); opacity: 0; }
+}
+
+/* Food: leaves sway around the stem */
+.ind-leaf {
+  transform-box: view-box;
+  transform-origin: 28px 32px;
+  animation: ind-sway 5s ease-in-out infinite;
+}
+
+.ind-leaf--r {
+  animation-delay: -2.5s;
+}
+
+.ind-seed {
+  fill: var(--orange);
+  stroke: none;
+  animation: ind-breathe 2.5s ease-in-out infinite;
+}
+
+@keyframes ind-sway {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+@keyframes ind-breathe {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+/* Energy: sparks leave the bolt along both wires, the bolt flickers softly */
+.ind-spark {
+  fill: var(--orange);
+  stroke: none;
+  animation: ind-spark-l 2.4s ease-out infinite;
+}
+
+.ind-spark--r {
+  animation-name: ind-spark-r;
+}
+
+.ind-bolt {
+  animation: ind-breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes ind-spark-l {
+  0% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(-12px); opacity: 0; }
+}
+
+@keyframes ind-spark-r {
+  0% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(12px); opacity: 0; }
+}
+
+/* Logistics: the route flows and a parcel travels it */
+.ind-route {
+  animation: ind-dash 1.2s linear infinite;
+}
+
+.ind-parcel {
+  fill: var(--orange);
+  stroke: none;
+  offset-path: path("M10 42c10 0 10-26 22-26h14");
+  animation: ind-travel 4s ease-in-out infinite;
+}
+
+@keyframes ind-dash {
+  to { stroke-dashoffset: -6; }
+}
+
+@keyframes ind-travel {
+  0% { offset-distance: 0%; opacity: 0; }
+  10%, 90% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+/* Health & finance: a short bright stretch runs along the pulse line */
+.ind-pulse {
+  stroke-dasharray: 0.28 0.72;
+  stroke-dashoffset: 0.28;
+  animation: ind-pulse 2.8s linear infinite;
+}
+
+@keyframes ind-pulse {
+  to { stroke-dashoffset: -0.72; }
+}
+
+/* Technology & media: signal rings fade out from the phone */
+.ind-wave {
+  opacity: 0;
+  animation: ind-wave 2.4s ease-out infinite;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes ind-wave {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ind-icon * {
+    animation: none !important;
+  }
+
+  .ind-wave,
+  .ind-item,
+  .ind-parcel {
+    opacity: 1;
   }
 }
 
@@ -2260,13 +2480,6 @@
   color: var(--ink);
 }
 
-/* Narrow column: steps and flows go top to bottom */
-.approach--stack,
-.flow--stack {
-  grid-template-columns: 1fr;
-  grid-auto-flow: row;
-}
-
 .tags--wide li {
   padding: 8px 14px;
   font-size: 15px;
@@ -2275,6 +2488,512 @@
 
 .article__body .overlap {
   grid-template-columns: 1fr;
+}
+
+/* ---------- Use-case flow (insights/where-a-use-case-lives): two vocabularies feed one node ----------
+   Chips on each side send a dashed line to a trunk, the trunk feeds the core. The dashes move toward
+   the core and the chips light up one after another. */
+.usecase-flow {
+  --uf-gap: 56px;
+  --uf-wire: rgba(255, 255, 255, 0.32);
+  margin-inline: 0;
+  margin-top: 28px;
+  padding: clamp(20px, 3vw, 32px);
+  background: #141518;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  color: #c3c8ce;
+}
+
+.usecase-flow__label {
+  margin-bottom: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7d838b;
+}
+
+.usecase-flow__map {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(120px, 0.8fr) minmax(0, 1fr);
+  grid-template-areas:
+    "bh . th"
+    "bl core tl"
+    "bb . tb";
+  column-gap: var(--uf-gap);
+  row-gap: 16px;
+  align-items: center;
+}
+
+.usecase-flow__head {
+  font-size: 15px;
+  font-weight: 650;
+  color: #fff;
+}
+
+.usecase-flow__head--business { grid-area: bh; }
+.usecase-flow__head--tech { grid-area: th; }
+.usecase-flow__chips--business { grid-area: bl; }
+.usecase-flow__chips--tech { grid-area: tl; }
+.usecase-flow__blind--business { grid-area: bb; }
+.usecase-flow__blind--tech { grid-area: tb; }
+
+.usecase-flow__chips {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  align-self: start;
+}
+
+.usecase-flow__chips li {
+  position: relative;
+  padding: 7px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #d5d8dc;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  animation: uf-chip 8s ease-in-out infinite;
+}
+
+.usecase-flow__chips li:nth-child(2) { animation-delay: 1s; }
+.usecase-flow__chips li:nth-child(3) { animation-delay: 2s; }
+.usecase-flow__chips li:nth-child(4) { animation-delay: 3s; }
+.usecase-flow__chips li:nth-child(5) { animation-delay: 4s; }
+.usecase-flow__chips li:nth-child(6) { animation-delay: 5s; }
+.usecase-flow__chips li:nth-child(7) { animation-delay: 6s; }
+.usecase-flow__chips li:nth-child(8) { animation-delay: 7s; }
+
+/* Wires: chip → trunk (horizontal), trunk (vertical), trunk → core (horizontal) */
+.usecase-flow__chips li::after,
+.usecase-flow__core::before,
+.usecase-flow__core::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: calc(var(--uf-gap) / 2);
+  height: 1px;
+  background: linear-gradient(90deg, var(--uf-wire) 50%, transparent 0) 0 0 / 8px 1px repeat-x;
+  animation: uf-flow 0.9s linear infinite;
+}
+
+.usecase-flow__chips--business li::after { left: 100%; }
+.usecase-flow__chips--tech li::after { right: 100%; animation-direction: reverse; }
+
+.usecase-flow__chips::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  width: 1px;
+  background: linear-gradient(180deg, var(--uf-wire) 50%, transparent 0) 0 0 / 1px 8px repeat-y;
+}
+
+.usecase-flow__chips--business::before { right: calc(var(--uf-gap) / -2); }
+.usecase-flow__chips--tech::before { left: calc(var(--uf-gap) / -2); }
+
+.usecase-flow__core {
+  grid-area: core;
+  position: relative;
+  display: grid;
+  gap: 6px;
+  padding: 26px 14px;
+  text-align: center;
+  background:
+    radial-gradient(120% 90% at 20% 0%, rgba(255, 255, 255, 0.28), transparent 60%),
+    linear-gradient(150deg, #f6a24a, #e07d14);
+  border-radius: 16px;
+  animation: uf-glow 3s ease-in-out infinite;
+}
+
+.usecase-flow__core::before { right: 100%; }
+.usecase-flow__core::after { left: 100%; animation-direction: reverse; }
+
+.usecase-flow__core span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(21, 23, 26, 0.7);
+}
+
+.usecase-flow__core strong {
+  font-size: var(--step-1);
+  font-weight: 800;
+  font-stretch: 112%;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--ink);
+}
+
+.usecase-flow__blind {
+  align-self: start;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.usecase-flow__blind .caption {
+  margin-bottom: 4px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.usecase-flow__blind p:last-child {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #c3c8ce;
+}
+
+@keyframes uf-flow {
+  to { background-position: 8px 0; }
+}
+
+@keyframes uf-chip {
+  0%, 14%, 100% { border-color: rgba(255, 255, 255, 0.12); color: #d5d8dc; }
+  5%, 9% { border-color: var(--orange); color: #fff; }
+}
+
+@keyframes uf-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(242, 144, 42, 0); }
+  50% { box-shadow: 0 0 36px 2px rgba(242, 144, 42, 0.35); }
+}
+
+/* Narrow: top to bottom, chips wrap, one vertical wire into and out of the core */
+@media (max-width: 640px) {
+  .usecase-flow__map {
+    grid-template-columns: 1fr;
+    grid-template-areas: "bh" "bl" "bb" "core" "th" "tl" "tb";
+    row-gap: 14px;
+  }
+
+  .usecase-flow__chips {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .usecase-flow__chips::before,
+  .usecase-flow__chips li::after {
+    display: none;
+  }
+
+  .usecase-flow__core {
+    margin-block: 28px;
+  }
+
+  .usecase-flow__core::before,
+  .usecase-flow__core::after {
+    left: 50%;
+    width: 1px;
+    height: 28px;
+    background: linear-gradient(180deg, var(--uf-wire) 50%, transparent 0) 0 0 / 1px 8px repeat-y;
+    animation: none;
+  }
+
+  .usecase-flow__core::before { top: auto; right: auto; bottom: 100%; }
+  .usecase-flow__core::after { top: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .usecase-flow *,
+  .usecase-flow *::before,
+  .usecase-flow *::after {
+    animation: none !important;
+  }
+}
+
+/* ---------- AI uses grid (insights/ai-is-moving-faster): twelve tiles + the agents tile ----------
+   Same dark card as the use-case flow; tiles light up in turn (uf-chip), the agents tile glows (uf-glow). */
+.ai-uses {
+  margin: 28px 0 0;
+  padding: clamp(20px, 3vw, 32px);
+  background: #141518;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+}
+
+.ai-uses__label {
+  margin-bottom: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7d838b;
+}
+
+.ai-uses__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.ai-uses__grid li {
+  display: grid;
+  gap: 2px;
+  padding: 14px 14px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  animation: uf-chip 12s ease-in-out infinite;
+}
+
+.ai-uses__grid svg {
+  width: 22px;
+  height: 22px;
+  margin-bottom: 10px;
+  fill: none;
+  stroke: #c3c8ce;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ai-uses__grid svg .accent {
+  stroke: var(--orange);
+}
+
+.ai-uses__grid strong {
+  font-size: 15px;
+  font-weight: 650;
+  color: #fff;
+}
+
+.ai-uses__grid span {
+  font-size: 13px;
+  line-height: 1.4;
+  color: #8d939b;
+}
+
+/* Lights move across the grid in reading order */
+.ai-uses__grid li:nth-child(2) { animation-delay: 1s; }
+.ai-uses__grid li:nth-child(3) { animation-delay: 2s; }
+.ai-uses__grid li:nth-child(4) { animation-delay: 3s; }
+.ai-uses__grid li:nth-child(5) { animation-delay: 4s; }
+.ai-uses__grid li:nth-child(6) { animation-delay: 5s; }
+.ai-uses__grid li:nth-child(7) { animation-delay: 6s; }
+.ai-uses__grid li:nth-child(8) { animation-delay: 7s; }
+.ai-uses__grid li:nth-child(9) { animation-delay: 8s; }
+.ai-uses__grid li:nth-child(10) { animation-delay: 9s; }
+.ai-uses__grid li:nth-child(11) { animation-delay: 10s; }
+.ai-uses__grid li:nth-child(12) { animation-delay: 11s; }
+
+.ai-uses__agents {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 16px;
+  margin-top: 8px;
+  padding: 20px 22px;
+  background:
+    radial-gradient(120% 140% at 10% 0%, rgba(255, 255, 255, 0.28), transparent 60%),
+    linear-gradient(150deg, #f6a24a, #e07d14);
+  border-radius: 14px;
+  animation: uf-glow 3s ease-in-out infinite;
+}
+
+.ai-uses__tag {
+  font-size: var(--step-1);
+  font-weight: 800;
+  font-stretch: 112%;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.ai-uses__agents p:last-child {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(21, 23, 26, 0.78);
+}
+
+/* Numbered variant (insights/it-diagnostic): seven dimensions + one orange summary tile */
+.ai-uses__grid .ai-uses__num {
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--orange);
+}
+
+.ai-uses--dims .ai-uses__grid li {
+  align-content: start;
+  animation-duration: 8s;
+}
+
+.ai-uses--dims .ai-uses__grid strong {
+  line-height: 1.3;
+}
+
+.ai-uses__grid .ai-uses__sum {
+  background:
+    radial-gradient(120% 140% at 10% 0%, rgba(255, 255, 255, 0.28), transparent 60%),
+    linear-gradient(150deg, #f6a24a, #e07d14);
+  border-color: transparent;
+  animation: uf-glow 3s ease-in-out infinite;
+}
+
+.ai-uses__sum .ai-uses__num,
+.ai-uses__sum strong {
+  color: var(--ink);
+}
+
+@media (max-width: 640px) {
+  .ai-uses__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-uses *,
+  .ai-uses {
+    animation: none !important;
+  }
+}
+
+/* ---------- Step flow (insight articles): numbered nodes on a dashed wire ----------
+   Set --steps on the figure and --i on each step; steps light up one after another.
+   --ai steps get the orange card, --person steps a light tag. */
+.step-flow {
+  --sf-node: 44px;
+  --sf-gap: 14px;
+  --sf-beat: 1.6s;
+  margin: 28px 0 0;
+  padding: clamp(20px, 3vw, 32px);
+  background: #141518;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+}
+
+.step-flow__label {
+  margin-bottom: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7d838b;
+}
+
+.step-flow__list {
+  display: grid;
+  gap: var(--sf-gap);
+}
+
+.step-flow__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--sf-node) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+/* Wire from this node down to the next one */
+.step-flow__step:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  top: var(--sf-node);
+  bottom: calc(var(--sf-gap) * -1);
+  left: calc(var(--sf-node) / 2);
+  width: 1px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.32) 50%, transparent 0) 0 0 / 1px 8px repeat-y;
+  animation: sf-wire 0.9s linear infinite;
+}
+
+.step-flow__node {
+  display: grid;
+  place-items: center;
+  width: var(--sf-node);
+  height: var(--sf-node);
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #c3c8ce;
+  background: #1d1f23;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  animation: sf-node calc(var(--steps) * var(--sf-beat)) ease-in-out infinite;
+  animation-delay: calc(var(--i) * var(--sf-beat));
+}
+
+.step-flow__card {
+  display: grid;
+  gap: 4px;
+  padding: 14px 18px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  animation: sf-card calc(var(--steps) * var(--sf-beat)) ease-in-out infinite;
+  animation-delay: calc(var(--i) * var(--sf-beat));
+}
+
+.step-flow__card h3 {
+  font-size: 16px;
+  font-weight: 650;
+  color: #fff;
+}
+
+.step-flow__card p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #9aa0a8;
+}
+
+.step-flow__card .step-flow__tag {
+  justify-self: start;
+  margin-bottom: 4px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+}
+
+/* The AI step is the engine: orange card, like the core of the use-case flow */
+.step-flow__step--ai .step-flow__card {
+  background:
+    radial-gradient(120% 140% at 10% 0%, rgba(255, 255, 255, 0.28), transparent 60%),
+    linear-gradient(150deg, #f6a24a, #e07d14);
+  border-color: transparent;
+  animation: uf-glow 3s ease-in-out infinite;
+}
+
+.step-flow__step--ai .step-flow__card h3 {
+  color: var(--ink);
+}
+
+.step-flow__step--ai .step-flow__card p {
+  color: rgba(21, 23, 26, 0.78);
+}
+
+.step-flow__step--ai .step-flow__card .step-flow__tag {
+  color: var(--ink);
+  border-color: rgba(21, 23, 26, 0.4);
+}
+
+@keyframes sf-wire {
+  to { background-position: 0 8px; }
+}
+
+@keyframes sf-node {
+  0%, 22%, 100% { color: #c3c8ce; background: #1d1f23; border-color: rgba(255, 255, 255, 0.16); }
+  4%, 16% { color: var(--ink); background: var(--orange); border-color: var(--orange); }
+}
+
+@keyframes sf-card {
+  0%, 22%, 100% { border-color: rgba(255, 255, 255, 0.1); }
+  4%, 16% { border-color: rgba(242, 144, 42, 0.7); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step-flow *,
+  .step-flow *::before {
+    animation: none !important;
+  }
 }
 
 @media (max-width: 1100px) {
@@ -2345,6 +3064,154 @@
     width: 100%;
     margin-left: 0;
   }
+}
+
+/* ---------- Practice cards with points that open, as on nalarx.com (Home "Three ways we help", Industries journeys) ----------
+   Cards align to the top, so opening a point only grows its own card. Without JS every point
+   stays open (the panels only collapse under html.js). */
+.solutions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: start;
+  gap: 20px;
+}
+
+.solution {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  background: var(--white);
+  transition: border-color 0.3s var(--ease-out);
+}
+
+.solution:hover,
+.solution:focus-within {
+  border-color: var(--line-strong);
+}
+
+.solution__head {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  align-items: center;
+  column-gap: 18px;
+  padding: 26px 26px 24px;
+  background: linear-gradient(160deg, var(--orange-soft), var(--panel) 65%);
+  border-bottom: 1px solid var(--line);
+}
+
+#practice-transformation .solution__head {
+  background: linear-gradient(160deg, var(--cell), var(--panel) 65%);
+}
+
+#practice-fractional .solution__head {
+  background: linear-gradient(160deg, #eef1f4, var(--panel) 65%);
+}
+
+.solution__art svg {
+  width: 72px;
+  height: 72px;
+}
+
+.solution__head h3 {
+  font-size: var(--step-1);
+  font-weight: 650;
+  font-stretch: 104%;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.solution__head .caption {
+  margin-top: 4px;
+}
+
+.solution__lead {
+  grid-column: 1 / -1;
+  margin-top: 20px;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.solution__points {
+  margin: 10px 26px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.point--whitespace .point__toggle {
+  color: var(--orange-deep);
+}
+
+.solution__link {
+  margin: 20px 26px 24px;
+  align-self: flex-start;
+}
+
+/* Narrower screens: cards swipe sideways, as on nalarx.com, instead of stacking ~2,600px tall */
+@media (max-width: 1100px) {
+  .solutions {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: min(82vw, 420px);
+    gap: 14px;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 0 var(--gutter) 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .solutions::-webkit-scrollbar {
+    display: none;
+  }
+
+  .solution {
+    scroll-snap-align: start;
+  }
+}
+
+/* Industries client journeys as practice cards: two across, a numbered step list, the last step
+   (where the work leads) in orange. Phones keep the sideways swipe from the rule above. */
+@media (min-width: 1101px) {
+  .solutions--journeys {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Head as the earlier journey cards: industry in small capitals, the journey name below it */
+.solutions--journeys .solution__head {
+  display: block;
+  background: var(--panel);
+}
+
+.solutions--journeys .solution__head .caption {
+  margin: 0 0 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.solutions--journeys .solution__head h3 {
+  font-size: var(--step-2);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.solutions--journeys .solution__points {
+  margin-bottom: 22px;
+}
+
+.solution__points .point__num {
+  flex: none;
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+.point--goal .point__toggle,
+.point--goal .point__num {
+  color: var(--orange-deep);
+  font-weight: 600;
 }
 
 /* ---------- Points that open (li.point > button.point__toggle + div.point__panel) ----------
@@ -2560,3 +3427,1103 @@ main > .section--dark:last-child {
   color: transparent;
 }
 
+/* ---------- Nodes and pipelines, as on nalarx.com ----------
+   One look for step lists across the site: rounded nodes joined by dashed arrows whose dashes
+   flow, and a highlight that walks the steps (.is-active, set by js/motion.js; hover takes over).
+   Used by the AI approach, case-study flows, "What we do" features, Services rows and the
+   Industries client journeys. */
+:root {
+  --arrow-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 10'%3E%3Cpath d='M1 1l4 4-4 4' fill='none' stroke='%23888d94' stroke-width='1.4'/%3E%3C/svg%3E");
+  --arrow-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23888d94' stroke-width='1.4'/%3E%3C/svg%3E");
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --node-ease: 0.5s var(--ease-out);
+}
+
+/* Arrows between nodes: --link is the gap they cross, --dash their colour. They point right;
+   a list whose nodes stack sets the --a-* switches (see "Down arrows" below) to point them down. */
+.approach--pipeline > li:not(:last-child)::after,
+.flow--diagram > li:not(:last-child)::after,
+.features--linked > .feature:not(:last-child)::after,
+.journeys--steps .point:not(:last-child)::after {
+  --dash: var(--line-strong);
+  content: "";
+  position: absolute;
+  top: var(--a-top, 50%);
+  left: var(--a-left, calc(100% + 1px));
+  width: var(--a-width, calc(var(--link) - 2px));
+  height: var(--a-height, 10px);
+  margin-top: var(--a-shift, -5px);
+  background: var(--a-head, var(--arrow-right)) var(--a-head-at, right center) / var(--a-head-size, 6px 10px) no-repeat,
+    linear-gradient(var(--a-angle, 90deg), var(--dash) 50%, transparent 0) var(--a-dash-at, 0 50%) / var(--a-dash-size, 8px 1.5px) var(--a-repeat, repeat-x);
+  pointer-events: none;
+}
+
+.approach--pipeline > li.is-active::after,
+.flow--diagram > li.is-active::after,
+.features--linked > .feature.is-active::after,
+.journeys--steps .point.is-open::after {
+  --dash: var(--orange);
+}
+
+@keyframes dash-flow-x {
+  to { background-position: right center, 8px 50%; }
+}
+
+@keyframes dash-flow-y {
+  to { background-position: center bottom, 50% 8px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .approach--pipeline > li:not(:last-child)::after,
+  .flow--diagram > li:not(:last-child)::after,
+  .features--linked > .feature:not(:last-child)::after,
+  .journeys--steps .point:not(:last-child)::after {
+    animation: var(--a-flow, dash-flow-x) 0.7s linear infinite;
+  }
+}
+
+/* Down arrows: always between journey steps; elsewhere once the nodes stack */
+.journeys--steps .journey__steps {
+  --a-top: calc(100% + 1px);
+  --a-left: 23px;
+  --a-width: 10px;
+  --a-height: calc(var(--link) - 2px);
+  --a-shift: 0;
+  --a-head: var(--arrow-down);
+  --a-head-at: center bottom;
+  --a-head-size: 10px 6px;
+  --a-angle: 180deg;
+  --a-dash-at: 50% 0;
+  --a-dash-size: 1.5px 8px;
+  --a-repeat: repeat-y;
+  --a-flow: dash-flow-y;
+}
+
+@media (max-width: 1100px) {
+  .approach--pipeline {
+    --a-top: calc(100% + 1px);
+    --a-left: 34px;
+    --a-width: 10px;
+    --a-height: calc(var(--link) - 2px);
+    --a-shift: 0;
+    --a-head: var(--arrow-down);
+    --a-head-at: center bottom;
+    --a-head-size: 10px 6px;
+    --a-angle: 180deg;
+    --a-dash-at: 50% 0;
+    --a-dash-size: 1.5px 8px;
+    --a-repeat: repeat-y;
+    --a-flow: dash-flow-y;
+  }
+}
+
+@media (max-width: 1000px) {
+  .features--linked {
+    --a-top: calc(100% + 1px);
+    --a-left: 42px;
+    --a-width: 10px;
+    --a-height: calc(var(--link) - 2px);
+    --a-shift: 0;
+    --a-head: var(--arrow-down);
+    --a-head-at: center bottom;
+    --a-head-size: 10px 6px;
+    --a-angle: 180deg;
+    --a-dash-at: 50% 0;
+    --a-dash-size: 1.5px 8px;
+    --a-repeat: repeat-y;
+    --a-flow: dash-flow-y;
+  }
+}
+
+@media (max-width: 700px) {
+  .flow--diagram {
+    --a-top: calc(100% + 1px);
+    --a-left: 24px;
+    --a-width: 10px;
+    --a-height: calc(var(--link) - 2px);
+    --a-shift: 0;
+    --a-head: var(--arrow-down);
+    --a-head-at: center bottom;
+    --a-head-size: 10px 6px;
+    --a-angle: 180deg;
+    --a-dash-at: 50% 0;
+    --a-dash-size: 1.5px 8px;
+    --a-repeat: repeat-y;
+    --a-flow: dash-flow-y;
+  }
+}
+
+/* Panel around a diagram: rounded, with a small caps label */
+.diagram {
+  padding: clamp(22px, 2.2vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: radial-gradient(120% 140% at 0% 0%, rgba(255, 255, 255, 0.045), transparent 55%), var(--panel);
+}
+
+.diagram__label {
+  margin-bottom: 22px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- AI approach: five steps in a row (AI Implementation) ----------
+   The bar along the bottom fills while a step is active. */
+.approach--pipeline {
+  --link: 36px;
+  --step-time: 2.8s;
+  gap: var(--link);
+}
+
+.approach--pipeline li {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background:
+    linear-gradient(var(--orange), var(--orange)) 0 100% / 0 3px no-repeat,
+    var(--panel);
+  transition: border-color var(--node-ease), background-color var(--node-ease),
+    box-shadow var(--node-ease), translate var(--node-ease);
+}
+
+.approach--pipeline li:first-child {
+  border-top-color: var(--line);
+}
+
+/* Small numbered box, as in .features--nodes */
+.approach--pipeline .approach__num,
+.approach--pipeline li:first-child .approach__num {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 18px;
+  font-size: 14px;
+  font-weight: 650;
+  font-stretch: 100%;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  color: var(--muted);
+  transition: color var(--node-ease), border-color var(--node-ease), background-color var(--node-ease);
+}
+
+.approach--pipeline li.is-active {
+  border-color: var(--orange);
+  background-color: var(--white);
+  background-size: 100% 3px, auto;
+  box-shadow: 0 22px 44px -28px rgba(242, 144, 42, 0.7);
+  translate: 0 -4px;
+  transition: border-color var(--node-ease), background-color var(--node-ease),
+    box-shadow var(--node-ease), translate var(--node-ease), background-size var(--step-time) linear;
+}
+
+.approach--pipeline li.is-active .approach__num {
+  border-color: transparent;
+  background: var(--orange);
+  color: var(--ink);
+}
+
+@media (max-width: 1100px) {
+  /* One step per row: number on the left, the arrows run down between the rows */
+  .approach--pipeline {
+    --link: 28px;
+    grid-template-columns: 1fr;
+  }
+
+  .approach--pipeline li {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    column-gap: 18px;
+    align-items: start;
+    padding: 20px 22px;
+  }
+
+  .approach--pipeline .approach__num,
+  .approach--pipeline li:first-child .approach__num {
+    grid-row: span 2;
+    margin-bottom: 0;
+  }
+}
+
+/* ---------- Case-study flow (AI Implementation) ----------
+   The AI node glows orange with a grain, as the centre card on nalarx.com. */
+.flow--diagram {
+  --link: 34px;
+  gap: var(--link);
+}
+
+.flow--diagram li {
+  padding: 18px 18px 20px;
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+  transition: border-color var(--node-ease), background-color var(--node-ease),
+    box-shadow var(--node-ease), translate var(--node-ease);
+}
+
+.flow--diagram li::before {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.flow--diagram li.is-active {
+  border-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.06);
+  translate: 0 -3px;
+}
+
+/* The AI step: orange glass with a grain */
+.flow--diagram .flow__ai {
+  border-color: rgba(255, 200, 150, 0.45);
+  background: var(--grain) 0 0 / 160px,
+    radial-gradient(120% 90% at 15% 0%, #ffb15e, transparent 60%),
+    linear-gradient(150deg, #f2902a, #9c4a08);
+  background-blend-mode: soft-light, normal, normal;
+  box-shadow: 0 24px 50px -24px rgba(242, 144, 42, 0.65);
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.flow--diagram .flow__ai::before {
+  content: counter(flow, decimal-leading-zero) "  ·  AI";
+  color: #ffe2c2;
+}
+
+.flow--diagram .flow__ai.is-active {
+  border-color: #ffd2a1;
+  box-shadow: 0 0 0 4px rgba(242, 144, 42, 0.18), 0 26px 60px -20px rgba(242, 144, 42, 0.85);
+}
+
+/* The human step: orange outline */
+.flow--diagram .flow__person {
+  border-color: rgba(242, 144, 42, 0.6);
+  background: rgba(242, 144, 42, 0.07);
+  color: var(--text);
+}
+
+.flow--diagram .flow__person::before {
+  content: counter(flow, decimal-leading-zero) "  ·  People";
+  color: var(--orange);
+}
+
+.flow--diagram .flow__person.is-active {
+  border-color: var(--orange);
+  background-color: rgba(242, 144, 42, 0.14);
+}
+
+/* ---------- "What we do" as nodes (AI, BT, FL practice pages) ----------
+   .features--linked adds arrows, for capabilities that follow one another. */
+.features--nodes {
+  --link: 34px;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  grid-template-columns: none;
+  gap: var(--link);
+  border-top: 0;
+}
+
+.features--nodes .feature,
+.features--nodes .feature:first-child,
+.features--nodes .feature:nth-child(odd):not(:first-child) {
+  position: relative;
+  padding: 26px 26px 30px;
+  border: 1px solid var(--line-strong);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.025);
+  transition: border-color var(--node-ease), background-color var(--node-ease),
+    box-shadow var(--node-ease), translate var(--node-ease);
+}
+
+.features--nodes .feature h3 {
+  flex-direction: column;
+  gap: 18px;
+}
+
+.features--nodes .feature__num {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  font-size: 14px;
+  font-weight: 650;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  transition: color var(--node-ease), border-color var(--node-ease), background-color var(--node-ease);
+}
+
+.features--nodes .feature.is-active {
+  border-color: rgba(242, 144, 42, 0.7);
+  background-color: rgba(242, 144, 42, 0.07);
+  box-shadow: 0 24px 50px -30px rgba(242, 144, 42, 0.7);
+  translate: 0 -3px;
+}
+
+.features--nodes .feature.is-active .feature__num {
+  border-color: transparent;
+  background: var(--orange);
+  color: var(--night);
+}
+
+@media (max-width: 1000px) {
+  .features--nodes {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Linked capabilities stack, so the arrows can keep pointing to the next one */
+  .features--linked {
+    --link: 28px;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .features--nodes {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Services rows as cards (services.html) ---------- */
+.service-list--cards {
+  display: grid;
+  gap: 14px;
+  border-top: 0;
+}
+
+.service-list--cards .service-row {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: radial-gradient(120% 140% at 0% 0%, rgba(255, 255, 255, 0.045), transparent 55%), var(--panel);
+  overflow: hidden;
+  transition: border-color var(--node-ease), box-shadow var(--node-ease);
+}
+
+.service-list--cards .service-row__link {
+  padding: 30px clamp(22px, 2.6vw, 40px);
+}
+
+/* Orange wash from the left instead of the full-width tint */
+.service-list--cards .service-row__link::before {
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(70% 140% at 0% 50%, rgba(242, 144, 42, 0.16), transparent 70%);
+  transition: opacity var(--node-ease);
+}
+
+.service-list--cards .service-row__link > * {
+  position: relative;
+}
+
+.service-list--cards .service-row.is-active {
+  border-color: rgba(242, 144, 42, 0.6);
+  box-shadow: 0 30px 60px -40px rgba(242, 144, 42, 0.8);
+}
+
+.service-list--cards .service-row.is-active .service-row__link::before {
+  opacity: 1;
+}
+
+.service-list--cards .service-row.is-active .service-row__art .iso {
+  transform: translateY(-6px);
+}
+
+/* Items as chips, as the tool list on nalarx.com */
+.service-list--cards .service-row__items {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.service-list--cards .service-row__items li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  line-height: 1.3;
+}
+
+.service-list--cards .service-row__items li::before {
+  position: static;
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.service-list--cards .service-row__go {
+  border-radius: 14px;
+}
+
+.service-list--cards .service-row.is-active .service-row__go {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--night);
+  transform: translateX(4px);
+}
+
+/* ---------- Industries client journeys as diagrams (industries.html) ----------
+   Each journey is a rounded panel; its steps are nodes joined by down arrows. The step that
+   is open, or the last one (where the work leads), is marked in orange. */
+.journeys--steps {
+  gap: 14px;
+}
+
+.journeys--steps .journey,
+.journeys--steps .journey:first-child {
+  padding: 26px 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--panel);
+}
+
+.journeys--steps .journey__steps {
+  --link: 22px;
+  display: grid;
+  gap: var(--link);
+  margin-top: 20px;
+  border-bottom: 0;
+}
+
+.journeys--steps .point,
+.journeys--steps .point:first-child,
+.journeys--steps .point + .point {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--white);
+  transition: border-color var(--node-ease), box-shadow var(--node-ease);
+}
+
+.journeys--steps .point__toggle {
+  padding: 12px 14px;
+}
+
+.journeys--steps .point__panel p {
+  margin: 0 14px 12px 44px;
+}
+
+.journeys--steps .point:last-child {
+  border-color: rgba(242, 144, 42, 0.55);
+  background: var(--orange-soft);
+}
+
+.journeys--steps .point.is-open {
+  border-color: var(--orange);
+  box-shadow: 0 16px 34px -24px rgba(242, 144, 42, 0.8);
+}
+
+@media (max-width: 700px) {
+  .flow--diagram {
+    --link: 28px;
+    grid-auto-flow: row;
+  }
+}
+
+/* Fixed journeys (fractional-leadership.html): the same nodes without opening, in one row
+   while the cards are wide; the arrows point right again ("initial" falls back to the defaults) */
+@media (min-width: 1101px) {
+  /* One journey per row: name on the left, the steps across the rest */
+  .journeys--row {
+    grid-template-columns: 1fr;
+  }
+
+  .journeys--row .journey,
+  .journeys--row .journey:first-child {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
+    grid-template-rows: auto 1fr;
+    column-gap: clamp(24px, 3vw, 56px);
+    align-items: start;
+  }
+
+  .journeys--row .journey__steps {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    margin-top: 0;
+    --a-top: initial;
+    --a-left: initial;
+    --a-width: initial;
+    --a-height: initial;
+    --a-shift: initial;
+    --a-head: initial;
+    --a-head-at: initial;
+    --a-head-size: initial;
+    --a-angle: initial;
+    --a-dash-at: initial;
+    --a-dash-size: initial;
+    --a-repeat: initial;
+    --a-flow: initial;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+  }
+
+  .journeys--row .point__toggle {
+    height: 100%;
+    align-content: start;
+  }
+}
+
+.journeys--row .point__toggle {
+  grid-template-columns: 30px minmax(0, 1fr);
+  cursor: default;
+}
+
+/* ---------- Practice areas as panels (business-transformation.html "Services") ----------
+   Four rounded panels in a 2 × 2 grid: number, name, line and an isometric illustration on top,
+   the services as chips below. The highlight walks the panels (js/motion.js): the active panel
+   turns black with an orange glow, as the dark bands and nalarx.com cards. */
+.tile-panels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  counter-reset: panel;
+}
+
+.tile-panels .tile-group,
+.tile-panels .tile-group + .tile-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin-top: 0;
+  padding: clamp(24px, 2.4vw, 36px);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--panel);
+  overflow: hidden;
+  isolation: isolate;
+  transition: border-color var(--node-ease), background-color var(--node-ease), box-shadow var(--node-ease);
+}
+
+/* Orange glow in the corner, shown on the active panel */
+.tile-panels .tile-group::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(70% 90% at 100% 0%, rgba(242, 144, 42, 0.28), transparent 65%);
+  opacity: 0;
+  transition: opacity var(--node-ease);
+}
+
+.tile-group__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(96px, 9vw, 140px);
+  align-items: start;
+  gap: 20px;
+}
+
+.tile-group__art {
+  height: clamp(84px, 8vw, 120px);
+  transition: transform var(--node-ease);
+}
+
+.tile-panels .tile-group__label {
+  margin-bottom: 12px;
+  font-size: var(--step-2);
+  font-weight: 700;
+  font-stretch: 106%;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-transform: none;
+  color: var(--ink);
+  transition: color var(--node-ease);
+}
+
+.tile-panels .tile-group__label::before {
+  counter-increment: panel;
+  content: counter(panel, decimal-leading-zero) " / 04";
+  display: block;
+  margin-bottom: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  font-stretch: 100%;
+  letter-spacing: 0.16em;
+  color: var(--orange-deep);
+}
+
+.tile-panels .tile-group__desc {
+  max-width: 460px;
+  margin: 0;
+  transition: color var(--node-ease);
+}
+
+.tile-panels .tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tile-panels .cell {
+  align-items: center;
+  gap: 9px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--white);
+  transition: border-color var(--node-ease), background-color var(--node-ease), color var(--node-ease);
+}
+
+.tile-panels .tiles > .cell::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+.tile-panels .cell--link {
+  border-color: var(--orange);
+  background: var(--orange-soft);
+}
+
+/* The active panel */
+.tile-panels .tile-group.is-active {
+  border-color: rgba(242, 144, 42, 0.45);
+  background-color: var(--night);
+  box-shadow: 0 34px 70px -40px rgba(242, 144, 42, 0.75);
+}
+
+.tile-panels .tile-group.is-active::before {
+  opacity: 1;
+}
+
+.tile-panels .tile-group.is-active .tile-group__art {
+  transform: translateY(-6px);
+}
+
+.tile-panels .tile-group.is-active .tile-group__label {
+  color: var(--white);
+}
+
+.tile-panels .tile-group.is-active .tile-group__label::before {
+  color: var(--orange);
+}
+
+.tile-panels .tile-group.is-active .tile-group__desc {
+  color: var(--night-text);
+}
+
+.tile-panels .tile-group.is-active .cell {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e3e6e9;
+}
+
+.tile-panels .tile-group.is-active .cell--link {
+  border-color: var(--orange);
+  background: var(--orange);
+  color: var(--night);
+}
+
+.tile-panels .tile-group .cell:hover {
+  border-color: var(--orange);
+}
+
+@media (max-width: 900px) {
+  .tile-panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .tile-group__head {
+    grid-template-columns: minmax(0, 1fr) 64px;
+  }
+
+  .tile-group__art {
+    height: 64px;
+  }
+}
+
+/* ---------- Capability list as nodes (insights/tender-engine "What the engine does") ----------
+   Rounded cards with a round number, as the step-flow above them; the highlight walks the list. */
+.tags--nodes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  counter-reset: tag;
+}
+
+.tags--nodes li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px 14px 14px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel);
+  transition: border-color var(--node-ease), background-color var(--node-ease), box-shadow var(--node-ease);
+}
+
+.tags--nodes li::before {
+  counter-increment: tag;
+  content: counter(tag, decimal-leading-zero);
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--white);
+  transition: color var(--node-ease), border-color var(--node-ease), background-color var(--node-ease);
+}
+
+.tags--nodes li.is-active {
+  border-color: var(--orange);
+  background-color: var(--white);
+  box-shadow: 0 18px 40px -28px rgba(242, 144, 42, 0.8);
+}
+
+.tags--nodes li.is-active::before {
+  border-color: transparent;
+  background: var(--orange);
+  color: var(--ink);
+}
+
+@media (max-width: 600px) {
+  .tags--nodes {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Working models on a canvas (AI Implementation "Three ways to work with us") ----------
+   Rounded cards; each diagram sits on a dark dotted canvas, as the platform panel on nalarx.com,
+   with the orange "US" block glowing. The highlight walks the cards and replays their diagram. */
+.models--canvas {
+  gap: 14px;
+}
+
+.models--canvas .model,
+.models--canvas .model:nth-child(2) {
+  gap: 12px;
+  padding: 14px 14px 30px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--panel);
+  transition: border-color var(--node-ease), background-color var(--node-ease), box-shadow var(--node-ease),
+    translate var(--node-ease);
+}
+
+.models--canvas .model > :not(.model__diagram) {
+  margin-inline: 14px;
+}
+
+.models--canvas .model__diagram {
+  position: relative;
+  height: 200px;
+  margin-bottom: 14px;
+  border-radius: 16px;
+  background:
+    radial-gradient(60% 70% at 50% 55%, rgba(242, 144, 42, 0.14), transparent 70%),
+    radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1.4px) 0 0 / 16px 16px,
+    var(--night);
+  overflow: hidden;
+}
+
+.models--canvas .model__diagram svg {
+  width: 230px;
+  height: 126px;
+  overflow: visible;
+}
+
+/* The client's boxes: outlined in white on the canvas */
+.models--canvas .model__diagram rect[fill="#fff"] {
+  fill: rgba(255, 255, 255, 0.04);
+  stroke: rgba(255, 255, 255, 0.75);
+  stroke-width: 1.5;
+}
+
+.models--canvas .model__diagram rect {
+  rx: 8px;
+}
+
+.models--canvas .model__diagram .m-piece {
+  rx: 3px;
+  stroke: var(--night);
+}
+
+.models--canvas :is(.m-you, .m-it, .m-team) text {
+  fill: var(--white);
+}
+
+.models--canvas .m-team text {
+  fill: var(--night-muted);
+}
+
+.models--canvas .m-us rect {
+  filter: drop-shadow(0 0 14px rgba(242, 144, 42, 0.55));
+}
+
+/* Number as a small box, as in .features--nodes */
+.models--canvas .model > .caption {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  font-size: 13px;
+  font-weight: 650;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  transition: color var(--node-ease), border-color var(--node-ease), background-color var(--node-ease);
+}
+
+.models--canvas .model.is-active {
+  border-color: var(--orange);
+  background-color: var(--white);
+  box-shadow: 0 30px 60px -40px rgba(242, 144, 42, 0.85);
+  translate: 0 -4px;
+}
+
+.models--canvas .model.is-active > .caption {
+  border-color: transparent;
+  background: var(--orange);
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .models--canvas .model.is-active .m-us rect {
+    animation: us-glow 1.6s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes us-glow {
+  to { filter: drop-shadow(0 0 26px rgba(242, 144, 42, 0.95)); }
+}
+
+/* ---------- Folded extra content (AI Implementation "And many more ways…") ----------
+   A native <details>: the summary is a full-width bar with a pill and a plus that turns into a
+   cross; the content slides open where the browser can animate to height: auto. */
+.more {
+  interpolate-size: allow-keywords;
+}
+
+.more__toggle {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 32px 0;
+  list-style: none;
+  cursor: pointer;
+}
+
+.more__toggle::-webkit-details-marker {
+  display: none;
+}
+
+.more__toggle .caption {
+  margin-right: auto;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.more__hint {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.more__hide,
+.more[open] .more__show {
+  display: none;
+}
+
+.more[open] .more__hide {
+  display: inline;
+}
+
+/* Plus in a rounded box; its two lines turn 45° into a cross when open */
+.more__icon {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.more__icon::before,
+.more__icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 1.5px;
+  margin: -0.75px 0 0 -7px;
+  background: var(--ink);
+  transition: background-color 0.3s ease, transform 0.5s var(--ease-out);
+}
+
+.more__icon::after {
+  transform: rotate(90deg);
+}
+
+.more__toggle:hover .caption {
+  color: var(--ink);
+}
+
+.more__toggle:hover .more__icon,
+.more[open] .more__icon {
+  border-color: var(--orange);
+  background: var(--orange);
+}
+
+.more__toggle:hover .more__icon::before,
+.more__toggle:hover .more__icon::after,
+.more[open] .more__icon::before,
+.more[open] .more__icon::after {
+  background: var(--night);
+}
+
+.more[open] .more__icon::before {
+  transform: rotate(45deg);
+}
+
+.more[open] .more__icon::after {
+  transform: rotate(135deg);
+}
+
+.more__toggle:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.more::details-content {
+  block-size: 0;
+  overflow: clip;
+  transition: block-size 0.6s var(--ease-out), content-visibility 0.6s allow-discrete;
+}
+
+.more[open]::details-content {
+  block-size: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .more::details-content {
+    transition: none;
+  }
+}
+
+/* The cards inside: rounded, as the other nodes */
+.journeys--more {
+  gap: 14px;
+  padding-bottom: 8px;
+}
+
+.journeys--more .journey,
+.journeys--more .journey:first-child {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--panel);
+}
+
+@media (max-width: 600px) {
+  .more__hint {
+    display: none;
+  }
+}
+
+/* Case studies with a diagram: no white rule above the first one, the section head is enough */
+.case-study:has(> .diagram):first-of-type {
+  border-top: 0;
+}
+
+/* ---------- Inner page heroes fit the first screen (desktop) ----------
+   All text sits in the left column (title, lead, then the note), the illustration alone on the
+   right. The illustration is capped at the window height under the sticky header, so the whole
+   hero fits the first screen; the hero is only as tall as its content, so no empty band is left
+   under it. .page-hero__aside dissolves (display: contents) so its note and art can take their
+   own grid cells. The svg keeps its default "meet" fit and the 3D canvas follows it
+   (js/iso-gl.js). */
+@media (min-width: 901px) {
+  .page-hero:has(.page-hero__art) {
+    --hero-pad: clamp(24px, 5vh, 72px);
+    padding-block: var(--hero-pad);
+  }
+
+  .page-hero:has(.page-hero__art) .page-hero__inner {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: clamp(32px, 4vw, 72px);
+    row-gap: 0;
+    align-items: center;
+  }
+
+  .page-hero:has(.page-hero__art) .page-hero__text {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+  }
+
+  /* No note under the lead (About): the text centres against the illustration */
+  .page-hero:has(.page-hero__art):not(:has(.page-hero__aside p)) .page-hero__text {
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
+  .page-hero:has(.page-hero__art) .page-hero__aside {
+    display: contents;
+  }
+
+  .page-hero:has(.page-hero__art) .page-hero__aside p {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    max-width: 560px;
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+
+  .page-hero:has(.page-hero__art) .page-hero__art {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    justify-self: end;
+    width: min(100%, 600px);
+  }
+
+  .page-hero__art svg {
+    max-height: max(240px, calc(var(--screen-h) - var(--header-h) - 10px - 2 * var(--hero-pad)));
+  }
+}
+
+/* Hero headline with a long word (.display--fit: "Implementation", "Transformation"): the type shrinks to the
+   column width so the word never runs under the illustration (cqi = 1% of .page-hero__text).
+   Other headlines keep the full size. */
+.page-hero__text {
+  container-type: inline-size;
+}
+
+.page-hero__text .display--fit {
+  font-size: min(var(--step-5), 10.4cqi);
+}
+
+/* Pillar heroes: the button under the lead */
+.page-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+  margin-top: 36px;
+}

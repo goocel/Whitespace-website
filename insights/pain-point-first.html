@@ -76,13 +76,17 @@
         </aside>
         <div class="article__body">
           <h2>Five steps, in this order</h2>
-          <ol class="approach approach--stack">
-            <li><span class="approach__num">1</span><h3>Start with pain points</h3><p>Where does time, cash or control leak?</p></li>
-            <li><span class="approach__num">2</span><h3>Map the process</h3><p>How the work really flows today.</p></li>
-            <li><span class="approach__num">3</span><h3>Check readiness</h3><p>Data, systems, people, controls.</p></li>
-            <li><span class="approach__num">4</span><h3>Pick quick wins</h3><p>Value × feasibility × risk.</p></li>
-            <li><span class="approach__num">5</span><h3>Pilot, scale, enable</h3><p>Train the team, track adoption with KPIs.</p></li>
-          </ol>
+          <!-- Steps light up in turn; the dashed wire flows down to the next step -->
+          <figure class="step-flow" style="--steps: 5">
+            <figcaption class="step-flow__label">Our approach to AI</figcaption>
+            <ol class="step-flow__list">
+              <li class="step-flow__step" style="--i: 0"><span class="step-flow__node">01</span><div class="step-flow__card"><h3>Start with pain points</h3><p>Where does time, cash or control leak?</p></div></li>
+              <li class="step-flow__step" style="--i: 1"><span class="step-flow__node">02</span><div class="step-flow__card"><h3>Map the process</h3><p>How the work really flows today.</p></div></li>
+              <li class="step-flow__step" style="--i: 2"><span class="step-flow__node">03</span><div class="step-flow__card"><h3>Check readiness</h3><p>Data, systems, people, controls.</p></div></li>
+              <li class="step-flow__step" style="--i: 3"><span class="step-flow__node">04</span><div class="step-flow__card"><h3>Pick quick wins</h3><p>Value × feasibility × risk.</p></div></li>
+              <li class="step-flow__step" style="--i: 4"><span class="step-flow__node">05</span><div class="step-flow__card"><h3>Pilot, scale, enable</h3><p>Train the team, track adoption with KPIs.</p></div></li>
+            </ol>
+          </figure>
           <p>This is the reverse of how most AI projects start, and a person checks the output at every step.</p>
 
           <h2>Three ways to build it with you</h2>
@@ -105,6 +109,17 @@
           <a href="../insights.html" class="link-arrow">All insights <span aria-hidden="true">→</span></a>
         </div>
         <div class="insight-grid">
+          <article class="insight-card" data-type="perspective">
+            <a href="../insights/slide-deck.html" class="insight-card__link">
+              <div class="insight-card__art"><div class="iso" data-illustration="deck" data-pad="0.3"></div></div>
+              <div class="insight-card__text">
+                <p class="insight-card__meta">Perspective · Business Transformation</p>
+                <h3>Most advice stops at the slide deck</h3>
+                <p>Companies pay for strategy, then struggle to turn it into change. We stay inside the business until it runs.</p>
+                <span class="link-arrow">Read more <span aria-hidden="true">→</span></span>
+              </div>
+            </a>
+          </article>
           <article class="insight-card" data-type="case-study">
             <a href="../insights/it-diagnostic.html" class="insight-card__link">
               <div class="insight-card__art"><div class="iso" data-illustration="engagement" data-pad="0.3"></div></div>
@@ -123,17 +138,6 @@
                 <p class="insight-card__meta">Case study · AI Implementation</p>
                 <h3>Invoice OCR: from a mountain of paper to checked records</h3>
                 <p>A finance team spending most of its time on paperwork and data entry. AI reads and matches; a person decides every exception.</p>
-                <span class="link-arrow">Read the case <span aria-hidden="true">→</span></span>
-              </div>
-            </a>
-          </article>
-          <article class="insight-card" data-type="case-study">
-            <a href="../insights/tender-engine.html" class="insight-card__link">
-              <div class="insight-card__art"><div class="iso" data-illustration="deals" data-pad="0.3"></div></div>
-              <div class="insight-card__text">
-                <p class="insight-card__meta">Case study · AI Implementation</p>
-                <h3>Tender engine: read the RFP once, not again and again</h3>
-                <p>Every team used to re-read the same long tender for its part of the bid. Now one engine reads it once for everyone.</p>
                 <span class="link-arrow">Read the case <span aria-hidden="true">→</span></span>
               </div>
             </a>

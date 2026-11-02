@@ -44,7 +44,7 @@
     const TONE = { paper: new THREE.Color("#f6f7f8"), light: new THREE.Color("#dde0e4") };
     const flat = (color) => new THREE.MeshBasicMaterial({ color });
     // BoxGeometry faces: +x (right), −x, +y (top), −y, +z (left), −z
-    const orangeFaces = [flat("#999999"), flat("#1a1a1a"), flat("#f2902a"), flat("#1a1a1a"), flat("#1a1a1a"), flat("#999999")];
+    const orangeFaces = [flat("#a3a8ae"), flat("#363a40"), flat("#f2902a"), flat("#363a40"), flat("#363a40"), flat("#a3a8ae")];
     const geometry = new THREE.BoxGeometry(0.94, 0.94, 0.94);
 
     const first = shapes[0];

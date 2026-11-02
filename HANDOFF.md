@@ -51,9 +51,10 @@ Section isi berselang-seling: hero putih → **band hitam** (`section--dark`, ka
 | `insights/<slug>.html` (6) | Artikel pendek dari deck hal. 4, 5, 7, 8, 9, 10: hero + kolom info + isi → **More insights** |
 | `about.html` | Hero 3D → **How we show up** (+ link "Next: Industries we know") |
 | `careers.html` | Hero 3D → **Open roles** |
-| 3 halaman pilar | AI: **What we do** → approach → **AI at work** → working models. BT: **What we do** → Services → **Engagements**. FL: **What we do** → client examples. Breadcrumb = Services |
+| 3 halaman pilar | AI: **What we do** → approach → **AI at work** → working models. BT: **What we do** → Services → **Engagements**. FL: **What we do** → client examples. Tanpa breadcrumb (dihapus 2 Nov) |
 | `contact.html` | Form, tidak berubah |
 
+- **Zoom 90% di desktop (2 Nov):** `css/base.css` memberi `html { zoom: 0.9 }` mulai 1024px, karena di 100% situs terasa terlalu penuh. Untuk tinggi layar penuh pakai `var(--screen-h)`, **bukan** `100svh` (di bawah zoom, 100svh hanya mengisi 90% layar).
 - Footer semua halaman: Services (3 pilar) · Firm (Insights · Industries · About · Careers · Contact) · Office.
 - Teks penjelasan yang **ditulis sendiri** (bukan dari deck) dan perlu review user: poin kartu The Solution, frasa `how-card`,
   langkah client journeys di Industries, kalimat penghubung di artikel Insights.

@@ -77,19 +77,19 @@
         <div class="article__body">
           <h2>Two sides, two vocabularies</h2>
           <p>Business teams talk in margin, SOPs, P&amp;L, sales pipeline, working capital, KPIs and approval flows. Technology teams talk in LLMs, RAG, agents, vector databases, OCR, prompts, APIs and tokens. A use case only exists where the two meet.</p>
-          <div class="overlap">
-            <div class="overlap__side">
-              <h3>Business judgment</h3>
-              <ul class="tags"><li>Margin</li><li>SOP</li><li>P&amp;L</li><li>Sales pipeline</li><li>Working capital</li><li>KPI</li><li>Approval flow</li></ul>
-              <div class="blindspot"><p class="caption">The blind spot</p><p>Business teams don't always know what AI is capable of.</p></div>
+          <!-- Both vocabularies flow into one node; the dashed lines move toward the centre -->
+          <figure class="usecase-flow">
+            <figcaption class="usecase-flow__label">Where a use case lives</figcaption>
+            <div class="usecase-flow__map">
+              <h3 class="usecase-flow__head usecase-flow__head--business">Business judgment</h3>
+              <ul class="usecase-flow__chips usecase-flow__chips--business"><li>Margin</li><li>SOP</li><li>P&amp;L</li><li>Sales pipeline</li><li>Working capital</li><li>KPI</li><li>Approval flow</li></ul>
+              <div class="usecase-flow__core"><span>Where they meet</span><strong>The use case</strong></div>
+              <h3 class="usecase-flow__head usecase-flow__head--tech">Technology</h3>
+              <ul class="usecase-flow__chips usecase-flow__chips--tech"><li>LLM</li><li>RAG</li><li>Agents</li><li>Vector DB</li><li>OCR</li><li>Prompts</li><li>API</li><li>Tokens</li></ul>
+              <div class="usecase-flow__blind usecase-flow__blind--business"><p class="caption">The blind spot</p><p>Business teams don't always know what AI is capable of.</p></div>
+              <div class="usecase-flow__blind usecase-flow__blind--tech"><p class="caption">The blind spot</p><p>IT teams rarely see the pain points and business objectives.</p></div>
             </div>
-            <div class="overlap__core"><p>The use case</p></div>
-            <div class="overlap__side">
-              <h3>Technology</h3>
-              <ul class="tags"><li>LLM</li><li>RAG</li><li>Agents</li><li>Vector DB</li><li>OCR</li><li>Prompts</li><li>API</li><li>Tokens</li></ul>
-              <div class="blindspot"><p class="caption">The blind spot</p><p>IT teams rarely see the pain points and business objectives.</p></div>
-            </div>
-          </div>
+          </figure>
 
           <h2>Each side has a blind spot</h2>
           <p>Business teams don't always know what AI is capable of, so they ask for too little or for the wrong thing. IT teams rarely see the pain points and business objectives, so they build what is technically interesting. Each side holds half of the picture.</p>
@@ -120,6 +120,17 @@
               </div>
             </a>
           </article>
+          <article class="insight-card" data-type="perspective">
+            <a href="../insights/slide-deck.html" class="insight-card__link">
+              <div class="insight-card__art"><div class="iso" data-illustration="deck" data-pad="0.3"></div></div>
+              <div class="insight-card__text">
+                <p class="insight-card__meta">Perspective · Business Transformation</p>
+                <h3>Most advice stops at the slide deck</h3>
+                <p>Companies pay for strategy, then struggle to turn it into change. We stay inside the business until it runs.</p>
+                <span class="link-arrow">Read more <span aria-hidden="true">→</span></span>
+              </div>
+            </a>
+          </article>
           <article class="insight-card" data-type="case-study">
             <a href="../insights/it-diagnostic.html" class="insight-card__link">
               <div class="insight-card__art"><div class="iso" data-illustration="engagement" data-pad="0.3"></div></div>
@@ -127,17 +138,6 @@
                 <p class="insight-card__meta">Case study · AI Implementation</p>
                 <h3>IT diagnostic: one evidence-based view of IT</h3>
                 <p>Assessing IT maturity across several companies, consistently and backed by evidence. AI reads, code calculates, people judge.</p>
-                <span class="link-arrow">Read the case <span aria-hidden="true">→</span></span>
-              </div>
-            </a>
-          </article>
-          <article class="insight-card" data-type="case-study">
-            <a href="../insights/invoice-ocr.html" class="insight-card__link">
-              <div class="insight-card__art"><div class="iso" data-illustration="productivity" data-pad="0.3"></div></div>
-              <div class="insight-card__text">
-                <p class="insight-card__meta">Case study · AI Implementation</p>
-                <h3>Invoice OCR: from a mountain of paper to checked records</h3>
-                <p>A finance team spending most of its time on paperwork and data entry. AI reads and matches; a person decides every exception.</p>
                 <span class="link-arrow">Read the case <span aria-hidden="true">→</span></span>
               </div>
             </a>

@@ -44,6 +44,19 @@
   --head-space: clamp(48px, 6vw, 80px);
   --header-h: 76px;
   --tile-gap: 3px;
+  /* Full screen height; use instead of 100svh so it still fills the screen under the zoom below */
+  --screen-h: 100svh;
+}
+
+/* Desktop at 100% browser zoom looked too full: the whole site is drawn at 90%, as the browser's
+   own 90% zoom would. Under zoom, 100svh only covers 90% of the screen, so --screen-h makes up
+   for it. Phones and tablets keep 100%. */
+@media (min-width: 1024px) {
+  html {
+    --page-zoom: 0.9;
+    --screen-h: calc(100svh / var(--page-zoom));
+    zoom: var(--page-zoom);
+  }
 }
 
 /* ---------- Reset ---------- */

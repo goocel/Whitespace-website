@@ -9,11 +9,11 @@
   // [top, left face, right face] — light, dark, orange and night match the live site's
   // stone, ink, signal and night tones; paper is the white variant.
   const TONES = {
-    light: ["#f4f5f6", "#9aa0a7", "#c6cad0"],
+    light: ["#f5f6f7", "#b4b9bf", "#d4d7db"],
     paper: ["#ffffff", "#c6cad0", "#e2e4e7"],
-    mid: ["#c6cad0", "#6b7179", "#9aa0a7"],
-    dark: ["#4a4f56", "#15171a", "#2b2e33"],
-    orange: ["#f2902a", "#1a1a1a", "#999999"],
+    mid: ["#d3d7db", "#8e949b", "#b3b8be"],
+    dark: ["#666c74", "#363a40", "#4b5057"],
+    orange: ["#f2902a", "#363a40", "#a3a8ae"],
     night: ["#30353b", "#1a1d21", "#23272c"],
     nightHi: ["#3c4148", "#1c1f23", "#2b2e33"],
   };
@@ -469,6 +469,22 @@
           out.push({ x, y, z, from: [x, y, z + 2], fade: true, tone: z === 5 ? "orange" : z % 3 === 2 ? "paper" : "light", delay: 70 * z });
       for (const [x, y] of [[-1, 2], [0, 2], [1, 2], [2, 2], [2, -1], [2, 0], [2, 1], [-1, -1], [-1, 0], [-1, 1], [0, -1], [1, -1]])
         out.push({ x, y, z: 0, from: [x, y, 0], tone: "paper" });
+      return out;
+    },
+    // Contact (deck p.17): your business (left, light) and technology (right, dark) rise on one
+    // slab; the orange whitespace cube drops into the gap between them and floats there (3D only).
+    meet: () => {
+      const out = [];
+      // Slab: a diagonal strip under both towers and the gap
+      for (let x = -1; x <= 3; x++)
+        for (let y = -1; y <= 3; y++) if (x + y >= 1 && x + y <= 3) out.push({ x, y, z: 0, from: [x, y, 0], tone: "paper" });
+      const rise = (cells, height, tone, start) =>
+        cells.forEach(([x, y]) => {
+          for (let z = 1; z <= height; z++) out.push({ x, y, z, from: [x, y, z - 2], fade: true, tone: tone(z), delay: start + 90 * z });
+        });
+      rise([[-1, 2], [0, 2], [-1, 3], [0, 3]], 5, (z) => (z % 2 ? "light" : "paper"), 0);
+      rise([[2, -1], [3, -1], [2, 0], [3, 0]], 4, (z) => (z === 4 ? "mid" : "dark"), 150);
+      out.push({ x: 1, y: 1, z: 4, from: [1, 1, 10], fade: true, tone: "orange", delay: 900, float: true });
       return out;
     },
     night: () => {

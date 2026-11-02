@@ -51,7 +51,7 @@
     holder.appendChild(canvas);
 
     const scene = new THREE.Scene();
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x8d939a, 1.6));
+    scene.add(new THREE.HemisphereLight(0xffffff, 0xa9aeb4, 1.6));
     const sun = new THREE.DirectionalLight(0xffffff, 2.2);
     sun.position.set(14, 20, -6);
     scene.add(sun);

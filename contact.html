@@ -6,6 +6,8 @@
   <meta name="description" content="Start a conversation with Whitespace Solutions. Tell us where things stand." />
   <title>Contact — Whitespace Solutions</title>
   <script>document.documentElement.classList.add("js");</script>
+  <!-- 3D illustration: start downloading three.js with the page (same URL as js/iso-gl.js) -->
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js" crossorigin />
   <link rel="icon" href="assets/images/brand/logo.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -56,21 +58,10 @@
         <div class="contact-page__intro">
           <h1 class="display">Start a<br /> conversation.</h1>
           <p class="lead">Partner with us for transformation and strategic growth. Tell us where things stand.</p>
-          <div class="iso contact-page__art" data-illustration="tower" data-pad="0.4"></div>
-          <dl class="details">
-            <div>
-              <dt class="caption">Office</dt>
-              <dd><a href="https://www.google.com/maps/search/?api=1&amp;query=Puri+Indah+Financial+Tower+Jakarta" target="_blank" rel="noopener">Puri Indah Financial Tower, 6th floor, Jl. Puri Lkr. Dalam, Kembangan Selatan, Jakarta Barat 11610, Indonesia</a></dd>
-            </div>
-            <div>
-              <dt class="caption">Phone</dt>
-              <dd><a href="tel:+622139731400">021-39731400</a></dd>
-            </div>
-            <div>
-              <dt class="caption">Email</dt>
-              <dd><a href="mailto:contact@whitespace.id">contact@whitespace.id</a></dd>
-            </div>
-          </dl>
+          <figure class="contact-page__figure">
+            <div class="iso contact-page__art" data-illustration="meet" data-pad="0.3"></div>
+            <figcaption class="contact-page__legend"><span>Your business</span><span class="contact-page__legend-ws">The whitespace</span><span>Technology</span></figcaption>
+          </figure>
         </div>
 
         <form class="form" id="contactForm" action="mailto:contact@whitespace.id" method="post" enctype="text/plain" novalidate>
@@ -185,6 +176,8 @@
   <script src="js/isometric.js"></script>
   <script src="js/site.js"></script>
   <script src="js/motion.js"></script>
+  <script src="js/iso-gl.js"></script>
+  <script src="js/page-hero-3d.js"></script>
   <script src="js/contact.js"></script>
 </body>
 </html>

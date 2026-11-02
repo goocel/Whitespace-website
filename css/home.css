@@ -12,7 +12,7 @@
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
   gap: 48px;
-  min-height: min(calc(100svh - var(--header-h)), 900px);
+  min-height: min(calc(var(--screen-h) - var(--header-h)), 900px);
 }
 
 .hero__text {
@@ -400,109 +400,6 @@
     width: auto;
     max-width: 400px;
     padding: 16px 0 0;
-  }
-}
-
-/* ---------- The solution: three practice cards with points that open, as on nalarx.com ----------
-   Cards align to the top, so opening a point only grows its own card. Without JS every point
-   stays open (the panels only collapse under html.js). */
-.solutions {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: start;
-  gap: 20px;
-}
-
-.solution {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--line);
-  background: var(--white);
-  transition: border-color 0.3s var(--ease-out);
-}
-
-.solution:hover,
-.solution:focus-within {
-  border-color: var(--line-strong);
-}
-
-.solution__head {
-  display: grid;
-  grid-template-columns: 72px 1fr;
-  align-items: center;
-  column-gap: 18px;
-  padding: 26px 26px 24px;
-  background: linear-gradient(160deg, var(--orange-soft), var(--panel) 65%);
-  border-bottom: 1px solid var(--line);
-}
-
-#practice-transformation .solution__head {
-  background: linear-gradient(160deg, var(--cell), var(--panel) 65%);
-}
-
-#practice-fractional .solution__head {
-  background: linear-gradient(160deg, #eef1f4, var(--panel) 65%);
-}
-
-.solution__art svg {
-  width: 72px;
-  height: 72px;
-}
-
-.solution__head h3 {
-  font-size: var(--step-1);
-  font-weight: 650;
-  font-stretch: 104%;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-}
-
-.solution__head .caption {
-  margin-top: 4px;
-}
-
-.solution__lead {
-  grid-column: 1 / -1;
-  margin-top: 20px;
-  font-size: 15px;
-  color: var(--text);
-}
-
-.solution__points {
-  margin: 10px 26px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.point--whitespace .point__toggle {
-  color: var(--orange-deep);
-}
-
-.solution__link {
-  margin: 20px 26px 24px;
-  align-self: flex-start;
-}
-
-/* Narrower screens: cards swipe sideways, as on nalarx.com, instead of stacking ~2,600px tall */
-@media (max-width: 1100px) {
-  .solutions {
-    grid-template-columns: none;
-    grid-auto-flow: column;
-    grid-auto-columns: min(82vw, 420px);
-    gap: 14px;
-    margin-inline: calc(var(--gutter) * -1);
-    padding: 0 var(--gutter) 8px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--gutter);
-    scrollbar-width: none;
-  }
-
-  .solutions::-webkit-scrollbar {
-    display: none;
-  }
-
-  .solution {
-    scroll-snap-align: start;
   }
 }
 

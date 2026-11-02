@@ -35,7 +35,7 @@
     /* ---------- Cubes ---------- */
     const cubes = hero.voxels.filter((v) => v.tone !== "ghost");
     const ghostVoxel = hero.voxels.find((v) => v.tone === "ghost");
-    const TONE = { light: "#e9ebee", mid: "#b9bec4", dark: "#3a3f45" };
+    const TONE = { light: "#e9ebee", mid: "#cdd1d6", dark: "#5b6169" };
     const ORANGE = new THREE.Color("#f2902a");
     const colors = cubes.map((v) => new THREE.Color(TONE[v.tone] || TONE.light));
 

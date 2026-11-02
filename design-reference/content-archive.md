@@ -102,3 +102,37 @@ Removed from Home (user, 29 Oct). Still on `practices/fractional-leadership.html
 - Title: From strategy to AI-enabled sales.
 - Text: One engagement that grew step by step, from direction-setting to AI in the sales process.
 - Flow: Corporate strategy → Go-to-market transformation → Sales force enablement → AI quote-to-cash (AI step highlighted)
+
+## About — hero note
+
+Removed 2 November 2026 (the user found the hero too wordy). It sat under the hero illustration:
+
+> One team that understands both the business and the technology: AI implementation, business
+> transformation from turnaround to deals and capital, and senior leaders when you need them.
+> Practical. Applicable. Affordable.
+
+## Practice pages — hero notes
+
+Removed 2 November 2026; each sat under the hero illustration (the leads above them stayed):
+
+| Page | Note |
+| --- | --- |
+| AI Implementation | AI only pays off when the process around it is right. That is why the same team also fixes the business around it. |
+| Business Transformation | From the first diagnostic to the transformation office that keeps the change going, we work inside the business until it runs. |
+| Fractional Leadership | From one quarter to a full turnaround, we fill the seat until your own team is ready to take it over. |
+
+## Services — hero note
+
+Removed 2 November 2026, with the practice-page notes; it sat under the hero illustration:
+
+> AI only pays off when the process around it is right. That is why we do both, and lend you senior
+> capacity when you need it.
+
+## Industries and Careers — hero notes
+
+Removed 2 November 2026, with the other hero notes; each sat under the hero illustration:
+
+| Page | Note |
+| --- | --- |
+| Industries | Wide exposure means we have usually seen your problem before, in another industry. |
+| Careers | You will sit inside client companies, not behind them: close to the decisions, the data and the people who run the business. |

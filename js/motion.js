@@ -22,10 +22,10 @@
       ".breadcrumb",
       ".page-hero .display",
       ".page-hero .lead",
+      ".page-hero__actions",
       ".page-hero__aside p",
       ".contact-page__intro > .display",
       ".contact-page__intro > .lead",
-      ".contact-page__intro > .details > div",
     ].filter((selector) => document.querySelector(selector));
     if (intro.length) {
       gsap.from(intro, { y: 32, autoAlpha: 0, duration: 1.1, ease: "expo.out", stagger: 0.09, delay: 0.1 });
@@ -99,9 +99,12 @@
       if (!build) return;
       const tl = build(svg, gsap.timeline({ paused: true }));
       modelTimelines.push(tl);
-      svg.closest(".model").addEventListener("mouseenter", () => {
+      // Replays on hover, and when the walking highlight below reaches the card (event "node:active")
+      const replay = () => {
         if (tl.progress() === 1) tl.restart();
-      });
+      };
+      svg.closest(".model").addEventListener("mouseenter", replay);
+      svg.closest(".model").addEventListener("node:active", replay);
     });
     if (modelTimelines.length) {
       ScrollTrigger.create({
@@ -135,15 +138,73 @@
     reveal(".compare__row", { stagger: 0.06 });
     reveal(".overlap > *", { stagger: 0.1 });
     reveal(".approach > li", { stagger: 0.08 });
-    reveal(".journeys > .journey", { stagger: 0.08 });
+    reveal(".journeys:not(.journeys--more) > .journey", { stagger: 0.08 });
+
+    /* ---------- Folded content (details.more): the cards come in when it opens ---------- */
+    document.querySelectorAll("details.more").forEach((details) => {
+      details.addEventListener("toggle", () => {
+        if (!details.open) return;
+        gsap.fromTo(
+          details.querySelectorAll(".journeys--more > .journey"),
+          { y: 24, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.8, ease: "expo.out", stagger: 0.06, delay: 0.1, overwrite: true }
+        );
+        ScrollTrigger.refresh();
+      });
+    });
     reveal(".offer-grid > .offer", { stagger: 0.1 });
     reveal(".service-list > .service-row", { stagger: 0.08 });
     reveal(".insight-grid, .insight-filters");
     reveal(".pullquote, .why__wrap");
     reveal(".table-wrap");
+    reveal(".diagram");
+
+    /* ---------- Node lists (components.css "Nodes and pipelines"): the highlight walks the steps ----------
+       Loops while on screen; hovering a step holds it, leaving the list resumes from there.
+       Milliseconds per step: short flows move faster, the five-step approach and Services rows slower. */
+    const timers = [];
+    const pace = {
+      ".flow--diagram": 1600,
+      ".features--nodes": 2200,
+      ".approach--pipeline": 2800,
+      ".service-list--cards": 2800,
+      ".tile-panels": 2800,
+      ".tags--nodes": 2200,
+      ".models--canvas": 3200,
+    };
+    document.querySelectorAll(Object.keys(pace).join(", ")).forEach((list) => {
+      const steps = [...list.children];
+      const every = pace[Object.keys(pace).find((selector) => list.matches(selector))];
+      let current = 0;
+      let timer = 0;
+      const show = (n) => {
+        current = n;
+        steps.forEach((step, i) => step.classList.toggle("is-active", i === n));
+        steps[n].dispatchEvent(new Event("node:active"));
+      };
+      const stop = () => clearInterval(timer);
+      const play = () => {
+        stop();
+        timer = setInterval(() => show((current + 1) % steps.length), every);
+      };
+
+      timers.push(stop);
+      steps.forEach((step, i) => step.addEventListener("mouseenter", () => { stop(); show(i); }));
+      list.addEventListener("mouseleave", play);
+      ScrollTrigger.create({
+        trigger: list,
+        start: "top 85%",
+        end: "bottom 15%",
+        onToggle: (self) => (self.isActive ? play() : stop()),
+      });
+      show(0);
+    });
     reveal(".next-link");
     reveal(".contact__box");
 
-    return () => root.classList.remove("gsap-motion");
+    return () => {
+      root.classList.remove("gsap-motion");
+      timers.forEach((clear) => clear());
+    };
   });
 })();
