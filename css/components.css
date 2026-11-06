@@ -4718,11 +4718,11 @@ main > .section--dark:last-child {
   .problem .title-accent { animation: none; }
 }
 
-/* Colour run (js/slide-deck-wave.js splits the letters and sets --n, the letter count): half the
-   word is orange and half white at any moment, and the boundary keeps travelling left to right
+/* Colour run (js/slide-deck-wave.js splits the letters and sets --n, the letter count): about 70%
+   of the word is orange and the rest white at any moment, and the boundary keeps travelling left to right
    and round again, like a row of dots changing colour one by one. The letters stay still.
-   Each letter is orange for half the cycle; the cycle is --n steps long and each letter starts
-   one step after the one before, so exactly half the letters are orange at all times. */
+   Each letter is orange for ~70% of the cycle; the cycle is --n steps long and each letter starts
+   one step after the one before, so the same share of letters is orange at all times. */
 .problem .title-accent.is-wave {
   --step: 0.32s;
   background: none;
@@ -4741,8 +4741,8 @@ main > .section--dark:last-child {
 @keyframes slide-deck-run {
   0%   { color: var(--white); }
   6%   { color: var(--orange); }
-  50%  { color: var(--orange); }
-  56%  { color: var(--white); }
+  70%  { color: var(--orange); }
+  76%  { color: var(--white); }
   100% { color: var(--white); }
 }
 @media (prefers-reduced-motion: reduce) {
