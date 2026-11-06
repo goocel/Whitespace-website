@@ -135,12 +135,24 @@
     }
 
     /* ---------- Draw only while something moves: the intro, a floating cube or the camera ---------- */
-    let wasActive = false;
-    const render = () => {
+    // The loop timeline is "active" the whole cycle, rests included; draw only while one of its
+    // tweens is actually moving a cube, so the GPU idles while the shape rests.
+    const loopTweens = loop.getChildren(false, true, false).filter((t) => t.duration() > 0);
+    const moving = () => intro.isActive() || (loop.isActive() && loopTweens.some((t) => t.isActive()));
+    // Phones and tablets: 30 frames a second is plenty for this motion and halves the work.
+    const FRAME = IsoGL.light ? 1000 / 30 - 2 : 0;
+    let wasActive = false, lastDraw = 0;
+    const render = (time) => {
       const turning = gl.step();
-      const active = intro.isActive() || loop.isActive();
-      // One more frame after the intro ends, so its last step is drawn too.
-      if (active || wasActive || turning) draw();
+      const active = moving();
+      // One more frame after the motion ends, so its last step is drawn too.
+      if (active || wasActive || turning) {
+        const now = time * 1000;
+        if (!FRAME || !active || now - lastDraw >= FRAME) {
+          draw();
+          lastDraw = now;
+        }
+      }
       wasActive = active;
     };
 

@@ -4698,7 +4698,7 @@ main > .section--dark:last-child {
   }
 }
 
-/* ---- Home "The problem": shimmer on "slide deck" (scramble loop in js/scramble.js) ---- */
+/* ---- Home "The problem": shimmer on "slide deck" (fallback for the letter wave below) ---- */
 .problem .title-accent {
   display: block;
   width: fit-content;
@@ -4716,6 +4716,38 @@ main > .section--dark:last-child {
 }
 @media (prefers-reduced-motion: reduce) {
   .problem .title-accent { animation: none; }
+}
+
+/* Colour run (js/slide-deck-wave.js splits the letters and sets --n, the letter count): half the
+   word is orange and half white at any moment, and the boundary keeps travelling left to right
+   and round again, like a row of dots changing colour one by one. The letters stay still.
+   Each letter is orange for half the cycle; the cycle is --n steps long and each letter starts
+   one step after the one before, so exactly half the letters are orange at all times. */
+.problem .title-accent.is-wave {
+  --step: 0.32s;
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  color: var(--white);
+  animation: none;
+}
+.problem .title-accent.is-wave .ch {
+  display: inline-block;
+  white-space: pre;
+  animation: slide-deck-run calc(var(--n) * var(--step)) linear infinite;
+  /* Negative delays: already running on load, the run moving from left to right */
+  animation-delay: calc((var(--i) - var(--n)) * var(--step));
+}
+@keyframes slide-deck-run {
+  0%   { color: var(--white); }
+  6%   { color: var(--orange); }
+  50%  { color: var(--orange); }
+  56%  { color: var(--white); }
+  100% { color: var(--white); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .problem .title-accent.is-wave { color: var(--orange); }
+  .problem .title-accent.is-wave .ch { animation: none; }
 }
 
 /* ---- Home practice cards: one font size (15px) for lead, points, opened text and link ---- */
@@ -4934,3 +4966,16 @@ main > .section--dark:last-child {
   color: var(--ink);
 }
 .page-hero__sub + .lead { margin-top: clamp(16px, 2vw, 24px); }
+
+/* ---------- Phones and tablets: lighter header glass ----------
+   A live blur behind the sticky bar is redrawn on every scroll step, which iPhones feel most.
+   On touch / narrow screens the bar drops the blur and is a touch more opaque instead, so it
+   looks almost the same. */
+@media (pointer: coarse), (max-width: 900px) {
+  .header { --hb-bg: rgba(255, 255, 255, 0.96); }
+  .header.is-dark { --hb-bg: rgba(32, 36, 42, 0.96); }
+  .header__inner::before {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}

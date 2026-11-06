@@ -16,6 +16,11 @@
   const THREE_URL = "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js";
   let loading = null;
 
+  // Phones and tablets (touch, or a narrow screen): a lighter set-up. The canvas is drawn at no
+  // more than 1.5× the screen pixels instead of 2× (about half the pixels on an iPhone), and
+  // callers can drop to 30 frames a second. Cubes are big and soft-edged, so it looks the same.
+  const light = window.matchMedia("(pointer: coarse), (max-width: 900px)").matches;
+
   /** True when the browser can draw WebGL. The probe context is released straight away. */
   function supported() {
     const probe = document.createElement("canvas");
@@ -43,7 +48,7 @@
    */
   function stage(THREE, { holder, svg, target, bleed = 0 }) {
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, light ? 1.5 : 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     const canvas = renderer.domElement;
     canvas.className = "iso-gl";
@@ -136,5 +141,5 @@
     return [((event.clientX - box.left) / box.width) * 2 - 1, ((event.clientY - box.top) / box.height) * 2 - 1];
   }
 
-  window.IsoGL = { supported, load, stage, pointerIn };
+  window.IsoGL = { supported, load, stage, pointerIn, light };
 })();
