@@ -487,6 +487,22 @@
       out.push({ x: 1, y: 1, z: 4, from: [1, 1, 10], fade: true, tone: "orange", delay: 900, float: true });
       return out;
     },
+    // Services hero: three ways we help, one team. One shared base carries three practice towers
+    // stepping down toward the viewer (AI the tallest at the back, Transformation and Fractional
+    // either side); the fourth quarter at the front stays open except for the orange cube: the whitespace.
+    services: () => {
+      const out = [];
+      grid(4, 4, (x, y) => out.push(v(x, y, 0, "paper")));
+      const tower = (x0, y0, height, tone) =>
+        grid(2, 2, (x, y) => {
+          for (let z = 1; z <= height; z++) out.push(v(x0 + x, y0 + y, z, z === height ? tone : z % 2 ? "light" : "mid"));
+        });
+      tower(0, 0, 4, "dark");
+      tower(0, 2, 2, "mid");
+      tower(2, 0, 3, "dark");
+      out.push(v(3, 3, 1, "orange"));
+      return visibleOnly(out);
+    },
     night: () => {
       const tones = (r) => (r > 0.8 ? "nightHi" : "night");
       tones.base = "night";

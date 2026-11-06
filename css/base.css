@@ -125,9 +125,9 @@ h4 {
 /* ---------- Typography ---------- */
 .display,
 .title {
-  font-stretch: 115%;
-  font-weight: 800;
-  letter-spacing: -0.035em;
+  font-stretch: 100%;
+  font-weight: 700;
+  letter-spacing: -0.025em;
 }
 
 .display {
@@ -142,7 +142,7 @@ h4 {
 
 .subtitle {
   font-size: var(--step-2);
-  font-stretch: 105%;
+  font-stretch: 100%;
   letter-spacing: -0.02em;
   line-height: 1.12;
 }
@@ -423,11 +423,28 @@ h4 {
   --bar-inset: clamp(0px, 5vw, 96px);
   width: min(100% - 2 * var(--gutter) - 2 * var(--bar-inset), var(--container) - 2 * var(--bar-inset));
   padding-inline: clamp(16px, 2vw, 28px) 7px;
+}
+
+/* The glass sits on a pseudo-element, not on the bar itself: an element with backdrop-filter
+   would stop the Services dropdown (its child) from blurring the page behind it. */
+.header__inner::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
   background: var(--hb-bg);
-  border-color: var(--hb-line);
+  border: 1px solid var(--hb-line);
   box-shadow: var(--hb-shadow);
   backdrop-filter: blur(18px) saturate(1.5);
   -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  opacity: 0;
+  transition: opacity 0.35s ease, background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  pointer-events: none;
+}
+
+.header.is-scrolled .header__inner::before {
+  opacity: 1;
 }
 
 /* Logo files: assets/images/brand/logo.svg (light bg) and logo-white.svg (dark bg).
@@ -599,7 +616,7 @@ h4 {
   display: block;
   margin-bottom: 4px;
   font-weight: 650;
-  font-stretch: 106%;
+  font-stretch: 100%;
 }
 
 .nav__menu span {

@@ -57,8 +57,9 @@
       <div class="container">
         <div class="page-hero__inner">
           <div class="page-hero__text">
-            <h1 class="display">Work on the<br /> whitespace.</h1>
-            <p class="lead">Joining Whitespace Solutions opens doors to opportunities for personal growth and networking. The Whitespace Solutions team comprises Indonesia's finest talents.</p>
+            <h1 class="display">Welcome to careers<br /> at Whitespace.</h1>
+            <h2 class="page-hero__sub">Find the whitespace only you can fill.</h2>
+            <p class="lead">Ready to put your skills to work on problems that matter? Join some of Indonesia's finest talents, work inside real businesses from day one, and grow fast with people who push you further.</p>
           </div>
           <div class="page-hero__aside">
             <div class="iso page-hero__art" data-illustration="careers" data-pad="0.4"></div>
@@ -73,24 +74,34 @@
           <h2 class="title">Open <span class="title-accent">roles</span></h2>
           <p class="lead">Apply by email with your CV and a short note on why this work.</p>
         </div>
-        <ul class="roles">
-          <li class="role">
-            <div>
-              <h3>Business Analyst</h3>
-              <p class="caption">Experienced</p>
-            </div>
-            <p>Work autonomously, reporting directly to both the Project Leader and clients.</p>
-            <a href="mailto:contact@whitespace.id?subject=Application%3A%20Business%20Analyst" class="btn btn--orange btn--sm">Apply <span class="arrow" aria-hidden="true">→</span></a>
-          </li>
-          <li class="role">
-            <div>
-              <h3>Project Support Intern</h3>
-              <p class="caption">Fresh graduate</p>
-            </div>
-            <p>Help plan, execute and deliver projects on time, within scope and within budget.</p>
-            <a href="mailto:contact@whitespace.id?subject=Application%3A%20Project%20Support%20Intern" class="btn btn--orange btn--sm">Apply <span class="arrow" aria-hidden="true">→</span></a>
-          </li>
-        </ul>
+        <div class="roles-table" data-roles>
+          <form class="roles-table__filters" role="search" onsubmit="return false">
+            <label class="roles-table__field"><span>Role</span><input type="search" name="q" placeholder="Search by role" autocomplete="off" /></label>
+            <label class="roles-table__field"><span>Level</span>
+              <select name="level"><option value="">All levels</option><option>Experienced</option><option>Fresh graduate</option></select>
+            </label>
+            <button type="reset" class="roles-table__reset">Reset</button>
+            <p class="roles-table__count" aria-live="polite"></p>
+          </form>
+          <table>
+            <thead><tr><th scope="col">Role</th><th scope="col">Level</th><th scope="col">What you'll do</th><th scope="col"><span class="sr-only">Apply</span></th></tr></thead>
+            <tbody>
+            <tr data-role>
+              <th scope="row" data-label="Role">Business Analyst</th>
+              <td data-label="Level"><span class="roles-table__tag">Experienced</span></td>
+              <td data-label="What you'll do">Work autonomously, reporting directly to both the Project Leader and clients.</td>
+              <td class="roles-table__act"><a href="mailto:contact@whitespace.id?subject=Application%3A%20Business%20Analyst" class="btn btn--orange btn--sm">Apply <span class="arrow" aria-hidden="true">→</span></a></td>
+            </tr>
+            <tr data-role>
+              <th scope="row" data-label="Role">Project Support Intern</th>
+              <td data-label="Level"><span class="roles-table__tag">Fresh graduate</span></td>
+              <td data-label="What you'll do">Help plan, execute and deliver projects on time, within scope and within budget.</td>
+              <td class="roles-table__act"><a href="mailto:contact@whitespace.id?subject=Application%3A%20Project%20Support%20Intern" class="btn btn--orange btn--sm">Apply <span class="arrow" aria-hidden="true">→</span></a></td>
+            </tr>
+            </tbody>
+          </table>
+          <p class="roles-table__empty" hidden>No roles match. <a href="mailto:contact@whitespace.id?subject=Career%20enquiry">Write to us anyway.</a></p>
+        </div>
       </div>
     </section>
   </main>
@@ -159,6 +170,8 @@
   <script src="js/isometric.js"></script>
   <script src="js/site.js"></script>
   <script src="js/motion.js"></script>
+  <script src="js/iso-loop.js"></script>
+  <script src="js/roles-table.js"></script>
   <script src="js/iso-gl.js"></script>
   <script src="js/page-hero-3d.js"></script>
 </body>
