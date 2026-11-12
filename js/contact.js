@@ -1,16 +1,19 @@
 /*
  * Contact page: preselect the topic from ?practice=…, validate the form with visible messages,
- * and compose the message as an email.
+ * and send the message to contact@whitespace.id.
  *
- * There is no backend: "Compose email" opens the visitor's email app with the message filled in
- * (mailto:). Nothing is sent or stored by this site, so the status message never says the
- * message was sent — only that the email app should open, with the address as a fallback.
+ * There is no backend of our own: messages go through FormSubmit (formsubmit.co, free, no account).
+ * The first message ever sent triggers a one-time "Activate form" email to contact@whitespace.id;
+ * nothing is delivered until someone clicks it. If the service fails, the visitor is offered the
+ * same message as a mailto: link instead.
  */
 (function () {
   const form = document.getElementById("contactForm");
   if (!form) return;
 
   const EMAIL = "contact@whitespace.id";
+  const ENDPOINT = `https://formsubmit.co/ajax/${EMAIL}`;
+  const escapeHtml = (text) => text.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
   const topic = form.elements.practice;
   const area = form.elements.area;
   const areaField = document.getElementById("f-area-field");
@@ -66,13 +69,13 @@
     input.addEventListener("blur", () => input.value && check(input));
   });
 
-  /* ---------- Submit: open the email app, then say what happens next ---------- */
+  /* ---------- Submit: send through FormSubmit, then say what happened ---------- */
   const setStatus = (html) => {
     status.innerHTML = html;
     status.hidden = !html;
   };
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
     setStatus("");
     const invalid = required.filter((input) => !check(input));
@@ -95,22 +98,46 @@
     ].filter(Boolean);
     const body = [field("message"), "", ...details].join("\n");
     const subject = `Conversation request: ${topicLabel}`;
+    const mailto = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
     button.disabled = true;
-    button.textContent = "Opening your email app…";
+    button.textContent = "Sending…";
     try {
-      window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const response = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: subject,
+          _template: "table",
+          _captcha: "false",
+          _honey: form.elements._honey.value,
+          name: field("name"),
+          position: field("position"),
+          company: field("institution"),
+          phone: field("phone"),
+          email: field("email"),
+          topic: topicLabel,
+          practice: topic.value === "business-transformation" && area.value ? label(area) : "",
+          message: field("message"),
+        }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || String(result.success) !== "true") throw new Error(result.message || response.status);
+      const replyTo = escapeHtml(field("email"));
+      form.reset();
+      syncArea();
+      setStatus(`<strong>Thank you, your message has been sent.</strong> We'll reply to ${replyTo} soon.`);
     } catch (error) {
-      // Fall through to the message below, which gives the address to write to directly.
-    }
-    window.setTimeout(() => {
+      // The service could not be reached or refused the message: offer the email app instead.
+      console.warn("FormSubmit:", error.message);
+      setStatus(
+        `<strong>We couldn't send your message just now.</strong> ` +
+          (error.message && !/^\d+$/.test(error.message) ? `<small>(${escapeHtml(String(error.message))})</small> ` : "") +
+          `<a href="${mailto}">Open it in your email app</a> or write to <a href="mailto:${EMAIL}">${EMAIL}</a>.`
+      );
+    } finally {
       button.disabled = false;
       button.innerHTML = buttonLabel;
-      setStatus(
-        `<strong>Your email app should now be open with the message ready.</strong> ` +
-          `Press send there to reach us; nothing is sent from this page. ` +
-          `If no email app opened, write to <a href="mailto:${EMAIL}">${EMAIL}</a>.`
-      );
-    }, 1200);
+    }
   });
 })();

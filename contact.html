@@ -56,7 +56,7 @@
     <section class="contact-page">
       <div class="container contact-page__inner">
         <div class="contact-page__intro">
-          <h1 class="display">Start a<br /> conversation.</h1>
+          <h1 class="display">Start a<br /> conversation</h1>
           <p class="lead">Partner with us for transformation and strategic growth. Tell us where things stand.</p>
           <figure class="contact-page__figure">
             <div class="iso contact-page__art" data-illustration="meet" data-pad="0.3"></div>
@@ -64,22 +64,24 @@
           </figure>
         </div>
 
-        <form class="form" id="contactForm" action="mailto:contact@whitespace.id" method="post" enctype="text/plain" novalidate>
+        <form class="form" id="contactForm" action="https://formsubmit.co/contact@whitespace.id" method="post" novalidate>
+          <!-- Spam trap: people never see or fill this; bots that do are dropped by FormSubmit -->
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="display: none" />
           <div class="field">
             <label for="f-name">Name</label>
             <input id="f-name" type="text" name="name" autocomplete="name" required aria-describedby="f-name-error" />
             <p class="field__error" id="f-name-error" hidden></p>
           </div>
           <div class="field">
-            <label for="f-position">Position <small>(optional)</small></label>
+            <label for="f-position">Position</label>
             <input id="f-position" type="text" name="position" autocomplete="organization-title" />
           </div>
           <div class="field">
-            <label for="f-institution">Company <small>(optional)</small></label>
+            <label for="f-institution">Company</label>
             <input id="f-institution" type="text" name="institution" autocomplete="organization" />
           </div>
           <div class="field">
-            <label for="f-phone">Phone <small>(optional)</small></label>
+            <label for="f-phone">Phone</label>
             <input id="f-phone" type="tel" name="phone" autocomplete="tel" />
           </div>
           <div class="field field--full">
@@ -88,7 +90,7 @@
             <p class="field__error" id="f-email-error" hidden></p>
           </div>
           <div class="field field--full">
-            <label for="f-practice">Topic <small>(optional)</small></label>
+            <label for="f-practice">Topic</label>
             <select id="f-practice" name="practice">
               <option value="">Not sure yet</option>
               <option value="ai-implementation">AI Implementation</option>
@@ -100,7 +102,7 @@
           </div>
           <!-- Shown only for Business Transformation: its four practices stay inside that pillar -->
           <div class="field field--full" id="f-area-field" hidden>
-            <label for="f-area">Practice <small>(optional)</small></label>
+            <label for="f-area">Practice</label>
             <select id="f-area" name="area">
               <option value="">Not sure yet</option>
               <option value="turnaround-transformation">Turnaround &amp; transformation</option>
@@ -115,8 +117,8 @@
             <p class="field__error" id="f-message-error" hidden></p>
           </div>
           <div class="form__footer">
-            <p class="muted">Sending opens your email app with the message ready. Nothing is stored on this site.</p>
-            <button type="submit" class="btn btn--orange">Compose email <span class="arrow" aria-hidden="true">→</span></button>
+            <p class="muted">Your message goes straight to contact@whitespace.id. Nothing is stored on this site.</p>
+            <button type="submit" class="btn btn--orange">Send message <span class="arrow" aria-hidden="true">→</span></button>
           </div>
           <p class="form__status" id="formStatus" role="status" aria-live="polite" hidden></p>
         </form>
