@@ -256,3 +256,33 @@ Untuk halaman baru: muat 2 script CDN GSAP sebelum `isometric.js`, lalu `motion.
 4. Sesuaikan judul/teks/tombol di kotak CTA, atau hapus `section.contact` kalau halaman tidak butuh CTA.
 5. Kalau butuh style khusus, buat `css/<halaman>.css` dan link setelah `components.css`.
 6. Tambahkan link halaman baru ke header dan footer di **semua** halaman.
+
+## Engagement Scope Builder (branch `feature/scope-builder`, Phase 1)
+
+Konfigurator 6 langkah dari `whitespace_website_redesign_brief.md`. Dirender seluruhnya oleh JavaScript dari data,
+jadi halaman mana pun (sekarang `engage.html`, nanti Home) cukup memasang satu titik mount:
+
+```html
+<link rel="stylesheet" href="css/scope-builder.css" />
+<div data-scope-builder data-submit="preview" data-heading-level="2"><noscript>…tautan ke contact.html…</noscript></div>
+<script src="js/scope-data.js"></script>
+<script src="js/form-send.js"></script>
+<script src="js/scope-builder.js"></script>
+```
+
+| File | Isi |
+| --- | --- |
+| `js/scope-data.js` | Opsi yang **sudah disetujui** (16 Nov 2026): 4 scope, 6 prioritas + Other + Not sure yet, coverage, vertical, horizontal, 3 pilar + Not sure yet, teks privasi. Label boleh diubah; `id` jangan |
+| `js/scope-data-pending.js` | Opsi **pending validation** (M&A, restructuring, portfolio, governance, …). Tidak pernah dipasang lewat `<script>`; hanya dimuat di `localhost`/`127.0.0.1` dengan `?pending=1`. **Jangan di-merge ke `main`** |
+| `js/scope-builder.js` | State, render, validasi, navigasi (Back / Continue / Edit / Back to review / stepper), ringkasan, draf `sessionStorage`, submit |
+| `js/form-send.js` | Pengirim bersama `window.FormSend`: mode `preview` (tanpa request) atau `live` (FormSubmit AJAX, timeout 15 dtk, `mailto:` cadangan) |
+| `css/scope-builder.css` | Semua style `.sb-*` |
+
+- `data-submit="preview"` (default): tidak ada yang dikirim; tampil panel "Preview mode — Nothing was sent" berisi isi kiriman.
+  Ganti ke `"live"` **hanya** setelah aktivasi FormSubmit untuk contact@whitespace.id dipastikan. Dengan `?pending=1` selalu preview.
+- `data-heading-level`: 2 di bawah `h1` halaman; 3 kalau builder ada di dalam section dengan `h2`.
+- Deep link: `?scope=holding|subsidiary|department|people` dan `?service=business-transformation|implementation|fractional-leadership`.
+- Semua class berawalan `sb-` supaya `motion.js` (yang menyembunyikan `.form > .field`, `.step`, dll. sampai di-scroll) dan
+  style global `.form`/`.field`/`.step` tidak menyentuh builder. Jangan pakai class situs lain di dalam builder (kecuali `.btn.btn--orange` untuk aksi utama).
+- Visual: kartu abu bersudut siku berjarak `--tile-gap`; terpilih = garis + centang tinta (bukan oranye); oranye hanya tombol
+  Continue / Engage Whitespace; error = teks + tanda "!" (bukan warna saja). ≤900px: satu kolom, bar progres, ringkasan jadi bar di bawah layar.

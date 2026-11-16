@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Configure your engagement with Whitespace Solutions: choose the scope, priorities, coverage and type of support, then send it to our team." />
+  <!-- Phase 1 (branch feature/scope-builder): not linked from the menu and kept out of search until launch -->
+  <meta name="robots" content="noindex" />
+  <title>Configure your engagement — Whitespace Solutions</title>
+  <script>document.documentElement.classList.add("js");</script>
+  <link rel="icon" href="assets/images/brand/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/scope-builder.css" />
+</head>
+<body>
+  <!-- ================= HEADER (same on every page) ================= -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo" aria-label="Whitespace Solutions home">
+        <img class="logo__on-light" src="assets/images/brand/logo.svg" alt="Whitespace Solutions" width="147" height="42" />
+        <img class="logo__on-dark" src="assets/images/brand/logo-white.svg" alt="" aria-hidden="true" width="147" height="42" />
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Main">
+        <ul class="nav__list">
+          <li><a href="insights.html" class="nav__link">Insights</a></li>
+          <li class="nav__dropdown">
+            <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-controls="practicesMenu">
+              Services
+              <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+            </button>
+            <ul class="nav__menu" id="practicesMenu">
+              <li><a href="practices/ai-implementation.html"><strong>AI Implementation</strong><span>AI built into how your company runs: use-case assessment, agents and automation, team training.</span></a></li>
+              <li><a href="practices/business-transformation.html"><strong>Business Transformation</strong><span>Fix what holds the business back: strategy, lean operations, deals, capital and a transformation office.</span></a></li>
+              <li><a href="practices/fractional-leadership.html"><strong>Fractional Leadership</strong><span>Senior capacity without full-time hires: interim C-level, business development, executive coaching.</span></a></li>
+              <li><a href="services.html"><strong>All services</strong><span>How the three fit together, and where to start.</span></a></li>
+            </ul>
+          </li>
+          <li><a href="industries.html" class="nav__link">Industries</a></li>
+          <li><a href="careers.html" class="nav__link">Careers</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+        <a href="contact.html" class="btn btn--dark">Start a conversation</a>
+      </nav>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main>
+    <section class="page-hero page-hero--plain">
+      <div class="container">
+        <h1 class="display">Configure your engagement</h1>
+        <p class="lead">Tell us where you need support, what matters most and how far the work should reach. It is a starting point for a conversation, not a commitment.</p>
+      </div>
+    </section>
+
+    <section class="section section--flush" id="engage">
+      <div class="container">
+        <!-- Engagement Scope Builder, rendered by js/scope-builder.js from js/scope-data.js.
+             data-submit="preview": nothing is sent until FormSubmit activation is confirmed (then "live"). -->
+        <div data-scope-builder data-submit="preview" data-heading-level="2">
+          <noscript>
+            <p class="lead">The engagement builder needs JavaScript. You can still <a class="link-underline" href="contact.html">send us a message</a> or write to <a class="link-underline" href="mailto:contact@whitespace.id">contact@whitespace.id</a>.</p>
+          </noscript>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= CONTACT + FOOTER (one dark block, same on every page) ================= -->
+  <div class="dark">
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__grid">
+          <div class="footer__brand">
+            <a href="index.html" class="logo" aria-label="Whitespace Solutions home">
+              <img src="assets/images/brand/logo-white.svg" alt="Whitespace Solutions" width="147" height="42" />
+            </a>
+            <p>Practical business transformation, now built around AI. Practical. Applicable. Affordable.</p>
+          </div>
+          <div>
+            <h4>Services</h4>
+            <ul>
+              <li><a href="practices/ai-implementation.html">AI Implementation</a></li>
+              <li><a href="practices/business-transformation.html">Business Transformation</a></li>
+              <li><a href="practices/fractional-leadership.html">Fractional Leadership</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Firm</h4>
+            <ul>
+              <li><a href="insights.html">Insights</a></li>
+              <li><a href="industries.html">Industries</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="careers.html">Careers</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Office</h4>
+            <ul>
+              <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Puri+Indah+Financial+Tower+Jakarta" target="_blank" rel="noopener">Puri Indah Financial Tower, 6th floor<br />Jl. Puri Lkr. Dalam, Kembangan Selatan<br />Jakarta Barat 11610, Indonesia</a></li>
+              <li><a href="tel:+622139731400">021-39731400</a></li>
+              <li><a href="mailto:contact@whitespace.id">contact@whitespace.id</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <span>&copy; <span id="year">2026</span> Whitespace Solutions. All rights reserved.</span>
+          <span>Jakarta, Indonesia</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/isometric.js"></script>
+  <script src="js/site.js"></script>
+  <script src="js/motion.js"></script>
+  <!-- Scope builder: data, sender, then the builder. js/scope-data-pending.js is never linked here. -->
+  <script src="js/scope-data.js"></script>
+  <script src="js/form-send.js"></script>
+  <script src="js/scope-builder.js"></script>
+</body>
+</html>

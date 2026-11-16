@@ -212,3 +212,16 @@ Semua aturannya ada di satu blok `@media (max-width: 900px)` di **akhir `css/com
 9. Insights belum punya tanggal per artikel selain "October 2026" (tanggal deck); artikel baru = salin salah satu file di `insights/`.
 7. `sesi-2` sudah di-merge ke `main` (2 Nov). `sesi-2` / `sesi-3` perlu `git merge main` sebelum dipakai lagi.
 8. Belum dites di Safari, Firefox dan perangkat fisik (hanya headless Edge).
+
+## Redesign — Phase 1: Engagement Scope Builder (16 Nov 2026, branch `feature/scope-builder`)
+
+- Arah redesign: `whitespace_website_redesign_brief.md` (sumber utama). Worktree `D:\Whitespace Web-scope`, preview lokal port 5503.
+  **Belum di-push / di-merge ke `main`** — tunggu persetujuan user.
+- Keputusan user: pilar = Business Transformation · Implementation (lebih luas dari AI) · Fractional Leadership; FormSubmit tetap,
+  aktivasi **belum** dipastikan → builder di mode `preview`; 4 scope organisasi; vertical & horizontal boleh digabung;
+  builder di Home (setelah hero, Phase 2) dan `engage.html` dengan logika & data yang sama.
+- Halaman `engage.html`: `noindex`, belum ditautkan dari menu/footer. Home dan file CSS/JS lama **tidak diubah**.
+- Detail komponen & file: `design-reference/README.md` bagian "Engagement Scope Builder".
+- **Checklist sebelum merge ke `main`:** (1) `js/scope-data-pending.js` tidak ikut (atau hanya item yang sudah disetujui dipindah ke
+  `scope-data.js`); (2) aktivasi FormSubmit dipastikan sebelum `data-submit="live"`; (3) deskripsi pilar sementara di `scope-data.js`
+  diganti definisi resmi; (4) hapus `noindex` dan tambahkan tautan hanya kalau user setuju.
