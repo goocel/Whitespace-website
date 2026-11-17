@@ -1,0 +1,38 @@
+# Checks run on every Pull Request and on pushes to branches other than main.
+# deploy.yml also calls this workflow, so main is only deployed when these pass.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Check internal links and asset references
+        run: python3 scripts/check-links.py
+
+      - name: Build the production image
+        run: docker build -t ws-website:ci .
+
+      - name: Run the image and request every page
+        run: |
+          docker run -d --name site -e PORT=8080 -p 8080:8080 ws-website:ci
+          scripts/smoke-test.sh http://localhost:8080
+
+      - name: Show container logs on failure
+        if: failure()
+        run: docker logs site
