@@ -48,7 +48,7 @@ jobs:
 
       - name: Smoke-test the live site
         if: vars.SITE_URL != ''
-        run: scripts/smoke-test.sh "${{ vars.SITE_URL }}"
+        run: bash scripts/smoke-test.sh "${{ vars.SITE_URL }}"
 
       - name: Skipped live smoke test
         if: vars.SITE_URL == ''

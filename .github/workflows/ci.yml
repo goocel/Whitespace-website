@@ -31,7 +31,7 @@ jobs:
       - name: Run the image and request every page
         run: |
           docker run -d --name site -e PORT=8080 -p 8080:8080 ws-website:ci
-          scripts/smoke-test.sh http://localhost:8080
+          bash scripts/smoke-test.sh http://localhost:8080
 
       - name: Show container logs on failure
         if: failure()
