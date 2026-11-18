@@ -2,3 +2,7 @@
 Thumbs.db
 .vscode/
 node_modules/
+
+# Internal only: never on main (main is the public site)
+whitespace_website_redesign_brief.md
+js/scope-data-pending.js
