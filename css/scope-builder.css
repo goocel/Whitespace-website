@@ -47,7 +47,7 @@
 .sb-notice {
   margin-bottom: 24px;
   padding: 14px 18px;
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   background: var(--panel);
   border-left: 3px solid var(--ink);
 }
@@ -107,13 +107,13 @@
 }
 
 .sb-stepper__num {
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   font-stretch: 85%;
   font-weight: 600;
 }
 
 .sb-stepper__label {
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   font-weight: 600;
 }
 
@@ -160,7 +160,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  font-size: var(--step-3);
+  font-size: var(--fs-subheadline);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.08;
@@ -168,7 +168,7 @@
 }
 
 .sb-panel__count {
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   font-stretch: 85%;
   font-weight: 600;
   letter-spacing: 0;
@@ -178,14 +178,14 @@
 .sb-panel__hint {
   max-width: 60ch;
   margin-top: 16px;
-  font-size: var(--step-1);
+  font-size: var(--fs-body);
   line-height: 1.5;
 }
 
 .sb-panel__note {
   max-width: 60ch;
   margin-top: 10px;
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   color: var(--muted);
 }
 
@@ -344,7 +344,7 @@
 }
 
 .sb-option__hint {
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   line-height: 1.45;
   color: var(--muted);
 }
@@ -352,72 +352,89 @@
 .sb-badge {
   align-self: start;
   padding: 2px 8px;
-  font-size: 12px;
+  font-size: var(--fs-caption);
   font-weight: 600;
   white-space: nowrap;
   color: var(--orange-deep);
   border: 1px dashed var(--orange-deep);
 }
 
-/* ---------- Text fields ---------- */
+/* ---------- Text fields ----------
+   Same look as the Contact form (.field in css/components.css): label and typed text inside one grey
+   tile, tiles 3px apart, an orange outline on the tile while typing, a deep-orange one on an error.
+   Typed text is the label size (--step--1), as on Contact. */
 .sb-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   margin-top: 24px;
+  padding: 14px 16px;
+  background: var(--panel);
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+  transition: outline-color 0.2s ease;
+}
+
+.sb-field:focus-within {
+  outline-color: var(--orange);
+}
+
+.sb-field.is-invalid {
+  outline-color: var(--sb-error);
 }
 
 .sb-field__label {
   display: block;
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   font-weight: 600;
   color: var(--ink);
 }
 
 .sb-field__opt {
-  font-weight: 500;
+  font-weight: 400;
   color: var(--muted);
 }
 
 .sb-field__hint {
-  margin-top: 4px;
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   color: var(--muted);
 }
 
 .sb-field__input {
   display: block;
   width: 100%;
-  margin-top: 8px;
-  padding: 13px 16px;
+  margin: 0;
+  padding: 0;
   font: inherit;
-  font-size: var(--step-0); /* 16px or more: phones do not zoom in on focus */
+  font-size: var(--fs-body);
   color: var(--ink);
-  background: var(--panel);
+  background: transparent;
   border: 0;
-  border-bottom: 1.5px solid var(--line-strong);
   border-radius: 0;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  outline: 0;
+}
+
+/* Transparent, so the extra height does not show: it keeps the touch target above 24px */
+input.sb-field__input {
+  min-height: 28px;
+}
+
+/* The tile shows focus (orange outline), so the input itself needs no ring of its own */
+.sb .sb-field__input:focus-visible {
+  outline: 0;
 }
 
 textarea.sb-field__input {
-  min-height: 112px;
+  min-height: 140px;
   resize: vertical;
 }
 
-.sb-field__input:hover {
-  background: var(--cell);
-}
-
-.sb-field__input:focus {
-  background: var(--white);
-  border-bottom-color: var(--ink);
-}
-
-.sb-field.is-invalid .sb-field__input {
-  border-bottom-color: var(--sb-error);
+.sb-field__input::placeholder {
+  color: var(--muted);
 }
 
 .sb-field__error {
-  margin-top: 8px;
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
 }
 
 /* ---------- Step 4: two dimensions side by side ---------- */
@@ -429,14 +446,14 @@ textarea.sb-field__input {
 }
 
 .sb-dimension__title {
-  font-size: var(--step-1);
+  font-size: var(--fs-subheadline);
   font-weight: 700;
   color: var(--ink);
 }
 
 .sb-dimension__hint {
   margin-top: 4px;
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   color: var(--muted);
 }
 
@@ -451,19 +468,26 @@ textarea.sb-field__input {
   margin-top: 40px;
 }
 
+/* Contact fields as one block of tiles, 3px apart, like the Contact form */
 .sb-contact__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 16px;
+  gap: var(--tile-gap);
+  margin-top: 16px;
 }
 
 .sb-contact__grid .sb-field {
-  margin-top: 16px;
+  margin-top: 0;
+}
+
+/* An odd last tile (Phone) takes the full row, so the block ends square */
+.sb-contact__grid .sb-field:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
 }
 
 .sb-disclaimer {
   margin-top: 32px;
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   font-weight: 600;
   color: var(--ink);
 }
@@ -471,7 +495,7 @@ textarea.sb-field__input {
 .sb-privacy {
   margin-top: 12px;
   padding-left: 14px;
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   line-height: 1.55;
   color: var(--muted);
   border-left: 2px solid var(--line-strong);
@@ -484,7 +508,7 @@ textarea.sb-field__input {
 .sb-alert {
   margin-top: 24px;
   padding: 16px 18px;
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   color: var(--ink);
   background: var(--orange-soft);
   border-left: 3px solid var(--sb-error);
@@ -574,7 +598,7 @@ textarea.sb-field__input {
 }
 
 .sb-summary__title {
-  font-size: var(--step-1);
+  font-size: var(--fs-subheadline);
   font-weight: 700;
   color: var(--ink);
 }
@@ -597,7 +621,7 @@ textarea.sb-field__input {
 
 .sb-summary__row dt {
   grid-column: 1;
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   font-stretch: 85%;
   font-weight: 600;
   color: var(--muted);
@@ -606,7 +630,7 @@ textarea.sb-field__input {
 .sb-summary__row dd {
   grid-column: 1;
   margin-top: 4px;
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   font-weight: 600;
   color: var(--ink);
 }
@@ -636,7 +660,7 @@ textarea.sb-field__input {
 }
 
 .sb-summary__list--review .sb-summary__row dd {
-  font-size: var(--step-0);
+  font-size: var(--fs-body);
 }
 
 .sb-summary__next {
@@ -646,7 +670,7 @@ textarea.sb-field__input {
 .sb-summary__foot {
   margin-top: 16px;
   padding-top: 16px;
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   color: var(--muted);
   border-top: 1px solid var(--line);
 }
@@ -669,7 +693,7 @@ textarea.sb-field__input {
 .sb-next li {
   position: relative;
   padding: 0 0 12px 34px;
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   counter-increment: sb-next;
 }
 
@@ -682,10 +706,64 @@ textarea.sb-field__input {
   place-items: center;
   width: 22px;
   height: 22px;
-  font-size: 12px;
+  font-size: var(--fs-caption);
   font-weight: 700;
   color: var(--white);
   background: var(--ink);
+}
+
+/* ---------- Compact summary card ----------
+   The card beside the questions stays about as tall as Step 1: one line per item (label left, choice
+   right), tighter spacing, and the "not a quote" note only on the review step, where the form also says it.
+   The review list inside Step 6 keeps the roomier stacked layout above. */
+.sb-summary__body {
+  padding: 20px 22px 18px;
+}
+
+.sb-summary__body .sb-summary__list {
+  margin-top: 8px;
+}
+
+.sb-summary__body .sb-summary__row {
+  grid-template-columns: minmax(92px, 38%) minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: 12px;
+  padding: 7px 0;
+}
+
+.sb-summary__body .sb-summary__row dt {
+  grid-column: 1;
+}
+
+.sb-summary__body .sb-summary__row dd {
+  grid-column: 2;
+  margin-top: 0;
+}
+
+.sb-summary__body .sb-summary__row .sb-summary__edit {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.sb-summary__body .sb-summary__edit .sb-link {
+  padding: 4px 0 4px 4px;
+}
+
+/* Several choices read as one line: "Directors, Managers / Heads" */
+.sb-summary__body .sb-summary__row dd li {
+  display: inline;
+}
+
+.sb-summary__body .sb-summary__row dd li + li::before {
+  content: ", ";
+}
+
+.sb-summary__foot {
+  display: none;
+}
+
+.sb.is-review .sb-summary__foot {
+  display: block;
 }
 
 /* ---------- Result (preview / sent) ---------- */
@@ -696,7 +774,7 @@ textarea.sb-field__input {
 .sb-result__tag {
   display: inline-block;
   padding: 4px 10px;
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   font-weight: 600;
   color: var(--ink);
   border: 1.5px dashed var(--line-strong);
@@ -704,7 +782,7 @@ textarea.sb-field__input {
 
 .sb-result__title {
   margin-top: 20px;
-  font-size: var(--step-3);
+  font-size: var(--fs-subheadline);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.08;
@@ -714,7 +792,7 @@ textarea.sb-field__input {
 .sb-result__text {
   max-width: 60ch;
   margin-top: 16px;
-  font-size: var(--step-1);
+  font-size: var(--fs-body);
 }
 
 .sb-payload {
@@ -727,7 +805,7 @@ textarea.sb-field__input {
   grid-template-columns: minmax(120px, 220px) minmax(0, 1fr);
   gap: 16px;
   padding: 12px 0;
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   border-bottom: 1px solid var(--line);
 }
 
@@ -764,7 +842,7 @@ textarea.sb-field__input {
 
   .sb-progress__count {
     display: block;
-    font-size: var(--step--1);
+    font-size: var(--fs-caption);
     font-weight: 600;
     color: var(--ink);
   }
@@ -824,7 +902,7 @@ textarea.sb-field__input {
     min-height: 56px;
     padding: 12px 16px;
     font: inherit;
-    font-size: var(--step--1);
+    font-size: var(--fs-caption);
     font-weight: 600;
     color: var(--ink);
     text-align: left;

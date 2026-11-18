@@ -96,7 +96,7 @@ design-reference/            README (style guide + tabel komponen), styleguide.h
 - CTA + footer = satu blok gelap. Judul section dipotong manual dengan `<br />`, huruf kecil biasa (bukan Title Case).
 - Warna, font Archivo, skala tipografi, logo = sama dengan acuan. Sudut kotak tidak membulat, **kecuali** header, dropdown dan band hitam (gaya Nalar); oranye hanya aksen.
 - Tombol oranye: panel hitam menyapu dari kiri saat hover. CTA global = **"Start a conversation"**.
-- Teks yang diketik di form = ukuran sama dengan label (`--step--1`).
+- Teks yang diketik di form = Body (`--fs-body`, min. 16px supaya iPhone tidak auto-zoom). Standar 4 ukuran font: lihat design-reference/README.md § Tipografi.
 - Hero Home: matrix `width: 170%; margin: -4% -76% -26% 6%` di desktop, `135%` di HP. Disetel user bertahap — jangan diubah.
 - Tabel Why (sekarang `hidden`): kolom Whitespace = panel hitam terangkat; centang muncul bergiliran.
 - Judul section di Home **tanpa titik di akhir**.
@@ -225,3 +225,18 @@ Semua aturannya ada di satu blok `@media (max-width: 900px)` di **akhir `css/com
 - **Checklist sebelum merge ke `main`:** (1) `js/scope-data-pending.js` tidak ikut (atau hanya item yang sudah disetujui dipindah ke
   `scope-data.js`); (2) aktivasi FormSubmit dipastikan sebelum `data-submit="live"`; (3) deskripsi pilar sementara di `scope-data.js`
   diganti definisi resmi; (4) hapus `noindex` dan tambahkan tautan hanya kalau user setuju.
+
+## Redesign — Phase 2: Home (16 Nov 2026, branch `feature/scope-builder`, belum di-commit)
+
+- Urutan Home baru: Hero (putih) → **Scope Builder** `#engage` (putih) → **Approach + 90 hari** `#approach` (hitam, baris How it works)
+  → **Services** `#services` (putih) → **People, Process, Business** `#impact` (hitam) → **Case studies** `#cases` (putih) → CTA + footer.
+- Keputusan user K1–K9: The problem, kasus runway/EBITDA dan tabel perbandingan **keluar dari Home** (teks + markup di
+  `design-reference/content-archive.md`; CSS/JS-nya tetap ada, tidak dipakai). EBITDA **tidak boleh** tampil lagi sebelum data & izin diverifikasi.
+- Copy hero, lead builder, 90 hari, People/Process/Business dan judul CTA = **draf dari brief**, perlu validasi bisnis.
+- Implementation: kepala kartu lebih luas ("From plan to practice…"), poin = kemampuan AI dari deck; link "View AI implementation".
+  "Your whitespace" berwarna tinta. Kepala kartu Implementation netral (oranye hanya untuk aksi utama).
+- Case studies hanya memakai fakta deck (hal. 15 dan 9), tanpa outcome. Kartu retail = FL **dengan** BT (perjalanannya mencakup keduanya).
+- Builder di Home = mount yang sama dengan `engage.html` (`data-heading-level="3"`); file builder tidak diubah. Draf sessionStorage dipakai bersama.
+- `js/home-motion.js`: `reveal()` sekarang melewati selector yang tidak ada. `js/slide-deck-wave.js` tidak dimuat lagi di Home (file tetap).
+- Label section tetap ditulis di markup, tapi seluruh situs menyembunyikannya (`components.css`, permintaan user 30 Okt).
+- Belum (Phase 3, seluruh situs): menu/footer masih "AI Implementation", tombol header "Start a conversation", panah dekoratif, tagline footer AI-first.

@@ -76,17 +76,20 @@ Oranye adalah satu-satunya warna aksen. Pakai **sekali per layar** untuk hal yan
 
 ## Tipografi
 
-Font: **Archivo** (Google Fonts, variable: width 62–125, weight 100–900). Ukuran memakai skala fluid situs asli:
+Font: **Archivo** (Google Fonts, variable: width 62–125, weight 100–900).
 
-| Token | Ukuran | Dipakai oleh |
-| --- | --- | --- |
-| `--step-5` | 40 → 88px | `.display` (judul hero/halaman) |
-| `--step-4` | 36 → 68px | `.title` (judul section) |
-| `--step-3` | 28 → 46px | — |
-| `--step-2` | 22 → 30px | `.subtitle`, nama role, link "Next" |
-| `--step-1` | 18 → 21px | `.lead`, judul feature, isi field form |
-| `--step-0` | 16 → 17px | body |
-| `--step--1` | 13 → 14px | `.caption`, label field, breadcrumb |
+**Standar ukuran (Nov 2026): hanya ada 4 ukuran teks di seluruh situs.** Setiap `font-size` di CSS wajib memakai salah satu token di bawah. Pilih berdasarkan peran teks, bukan selera. Hirarki di dalam satu level dibuat dengan ketebalan dan warna, jangan dengan ukuran baru.
+
+| Level | Token | HP → desktop | Dipakai untuk |
+| --- | --- | --- | --- |
+| Headline | `--fs-headline` | 36 → 64px | Judul hero halaman **dan** judul section (satu ukuran): `.display`, `.title` |
+| Sub headline | `--fs-subheadline` | 22 → 30px | Kalimat pengantar di bawah headline (`.lead`, `.page-hero__sub`, `.subtitle`) dan judul kartu/item (judul kartu Insights, layanan, langkah, role, h2 di artikel) |
+| Body text | `--fs-body` | 16 → 17px | Paragraf, isi daftar, isi kartu, sel tabel, link CTA teks, isi field form, footer |
+| Keterangan | `--fs-caption` | 13 → 14px | Label kecil berhuruf kapital, meta (mis. "Perspective · AI"), caption, breadcrumb, label & catatan form, teks mikro di diagram |
+
+Pengecualian (ukurannya sendiri): tombol (`.btn`, `.sb-btn`), menu navigasi/header, chip filter, dan teks di dalam SVG diagram.
+Judul hero yang memakai `--fit` (`.display--fit`, `.title--fit`, hero Home) tetap dibatasi lebar kolom (`min(var(--fs-headline), …cqi)`), jadi di HP bisa sedikit di bawah 36px supaya kata terpanjang muat.
+Token lama `--step-*` masih ada sebagai alias ke 4 token ini; jangan dipakai di kode baru.
 
 | Class | Gaya |
 | --- | --- |
@@ -150,8 +153,8 @@ Untuk mengubah lebar seluruh situs, cukup ubah `--gutter` / `--container` di `cs
 | --- | --- | --- |
 | Tombol utama | `.btn.btn--orange` (+ `.btn--sm`) + `<span class="arrow">→</span>`; hover: panel hitam menyapu dari kiri (0,45 dtk), teks putih, panah geser 4px. Di `.dark`: panel putih, teks hitam | "Start a conversation", "Apply" |
 | Tombol gelap | `.btn.btn--dark`; hover: berubah oranye, teks hitam | Tombol di header |
-| Link garis bawah | `.link-underline` | "How we work" |
-| Link panah | `.link-arrow` | "View practice →" |
+| Link sekunder (di samping tombol) | `.link-underline` | "How we work"; tanpa garis bawah, hover hanya ganti warna |
+| Link CTA teks | `.link-arrow` | "View practice"; tanpa panah & garis bawah, hover hanya ganti warna |
 | Nav aktif | `aria-current="page"` pada `.nav__link` | Garis bawah oranye |
 | Page hero | `section.page-hero` (+ `.breadcrumb`, `.page-hero__art`) | Semua halaman dalam |
 | Value cards | `ul.values > li.value` (+ `<div class="iso value__art" data-illustration="…" data-pad="0.4">`); area gambar 170px, ikon setinggi 120px (90px di HP), sama dengan situs asli; hover: latar `--panel` → `--cell` | Home, About |
@@ -286,3 +289,10 @@ jadi halaman mana pun (sekarang `engage.html`, nanti Home) cukup memasang satu t
   style global `.form`/`.field`/`.step` tidak menyentuh builder. Jangan pakai class situs lain di dalam builder (kecuali `.btn.btn--orange` untuk aksi utama).
 - Visual: kartu abu bersudut siku berjarak `--tile-gap`; terpilih = garis + centang tinta (bukan oranye); oranye hanya tombol
   Continue / Engage Whitespace; error = teks + tanda "!" (bukan warna saja). ≤900px: satu kolom, bar progres, ringkasan jadi bar di bawah layar.
+
+### Home setelah redesign (Nov 2026)
+
+Hero → Scope Builder (`#engage`) → Approach + first 90 days (`#approach`, `.how-list`) → Services (`#services`, `.solutions`, urutan
+BT · Implementation · FL) → People, Process, Business (`#impact`, `.values--3` di band hitam) → Case studies (`#cases`,
+`.insight-grid.cases-grid > article.insight-card.case-card` + `dl.case-facts`) → CTA (`.contact__actions`: tombol oranye + link).
+Style baru ada di akhir `css/home.css` (blok "Home redesign, Nov 2026"). Konten yang diturunkan: `content-archive.md`.
