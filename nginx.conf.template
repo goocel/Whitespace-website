@@ -7,7 +7,7 @@ server {
     index index.html;
 
     gzip on;
-    gzip_types text/css application/javascript image/svg+xml application/json;
+    gzip_types text/css application/javascript image/svg+xml image/x-icon application/json;
     gzip_min_length 1024;
 
     add_header X-Content-Type-Options "nosniff" always;
@@ -26,7 +26,7 @@ server {
     }
 
     # Static assets: short cache (filenames are not hashed)
-    location ~* \.(css|js|svg|png|jpg|jpeg|webp|woff2?)$ {
+    location ~* \.(css|js|svg|png|ico|jpg|jpeg|webp|woff2?)$ {
         add_header Cache-Control "public, max-age=3600";
         add_header X-Content-Type-Options "nosniff" always;
     }
