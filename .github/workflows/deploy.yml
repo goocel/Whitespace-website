@@ -1,0 +1,55 @@
+# Push to main -> CI passes -> deploy to Railway -> smoke-test the live site.
+# One-time setup (see DEPLOY.md): repo secret RAILWAY_TOKEN, repo variable SITE_URL.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # manual "Run workflow" button in the Actions tab
+
+permissions:
+  contents: read
+
+# One deploy at a time; a running deploy is never cancelled half-way.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  deploy:
+    needs: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: ${{ vars.SITE_URL }}
+    env:
+      RAILWAY_SERVICE: whitespace-website
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Install Railway CLI
+        run: npm install --global @railway/cli@5.54.1
+
+      # --ci streams build logs and exits non-zero if the build fails. Railway only switches
+      # traffic once the new container passes the healthcheck in railway.json, so a broken
+      # release leaves the previous version serving.
+      - name: Deploy to Railway
+        run: railway up --ci --service "$RAILWAY_SERVICE"
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
+      - name: Smoke-test the live site
+        if: vars.SITE_URL != ''
+        run: bash scripts/smoke-test.sh "${{ vars.SITE_URL }}"
+
+      - name: Skipped live smoke test
+        if: vars.SITE_URL == ''
+        run: echo "::warning::Repository variable SITE_URL is not set, so the live site was not checked."
