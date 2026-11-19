@@ -1,0 +1,994 @@
+/* =========================================================
+   Engagement Scope Builder (js/scope-builder.js)
+   Every selector starts with .sb so nothing here touches the rest of the site, and the site's
+   shared components (.form, .field, .step, .point …) never reach the builder.
+   Uses the tokens from css/base.css: colours, type scale, --tile-gap, --header-h.
+   Square corners and grey tiles as elsewhere; orange only for the primary action (Continue /
+   Engage Whitespace); the selected state is ink, so it never competes with the action.
+   ========================================================= */
+
+.sb {
+  --sb-focus: 2px solid var(--ink);
+  --sb-error: var(--orange-deep);
+  scroll-margin-top: calc(var(--header-h) + 16px);
+  color: var(--text);
+}
+
+.sb :focus-visible {
+  outline: var(--sb-focus);
+  outline-offset: 3px;
+}
+
+/* Step headings get focus from the script after each move; they are not controls, so no ring */
+.sb-panel__title:focus,
+.sb-result:focus,
+.sb-alert:focus {
+  outline: none;
+}
+
+.sb-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.sb-honey {
+  display: none;
+}
+
+.sb [hidden] {
+  display: none !important;
+}
+
+/* ---------- Notices (restored draft, local pending preview) ---------- */
+.sb-notice {
+  margin-bottom: 24px;
+  padding: 14px 18px;
+  font-size: var(--fs-caption);
+  background: var(--panel);
+  border-left: 3px solid var(--ink);
+}
+
+.sb-notice--pending {
+  border-left: 3px dashed var(--orange-deep);
+}
+
+.sb-link {
+  display: inline;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.sb-link:hover {
+  color: var(--orange-deep);
+}
+
+/* ---------- Progress: numbered stepper (wide) / bar with "Step n of 6" (phones) ---------- */
+.sb-progress {
+  margin-bottom: clamp(32px, 4vw, 56px);
+}
+
+.sb-progress__count,
+.sb-progress__bar {
+  display: none;
+}
+
+.sb-stepper {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--tile-gap);
+}
+
+.sb-stepper__btn {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  width: 100%;
+  min-height: 48px;
+  padding: 14px 0 8px;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-top: 2px solid var(--line);
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.sb-stepper__num {
+  font-size: var(--fs-caption);
+  font-stretch: 85%;
+  font-weight: 600;
+}
+
+.sb-stepper__label {
+  font-size: var(--fs-caption);
+  font-weight: 600;
+}
+
+.sb-stepper__btn.is-done {
+  color: var(--text);
+  border-top-color: var(--line-strong);
+}
+
+.sb-stepper__btn[aria-current="step"] {
+  color: var(--ink);
+  border-top-color: var(--ink);
+}
+
+.sb-stepper__btn:not(:disabled):not([aria-current="step"]):hover {
+  color: var(--ink);
+}
+
+.sb-stepper__btn:disabled {
+  color: var(--line-strong);
+  cursor: default;
+}
+
+/* ---------- Layout: questions left, summary right ---------- */
+.sb-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
+  gap: clamp(32px, 5vw, 96px);
+  align-items: start;
+}
+
+/* ---------- Step panel ---------- */
+.sb-panel--enter {
+  animation: sb-enter 0.28s var(--ease-out) both;
+}
+
+@keyframes sb-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.sb-panel__title {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: var(--fs-subheadline);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  color: var(--ink);
+}
+
+.sb-panel__count {
+  font-size: var(--fs-caption);
+  font-stretch: 85%;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--muted);
+}
+
+.sb-panel__hint {
+  max-width: 60ch;
+  margin-top: 16px;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+}
+
+.sb-panel__note {
+  max-width: 60ch;
+  margin-top: 10px;
+  font-size: var(--fs-caption);
+  color: var(--muted);
+}
+
+/* Error: text and a "!" mark, never colour alone */
+.sb-error,
+.sb-field__error {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-weight: 600;
+  color: var(--sb-error);
+}
+
+.sb-error {
+  margin-top: 20px;
+}
+
+.sb-error::before,
+.sb-field__error::before {
+  content: "!";
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 1.35em;
+  height: 1.35em;
+  font-size: 0.85em;
+  font-weight: 800;
+  color: var(--white);
+  background: var(--sb-error);
+  border-radius: 50%;
+}
+
+/* ---------- Selectable cards ---------- */
+.sb-options {
+  display: grid;
+  gap: var(--tile-gap);
+  margin-top: 28px;
+}
+
+.sb-options--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.sb-options--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.sb-options--list {
+  margin-top: 16px;
+}
+
+.sb-option {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+/* The real input covers the card: native keyboard, click and form behaviour */
+.sb-option__input {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.sb-option__box {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 14px;
+  height: 100%;
+  min-height: 60px;
+  padding: 18px 20px;
+  background: var(--panel);
+  border: 1.5px solid transparent;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.sb-options--list .sb-option__box {
+  min-height: 52px;
+  padding: 14px 18px;
+}
+
+.sb-option:hover .sb-option__box {
+  background: var(--cell);
+}
+
+.sb-option__input:checked + .sb-option__box {
+  background: var(--white);
+  border-color: var(--ink);
+}
+
+.sb-option__input:focus-visible + .sb-option__box {
+  outline: var(--sb-focus);
+  outline-offset: 2px;
+}
+
+.sb-panel.is-invalid .sb-option__input:not(:checked) + .sb-option__box {
+  border-color: rgba(169, 82, 10, 0.4);
+}
+
+/* Check mark: square for several choices, round for one */
+.sb-option__mark {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  background: var(--white);
+  border: 1.5px solid var(--line-strong);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.sb-option__mark--radio {
+  border-radius: 50%;
+}
+
+.sb-option__input:checked + .sb-option__box .sb-option__mark {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.sb-option__input:checked + .sb-option__box .sb-option__mark--checkbox::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 6px;
+  height: 11px;
+  border: solid var(--white);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.sb-option__input:checked + .sb-option__box .sb-option__mark--radio::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  background: var(--white);
+  border-radius: 50%;
+}
+
+.sb-option__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sb-option__label {
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.sb-option__hint {
+  font-size: var(--fs-caption);
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.sb-badge {
+  align-self: start;
+  padding: 2px 8px;
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--orange-deep);
+  border: 1px dashed var(--orange-deep);
+}
+
+/* ---------- Text fields ----------
+   Same look as the Contact form (.field in css/components.css): label and typed text inside one grey
+   tile, tiles 3px apart, an orange outline on the tile while typing, a deep-orange one on an error.
+   Typed text is the label size (--step--1), as on Contact. */
+.sb-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 24px;
+  padding: 14px 16px;
+  background: var(--panel);
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+  transition: outline-color 0.2s ease;
+}
+
+.sb-field:focus-within {
+  outline-color: var(--orange);
+}
+
+.sb-field.is-invalid {
+  outline-color: var(--sb-error);
+}
+
+.sb-field__label {
+  display: block;
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.sb-field__opt {
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.sb-field__hint {
+  font-size: var(--fs-caption);
+  color: var(--muted);
+}
+
+.sb-field__input {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  font-size: var(--fs-body);
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+}
+
+/* Transparent, so the extra height does not show: it keeps the touch target above 24px */
+input.sb-field__input {
+  min-height: 28px;
+}
+
+/* The tile shows focus (orange outline), so the input itself needs no ring of its own */
+.sb .sb-field__input:focus-visible {
+  outline: 0;
+}
+
+textarea.sb-field__input {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.sb-field__input::placeholder {
+  color: var(--muted);
+}
+
+.sb-field__error {
+  font-size: var(--fs-caption);
+}
+
+/* ---------- Step 4: two dimensions side by side ---------- */
+.sb-dimensions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(24px, 3vw, 48px);
+  margin-top: 28px;
+}
+
+.sb-dimension__title {
+  font-size: var(--fs-subheadline);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.sb-dimension__hint {
+  margin-top: 4px;
+  font-size: var(--fs-caption);
+  color: var(--muted);
+}
+
+/* ---------- Step 6: review, contact, privacy ---------- */
+.sb-review {
+  margin-top: 28px;
+  padding: 4px 24px;
+  background: var(--panel);
+}
+
+.sb-contact {
+  margin-top: 40px;
+}
+
+/* Contact fields as one block of tiles, 3px apart, like the Contact form */
+.sb-contact__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--tile-gap);
+  margin-top: 16px;
+}
+
+.sb-contact__grid .sb-field {
+  margin-top: 0;
+}
+
+/* An odd last tile (Phone) takes the full row, so the block ends square */
+.sb-contact__grid .sb-field:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.sb-disclaimer {
+  margin-top: 32px;
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.sb-privacy {
+  margin-top: 12px;
+  padding-left: 14px;
+  font-size: var(--fs-caption);
+  line-height: 1.55;
+  color: var(--muted);
+  border-left: 2px solid var(--line-strong);
+}
+
+.sb-privacy strong {
+  color: var(--ink);
+}
+
+.sb-alert {
+  margin-top: 24px;
+  padding: 16px 18px;
+  font-size: var(--fs-caption);
+  color: var(--ink);
+  background: var(--orange-soft);
+  border-left: 3px solid var(--sb-error);
+}
+
+.sb-alert a {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* ---------- Actions ---------- */
+.sb-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.sb-actions__end {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.sb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 14px 22px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  background: transparent;
+  border: 1.5px solid var(--ink);
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.sb-btn:hover {
+  color: var(--white);
+  background: var(--ink);
+}
+
+.sb-btn--ghost {
+  border-color: transparent;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.sb-btn--ghost:hover {
+  color: var(--ink);
+  background: var(--panel);
+}
+
+.sb-btn--primary {
+  justify-content: center;
+  min-height: 56px;
+}
+
+.sb-btn--primary:disabled {
+  cursor: progress;
+  opacity: 0.65;
+}
+
+/* ---------- Summary ---------- */
+.sb-summary {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  background: var(--panel);
+  border-top: 1.5px solid var(--ink);
+}
+
+.sb-summary__toggle {
+  display: none;
+}
+
+.sb-summary__body {
+  padding: 24px 24px 28px;
+}
+
+.sb-summary__title {
+  font-size: var(--fs-subheadline);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.sb-summary__list {
+  margin-top: 12px;
+}
+
+.sb-summary__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.sb-summary__row:last-child {
+  border-bottom: 0;
+}
+
+.sb-summary__row dt {
+  grid-column: 1;
+  font-size: var(--fs-caption);
+  font-stretch: 85%;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.sb-summary__row dd {
+  grid-column: 1;
+  margin-top: 4px;
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.sb-summary__row dd li + li {
+  margin-top: 2px;
+}
+
+.sb-summary__row .sb-summary__edit {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  margin: 0;
+}
+
+.sb-summary__edit .sb-link {
+  padding: 10px 0 10px 8px; /* bigger touch target without moving the text */
+}
+
+.sb-summary__empty {
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.sb-summary__list--review {
+  margin-top: 0;
+}
+
+.sb-summary__list--review .sb-summary__row dd {
+  font-size: var(--fs-body);
+}
+
+.sb-summary__next {
+  display: none;
+}
+
+.sb-summary__foot {
+  margin-top: 16px;
+  padding-top: 16px;
+  font-size: var(--fs-caption);
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+}
+
+/* On the review step the questions column shows the configuration; the card shows what happens next */
+.sb.is-review .sb-summary__body > .sb-summary__title,
+.sb.is-review .sb-summary__body > .sb-summary__list {
+  display: none;
+}
+
+.sb.is-review .sb-summary__next {
+  display: block;
+}
+
+.sb-next {
+  margin-top: 14px;
+  counter-reset: sb-next;
+}
+
+.sb-next li {
+  position: relative;
+  padding: 0 0 12px 34px;
+  font-size: var(--fs-caption);
+  counter-increment: sb-next;
+}
+
+.sb-next li::before {
+  content: counter(sb-next);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  color: var(--white);
+  background: var(--ink);
+}
+
+/* ---------- Compact summary card ----------
+   The card beside the questions stays about as tall as Step 1: one line per item (label left, choice
+   right), tighter spacing, and the "not a quote" note only on the review step, where the form also says it.
+   The review list inside Step 6 keeps the roomier stacked layout above. */
+.sb-summary__body {
+  padding: 20px 22px 18px;
+}
+
+.sb-summary__body .sb-summary__list {
+  margin-top: 8px;
+}
+
+.sb-summary__body .sb-summary__row {
+  grid-template-columns: minmax(92px, 38%) minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: 12px;
+  padding: 7px 0;
+}
+
+.sb-summary__body .sb-summary__row dt {
+  grid-column: 1;
+}
+
+.sb-summary__body .sb-summary__row dd {
+  grid-column: 2;
+  margin-top: 0;
+}
+
+.sb-summary__body .sb-summary__row .sb-summary__edit {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.sb-summary__body .sb-summary__edit .sb-link {
+  padding: 4px 0 4px 4px;
+}
+
+/* Several choices read as one line: "Directors, Managers / Heads" */
+.sb-summary__body .sb-summary__row dd li {
+  display: inline;
+}
+
+.sb-summary__body .sb-summary__row dd li + li::before {
+  content: ", ";
+}
+
+.sb-summary__foot {
+  display: none;
+}
+
+.sb.is-review .sb-summary__foot {
+  display: block;
+}
+
+/* ---------- Result (preview / sent) ---------- */
+.sb-result {
+  max-width: 860px;
+}
+
+.sb-result__tag {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: var(--ink);
+  border: 1.5px dashed var(--line-strong);
+}
+
+.sb-result__title {
+  margin-top: 20px;
+  font-size: var(--fs-subheadline);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  color: var(--ink);
+}
+
+.sb-result__text {
+  max-width: 60ch;
+  margin-top: 16px;
+  font-size: var(--fs-body);
+}
+
+.sb-payload {
+  margin-top: 28px;
+  border-top: 1.5px solid var(--ink);
+}
+
+.sb-payload__row {
+  display: grid;
+  grid-template-columns: minmax(120px, 220px) minmax(0, 1fr);
+  gap: 16px;
+  padding: 12px 0;
+  font-size: var(--fs-caption);
+  border-bottom: 1px solid var(--line);
+}
+
+.sb-payload__row dt {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.sb-payload__row dd {
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.sb-result .sb-next {
+  max-width: 60ch;
+  margin-top: 24px;
+}
+
+.sb-actions--result {
+  justify-content: flex-start;
+}
+
+/* ---------- Narrower screens ---------- */
+@media (max-width: 1100px) {
+  .sb-options--3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .sb-stepper {
+    display: none;
+  }
+
+  .sb-progress__count {
+    display: block;
+    font-size: var(--fs-caption);
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .sb-progress__bar {
+    display: block;
+    height: 3px;
+    margin-top: 10px;
+    background: var(--line);
+  }
+
+  .sb-progress__fill {
+    display: block;
+    height: 100%;
+    background: var(--ink);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  /* The progress bar above already says "Step n of 6": keep it for screen readers only */
+  .sb-panel__count {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .sb-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .sb-dimensions,
+  .sb-contact__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Summary: a bar stuck to the bottom of the screen while the builder is in view; tap to open */
+  .sb-summary {
+    position: sticky;
+    top: auto;
+    bottom: 0;
+    z-index: 5;
+    margin-top: 32px;
+    background: var(--white);
+    box-shadow: 0 -14px 28px -18px rgba(21, 23, 26, 0.35);
+  }
+
+  .sb-summary__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    min-height: 56px;
+    padding: 12px 16px;
+    font: inherit;
+    font-size: var(--fs-caption);
+    font-weight: 600;
+    color: var(--ink);
+    text-align: left;
+    background: var(--white);
+    border: 0;
+    cursor: pointer;
+  }
+
+  .sb-summary__toggle::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    margin-left: auto;
+    border: solid var(--ink);
+    border-width: 1.5px 1.5px 0 0;
+    transform: rotate(-45deg) translateY(2px);
+    transition: transform 0.2s ease;
+  }
+
+  .sb-summary.is-open .sb-summary__toggle::after {
+    transform: rotate(135deg) translateY(2px);
+  }
+
+  .sb-summary__count {
+    color: var(--muted);
+  }
+
+  .sb-summary__body {
+    display: none;
+    max-height: 55vh;
+    overflow-y: auto;
+    padding: 4px 16px 20px;
+    background: var(--panel);
+  }
+
+  .sb-summary.is-open .sb-summary__body {
+    display: block;
+  }
+
+  .sb-summary__body > .sb-summary__title {
+    display: none;
+  }
+
+  /* The review step shows the full configuration in the page itself */
+  .sb.is-review .sb-summary {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .sb-options--2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sb-review {
+    padding: 4px 16px;
+  }
+
+  .sb-actions,
+  .sb-actions__end {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .sb-actions__end {
+    margin-left: 0;
+  }
+
+  .sb-actions .sb-btn,
+  .sb-actions .btn {
+    width: 100%;
+  }
+
+  .sb-payload__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sb-panel--enter {
+    animation: none;
+  }
+
+  .sb-progress__fill {
+    transition: none;
+  }
+}

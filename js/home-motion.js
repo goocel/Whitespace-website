@@ -102,6 +102,8 @@
 
     /* ---------- Home-only content reveals on scroll ---------- */
     const reveal = (selector, vars = {}) => {
+      // Sections come and go on Home (Nov 2026 redesign): skip selectors that match nothing
+      if (!document.querySelector(selector)) return;
       gsap.set(selector, { y: 28, autoAlpha: 0 });
       ScrollTrigger.batch(selector, {
         start: "top 90%",
@@ -113,7 +115,7 @@
 
     reveal(".solutions > .solution", { stagger: 0.1 });
     reveal(".how-list > .how-step", { stagger: 0.08 });
-    reveal(".case__text > *");
+    reveal(".case__text > *"); // runway case, archived (design-reference/content-archive.md); no-op while it is off the page
 
     /* Comparison table: the Whitespace ticks pop in one by one */
     if (document.querySelector(".why-table")) {

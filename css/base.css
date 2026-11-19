@@ -28,18 +28,33 @@
 
   --font: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  /* Fluid type scale */
-  --step--1: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
-  --step-0: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
-  --step-1: clamp(1.125rem, 1.06rem + 0.3vw, 1.3125rem);
-  --step-2: clamp(1.375rem, 1.22rem + 0.7vw, 1.875rem);
-  --step-3: clamp(1.75rem, 1.42rem + 1.5vw, 2.875rem);
-  --step-4: clamp(2.25rem, 1.6rem + 3vw, 4.25rem);
-  --step-5: clamp(2.5rem, 1.6rem + 4.2vw, 5.5rem);
+  /* Type standard (Nov 2026): the ONLY four text sizes on the site, phone → desktop.
+     Every font-size in the CSS uses one of these; buttons, the nav and text inside SVG diagrams are
+     the only exceptions. Pick by role, not by look:
+       headline     page-hero titles and section titles (one size for both)    36 → 64px
+       subheadline  the intro sentence under a headline, and card / item titles 22 → 30px
+       body         paragraphs, list items, card text, table cells               16 → 17px
+       caption      keterangan: small caps labels, meta, captions, form notes    13 → 14px
+     Hierarchy inside a level comes from weight and colour, never from a new size. */
+  --fs-headline: clamp(2.25rem, 1.6rem + 2.6vw, 4rem);
+  --fs-subheadline: clamp(1.375rem, 1.22rem + 0.7vw, 1.875rem);
+  --fs-body: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --fs-caption: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+
+  /* Old scale names kept as aliases so nothing falls off the standard */
+  --step--1: var(--fs-caption);
+  --step-0: var(--fs-body);
+  --step-1: var(--fs-subheadline);
+  --step-2: var(--fs-subheadline);
+  --step-3: var(--fs-subheadline);
+  --step-4: var(--fs-headline);
+  --step-5: var(--fs-headline);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   --container: 1760px;
-  --gutter: clamp(16px, 4vw, 72px);
+  /* Page side margin (Nov 2026: widened from clamp(16px, 4vw, 72px)): ~6% of the width on desktop,
+     ~19px on a 390px phone, 120px at most */
+  --gutter: clamp(16px, 6vw - 4px, 120px);
   --section-space: clamp(48px, 6vw, 96px); /* 48px on phones; unchanged from ~1070px up */
   --head-space: clamp(48px, 6vw, 80px);
   --header-h: 76px;
@@ -84,7 +99,7 @@ html {
 
 body {
   font-family: var(--font);
-  font-size: var(--step-0);
+  font-size: var(--fs-body);
   line-height: 1.55;
   color: var(--text);
   background: var(--white);
@@ -131,24 +146,24 @@ h4 {
 }
 
 .display {
-  font-size: var(--step-5);
+  font-size: var(--fs-headline);
   line-height: 0.98;
 }
 
 .title {
-  font-size: var(--step-4);
+  font-size: var(--fs-headline);
   line-height: 1;
 }
 
 .subtitle {
-  font-size: var(--step-2);
+  font-size: var(--fs-subheadline);
   font-stretch: 100%;
   letter-spacing: -0.02em;
   line-height: 1.12;
 }
 
 .lead {
-  font-size: var(--step-1);
+  font-size: var(--fs-subheadline);
   line-height: 1.5;
   color: var(--text);
 }
@@ -156,7 +171,7 @@ h4 {
 .caption {
   font-stretch: 85%;
   font-weight: 600;
-  font-size: var(--step--1);
+  font-size: var(--fs-caption);
   color: var(--muted);
 }
 
@@ -274,23 +289,18 @@ h4 {
   color: var(--ink);
 }
 
-.arrow {
-  display: inline-block;
-  transition: transform 0.45s var(--ease-out);
-}
-
-.btn:hover .arrow,
-.link-arrow:hover span {
-  transform: translateX(4px);
-}
-
+/* ---------- Text-link CTAs: one standard for the whole site (Nov 2026) ----------
+   .link-arrow ("Read more", "Read the case", "View practice", "All insights" …), .next-link ("Next: …") and
+   .link-underline (the quieter link beside a button). No arrows, no underline (buttons carry no arrows
+   either). Default: ink (white on dark bands). Hover, keyboard focus and press: only the colour changes;
+   keyboard focus also gets a ring.
+   Brand orange --orange (#f2902a) is only 2.4:1 on white, so on white the hover uses the accessible variant
+   --orange-deep (#a9520a, 5.4:1); dark bands (.section--dark) re-map --orange-deep to --orange (7.7:1).
+   The CTA + footer block (.dark) does not re-map tokens, so it sets --cta-text / --cta-hover itself (below).
+   Buttons (.btn), navigation and ordinary links are not part of this. */
 .link-underline {
-  font-size: 18px;
+  font-size: var(--fs-body);
   font-weight: 600;
-  color: var(--ink);
-  text-decoration: underline;
-  text-underline-offset: 5px;
-  text-decoration-thickness: 1.5px;
 }
 
 .link-arrow {
@@ -298,15 +308,34 @@ h4 {
   align-items: center;
   gap: 10px;
   font-weight: 600;
-  color: var(--muted);
 }
 
-.link-arrow span {
-  transition: transform 0.2s ease;
+.link-arrow,
+.next-link,
+.link-underline {
+  color: var(--cta-text, var(--ink));
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-.link-arrow:hover {
-  color: var(--ink);
+.link-arrow:hover,
+.link-arrow:focus-visible,
+.link-arrow:active,
+.next-link:hover,
+.next-link:focus-visible,
+.next-link:active,
+.link-underline:hover,
+.link-underline:focus-visible,
+.link-underline:active {
+  color: var(--cta-hover, var(--orange-deep));
+}
+
+/* Keyboard focus: a ring in the link's own colour (2.5px: under the 90% desktop zoom 2px would draw as 1px) */
+.link-arrow:focus-visible,
+.next-link:focus-visible,
+.link-underline:focus-visible {
+  outline: 2.5px solid currentColor;
+  outline-offset: 3px;
 }
 
 /* ---------- Isometric illustrations (rendered by js/isometric.js) ---------- */
@@ -418,11 +447,19 @@ h4 {
     box-shadow 0.35s ease;
 }
 
-/* Scrolled: the bar narrows by --bar-inset on each side and stays centred */
+/* Scrolled: the glass bar appears but keeps the width it has at the top of the page (the container),
+   Nov 2026; it used to narrow by --bar-inset (clamp(0px, 5vw, 96px)) on each side */
 .header.is-scrolled .header__inner {
-  --bar-inset: clamp(0px, 5vw, 96px);
-  width: min(100% - 2 * var(--gutter) - 2 * var(--bar-inset), var(--container) - 2 * var(--bar-inset));
+  --bar-inset: 0px;
   padding-inline: clamp(16px, 2vw, 28px) 7px;
+}
+
+/* The header is drawn at 100% while the page is drawn at --page-zoom (90% on desktop), so the plain
+   .container sum would come out wider than the page content. Scaling the gutter and the max width by
+   the page zoom makes the bar exactly as wide as the content below it, at the top and when scrolled. */
+.header .header__inner {
+  width: min(100% - 2 * var(--gutter) * var(--page-zoom, 1) - 2 * var(--bar-inset, 0px),
+             var(--container) * var(--page-zoom, 1) - 2 * var(--bar-inset, 0px));
 }
 
 /* The glass sits on a pseudo-element, not on the bar itself: an element with backdrop-filter
@@ -661,6 +698,9 @@ h4 {
 
 /* ---------- Contact CTA & footer (dark) ---------- */
 .dark {
+  /* Text-link CTAs on the CTA + footer block (its colour tokens are not re-mapped like .section--dark) */
+  --cta-text: var(--white);
+  --cta-hover: var(--orange);
   background: var(--night);
   color: var(--night-text);
 }
@@ -690,7 +730,7 @@ h4 {
 .contact__box p {
   max-width: 440px;
   margin: 28px 0 36px;
-  font-size: 18px;
+  font-size: var(--fs-body);
 }
 
 .contact__art {
@@ -714,19 +754,19 @@ h4 {
 .footer__brand p {
   max-width: 320px;
   margin-top: 20px;
-  font-size: 15px;
+  font-size: var(--fs-body);
 }
 
 .footer h4 {
   margin-bottom: 18px;
-  font-size: 15px;
+  font-size: var(--fs-body);
   font-weight: 600;
 }
 
 .footer ul {
   display: grid;
   gap: 10px;
-  font-size: 15px;
+  font-size: var(--fs-body);
 }
 
 .footer__bottom {
@@ -737,7 +777,7 @@ h4 {
   margin-top: 64px;
   padding-top: 24px;
   border-top: 1px solid var(--night-line);
-  font-size: 13px;
+  font-size: var(--fs-caption);
   color: var(--night-muted);
 }
 
